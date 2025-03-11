@@ -1,4 +1,4 @@
-const flowbite = require("flowbite-react/tailwind");
+import flowbite from "flowbite-react/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -12,10 +12,15 @@ module.exports = {
     flowbite.content(),
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#1D4ED8", // رنگ اصلی برای دکمه‌ها، لینک‌ها و ...
+        secondary: "#6B7280", // رنگ ثانویه جهت حالت hover و ...
+        background: "#FFFFFF", // رنگ پس‌زمینه حالت نرمال
+        text: "#1F2937", // رنگ متن اصلی
+        border: "#E5E7EB", // رنگ مرزها
+      },
+    },
   },
-  plugins: [
-    flowbite.plugin(),
-
-  ],
+  plugins: [flowbite.plugin],
 };

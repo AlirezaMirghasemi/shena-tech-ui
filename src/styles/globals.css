@@ -25,6 +25,5 @@
 }
 body {
   font-family: "Vazir", sans-serif;
-  direction: rtl;
-  text-align: right;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
