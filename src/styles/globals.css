@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* تعریف فونت‌ها */
+@font-face {
+  font-family: Vazir;
+  src: url("/fonts/Vazir-Regular.eot");
+  src: url("/fonts/Vazir-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Vazir-Regular.woff2") format("woff2"),
+    url("/fonts/Vazir-Regular.woff") format("woff"),
+    url("/fonts/Vazir-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  src: url("/fonts/Vazir-Bold.eot");
+  src: url("/fonts/Vazir-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Vazir-Bold.woff2") format("woff2"),
+    url("/fonts/Vazir-Bold.woff") format("woff"),
+    url("/fonts/Vazir-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-display: swap;
+}
+body {
+  font-family: "Vazir", sans-serif;
+  direction: rtl;
+  text-align: right;
+}
