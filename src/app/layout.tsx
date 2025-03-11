@@ -1,5 +1,6 @@
 "use client";
-import "../../styles/globals.css";
+import "../styles/globals.css";
+import StoreProvider from "./StoreProvider";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,7 +9,7 @@ export default function RootLayout({
   return (
     <html lang="fa">
       <body>
-        {children}
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
