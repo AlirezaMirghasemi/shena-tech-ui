@@ -1,5 +1,4 @@
 "use client";
-
 import ThemeToggle from "@/components/common/ThemeToggle";
 import {
   FaBars,
@@ -8,7 +7,6 @@ import {
   FaVideo,
   FaX,
 } from "react-icons/fa6";
-
 export default function Header() {
   return (
     <>
@@ -58,7 +56,6 @@ export default function Header() {
 
           {/* سمت راست: منوها */}
           <div className="flex items-center gap-x-2">
-
             {/* منوی دراپ‌دان دسکتاپ */}
             <div className="hidden sm:inline-block hs-dropdown relative">
               <button
@@ -102,36 +99,12 @@ export default function Header() {
               aria-controls="mobile-menu"
               aria-label="Toggle navigation"
             >
-              <svg
-                className="w-6 h-6 hs-collapse-open:hidden"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
-                className="w-6 h-6 hidden hs-collapse-open:block"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <ThemeToggle/>
-          </div>
+              <FaBars className="w-6 h-6 hs-collapse-open:hidden" />
 
+              <FaX className="w-6 h-6 hidden hs-collapse-open:block" />
+            </button>
+            <ThemeToggle />
+          </div>
         </nav>
 
         {/* منوی موبایل */}
@@ -168,7 +141,7 @@ export default function Header() {
               href="#"
               className="block py-2 px-3 font-medium text-gray-600 hover:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 rounded-lg transition-colors"
             >
-             تماس با ما
+              تماس با ما
             </a>
             <div className="border-t border-gray-200 dark:border-neutral-700 my-2"></div>
 
