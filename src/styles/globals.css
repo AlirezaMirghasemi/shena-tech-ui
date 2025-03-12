@@ -1,10 +1,12 @@
 @import "tailwindcss";
+@import "../../node_modules/preline/variants.css";
+@source '../../node_modules/preline/preline.js';
+
+
 /*
   ---break---
 */
-@plugin 'tailwindcss-animate';
 @plugin "@tailwindcss/forms";
-
 /* تعریف فونت‌ها */
 @font-face {
   font-family: Vazir;
@@ -31,6 +33,17 @@ html {
   font-family: "Vazir", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Adds pointer cursor to buttons */
+@layer base {
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+
+  /* Defaults hover styles on all devices */
+  @custom-variant hover (&:hover);
 /*
   ---break---
 */
