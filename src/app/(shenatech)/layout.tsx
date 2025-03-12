@@ -9,11 +9,11 @@ export default function HomePageLayout({
 }>) {
   return (
     <>
-      <div className="container mx-auto">
-        <div className="">
+      <div className="min-h-screen flex flex-col items-center">
+        <div className="container">
           <Header />
           {children}
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>
