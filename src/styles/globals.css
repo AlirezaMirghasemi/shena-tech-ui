@@ -1,13 +1,13 @@
 @import "tailwindcss";
 @import "../../node_modules/preline/variants.css";
 @source '../../node_modules/preline/preline.js';
-
-
-/*
-  ---break---
-*/
 @plugin "@tailwindcss/forms";
-/* تعریف فونت‌ها */
+
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @font-face {
   font-family: Vazir;
   src: url("/fonts/Vazir-Regular.eot");
@@ -33,87 +33,73 @@ html {
   font-family: "Vazir", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-/* Adds pointer cursor to buttons */
-@layer base {
-    button:not(:disabled),
-    [role="button"]:not(:disabled) {
-      cursor: pointer;
-    }
+@theme {
+    --color-blue-50: #f1f5f8;
+    --color-blue-100: #e7edf3;
+    --color-blue-200: #c8d5e4;
+    --color-blue-300: #a6bbd4;
+    --color-blue-400: #7d9cc0;
+    --color-blue-500: #496d96;
+    --color-blue-600: #436489;
+    --color-blue-700: #3a5778;
+    --color-blue-800: #304863;
+    --color-blue-900: #213245;
+    --color-blue-950: #121b26;
+    --color-gray-50: #f5f8f1;
+    --color-gray-100: #e8f0e0;
+    --color-gray-200: #cddfbe;
+    --color-gray-300: #b1cd98;
+    --color-gray-400: #8cb668;
+    --color-gray-500: #6d9649;
+    --color-gray-600: #618641;
+    --color-gray-700: #557539;
+    --color-gray-800: #46602f;
+    --color-gray-900: #324521;
+    --color-gray-950: #253319;
+    --color-khaki-50: #f8f5f1;
+    --color-khaki-100: #f2ebe4;
+    --color-khaki-200: #e3d5c5;
+    --color-khaki-300: #d0b99f;
+    --color-khaki-400: #bb9972;
+    --color-khaki-500: #967249;
+    --color-khaki-600: #866641;
+    --color-khaki-700: #755939;
+    --color-khaki-800: #634c30;
+    --color-khaki-900: #453421;
+    --color-khaki-950: #302517;
+    --color-purple-50: #faf5f7;
+    --color-purple-100: #f3e7ed;
+    --color-purple-200: #e6ccd8;
+    --color-purple-300: #d5a9be;
+    --color-purple-400: #c384a1;
+    --color-purple-500: #96496d;
+    --color-purple-600: #894364;
+    --color-purple-700: #713752;
+    --color-purple-800: #602f46;
+    --color-purple-900: #3a1c2a;
+    --color-purple-950: #29141e;
+    --color-firoozi-50: #eaf5f5;
+    --color-firoozi-100: #d9eced;
+    --color-firoozi-200: #b0d7d9;
+    --color-firoozi-300: #8ac4c6;
+    --color-firoozi-400: #65b1b4;
+    --color-firoozi-500: #499496;
+    --color-firoozi-600: #3a7678;
+    --color-firoozi-700: #2b5859;
+    --color-firoozi-800: #1c393a;
+    --color-firoozi-900: #0f1e1f;
+    --color-firoozi-950: #070d0e;
+    --color-black:#121b26;
+    --color-white:#e7edf3;
+    --color-natural-50: #f8f5f1;
+    --color-natural-100: #f2ebe4;
+    --color-natural-200: #e3d5c5;
+    --color-natural-300: #d0b99f;
+    --color-natural-400: #bb9972;
+    --color-natural-500: #967249;
+    --color-natural-600: #866641;
+    --color-natural-700: #755939;
+    --color-natural-800: #634c30;
+    --color-natural-900: #453421;
+    --color-natural-950: #302517;
   }
-
-  /* Defaults hover styles on all devices */
-  @custom-variant hover (&:hover);
-/*
-  ---break---
-*/
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
-}
