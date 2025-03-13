@@ -1,4 +1,4 @@
-import { Gender } from "@/constants/Gender";
+import { Gender } from "@/constants/data/Gender";
 
 export interface IUser {
     id?: number,

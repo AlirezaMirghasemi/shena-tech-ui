@@ -1,5 +1,7 @@
+"use client"
+import ThemeToggle from "@/components/common/ThemeToggle";
 import { FaSearch } from "react-icons/fa";
-import { FaBell, FaWaterLadder } from "react-icons/fa6";
+import { FaBell, FaPersonDrowning } from "react-icons/fa6";
 
 export default function Header() {
   return (
@@ -13,7 +15,7 @@ export default function Header() {
               href="#"
               aria-label="Preline"
             >
-              <FaWaterLadder className="w-28 h-auto" width="116" height="32" />
+              <FaPersonDrowning className="w-28 h-auto" width="116" height="32" />
             </a>
             {/* End Logo */}
             <div className="lg:hidden ms-1"></div>
@@ -93,6 +95,7 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+              <ThemeToggle/>
               {/* End Dropdown */}
             </div>
           </div>

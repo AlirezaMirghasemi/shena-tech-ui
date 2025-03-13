@@ -1,5 +1,5 @@
-import { Status } from "@/constants/Status";
-import {Type} from "@/constants/Type";
+import { Status } from "@/constants/data/Status";
+import {Type} from "@/constants/data/Type";
 
 
 export interface IPost {

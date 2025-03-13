@@ -1,4 +1,4 @@
-import {Status} from "@/constants/Status";
+import {Status} from "@/constants/data/Status";
 
 export interface IComment {
     id?:number,
