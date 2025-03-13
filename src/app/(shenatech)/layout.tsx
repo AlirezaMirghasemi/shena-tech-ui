@@ -1,4 +1,4 @@
-import Header from "@/components/layout/shenatech/Header";
+import Header from "@/components/layout/shenatech/header/Header";
 import Footer from "@/components/layout/shenatech/Footer";
 import React from "react";
 

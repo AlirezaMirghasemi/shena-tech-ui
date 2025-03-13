@@ -9,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className="bg-blue-100 dark:bg-blue-900">
+      <body className="bg-linear-to-t from-blue-200 to-blue-400 dark:from-blue-500 dark:to-blue-900">
         <StoreProvider>
           <PrelineScript />
           {children}

@@ -1,12 +1,11 @@
+/* https://www.tints.dev/?purple=96496D&green=6D9649&primary=496D96&secendry=6D9649&tertiary=967249&blue=496D96&khaki=967249&firoozi=499496 */
+
 @import "tailwindcss";
 @import "../../node_modules/preline/variants.css";
 @source '../../node_modules/preline/preline.js';
 @plugin "@tailwindcss/forms";
 
-
-
 @custom-variant dark (&:where(.dark, .dark *));
-
 
 @font-face {
   font-family: Vazir;
@@ -34,72 +33,78 @@ html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 @theme {
-    --color-blue-50: #f1f5f8;
-    --color-blue-100: #e7edf3;
-    --color-blue-200: #c8d5e4;
-    --color-blue-300: #a6bbd4;
-    --color-blue-400: #7d9cc0;
-    --color-blue-500: #496d96;
-    --color-blue-600: #436489;
-    --color-blue-700: #3a5778;
-    --color-blue-800: #304863;
-    --color-blue-900: #213245;
-    --color-blue-950: #121b26;
-    --color-gray-50: #f5f8f1;
-    --color-gray-100: #e8f0e0;
-    --color-gray-200: #cddfbe;
-    --color-gray-300: #b1cd98;
-    --color-gray-400: #8cb668;
-    --color-gray-500: #6d9649;
-    --color-gray-600: #618641;
-    --color-gray-700: #557539;
-    --color-gray-800: #46602f;
-    --color-gray-900: #324521;
-    --color-gray-950: #253319;
-    --color-khaki-50: #f8f5f1;
-    --color-khaki-100: #f2ebe4;
-    --color-khaki-200: #e3d5c5;
-    --color-khaki-300: #d0b99f;
-    --color-khaki-400: #bb9972;
-    --color-khaki-500: #967249;
-    --color-khaki-600: #866641;
-    --color-khaki-700: #755939;
-    --color-khaki-800: #634c30;
-    --color-khaki-900: #453421;
-    --color-khaki-950: #302517;
-    --color-purple-50: #faf5f7;
-    --color-purple-100: #f3e7ed;
-    --color-purple-200: #e6ccd8;
-    --color-purple-300: #d5a9be;
-    --color-purple-400: #c384a1;
-    --color-purple-500: #96496d;
-    --color-purple-600: #894364;
-    --color-purple-700: #713752;
-    --color-purple-800: #602f46;
-    --color-purple-900: #3a1c2a;
-    --color-purple-950: #29141e;
-    --color-firoozi-50: #eaf5f5;
-    --color-firoozi-100: #d9eced;
-    --color-firoozi-200: #b0d7d9;
-    --color-firoozi-300: #8ac4c6;
-    --color-firoozi-400: #65b1b4;
-    --color-firoozi-500: #499496;
-    --color-firoozi-600: #3a7678;
-    --color-firoozi-700: #2b5859;
-    --color-firoozi-800: #1c393a;
-    --color-firoozi-900: #0f1e1f;
-    --color-firoozi-950: #070d0e;
-    --color-black:#121b26;
-    --color-white:#e7edf3;
-    --color-natural-50: #f8f5f1;
-    --color-natural-100: #f2ebe4;
-    --color-natural-200: #e3d5c5;
-    --color-natural-300: #d0b99f;
-    --color-natural-400: #bb9972;
-    --color-natural-500: #967249;
-    --color-natural-600: #866641;
-    --color-natural-700: #755939;
-    --color-natural-800: #634c30;
-    --color-natural-900: #453421;
-    --color-natural-950: #302517;
+  --color-blue-50:  #eaeff5;
+  --color-blue-100: #d9e2ed;
+  --color-blue-200: #b0c3d9;
+  --color-blue-300: #8aa6c6;
+  --color-blue-400: #658ab4;
+  --color-blue-500: #496d96;
+  --color-blue-600: #3a5778;
+  --color-blue-700: #2b4159;
+  --color-blue-800: #1c2a3a;
+  --color-blue-900: #0f161f;
+  --color-blue-950: #070a0e;
+  --color-gray-50:  #f5f8f1;
+  --color-gray-100: #e8f0e0;
+  --color-gray-200: #cddfbe;
+  --color-gray-300: #b1cd98;
+  --color-gray-400: #8cb668;
+  --color-gray-500: #6d9649;
+  --color-gray-600: #618641;
+  --color-gray-700: #557539;
+  --color-gray-800: #46602f;
+  --color-gray-900: #324521;
+  --color-gray-950: #253319;
+  --color-khaki-50: #f8f5f1;
+  --color-khaki-100: #f2ebe4;
+  --color-khaki-200: #e3d5c5;
+  --color-khaki-300: #d0b99f;
+  --color-khaki-400: #bb9972;
+  --color-khaki-500: #967249;
+  --color-khaki-600: #866641;
+  --color-khaki-700: #755939;
+  --color-khaki-800: #634c30;
+  --color-khaki-900: #453421;
+  --color-khaki-950: #302517;
+  --color-purple-50:  #faf5f7;
+  --color-purple-100: #f3e7ed;
+  --color-purple-200: #e6ccd8;
+  --color-purple-300: #d5a9be;
+  --color-purple-400: #c384a1;
+  --color-purple-500: #96496d;
+  --color-purple-600: #894364;
+  --color-purple-700: #713752;
+  --color-purple-800: #602f46;
+  --color-purple-900: #3a1c2a;
+  --color-purple-950: #29141e;
+  --color-firoozi-50:  #eaf5f5;
+  --color-firoozi-100: #d9eced;
+  --color-firoozi-200: #b0d7d9;
+  --color-firoozi-300: #8ac4c6;
+  --color-firoozi-400: #65b1b4;
+  --color-firoozi-500: #499496;
+  --color-firoozi-600: #3a7678;
+  --color-firoozi-700: #2b5859;
+  --color-firoozi-800: #1c393a;
+  --color-firoozi-900: #0f1e1f;
+  --color-firoozi-950: #070d0e;
+  --color-black: #070a0e;
+  --color-white: #d9e2ed;
+  --color-neutral-50: #eaf5f5;
+  --color-neutral-100:#d9eced;
+  --color-neutral-200:#b0d7d9;
+  --color-neutral-300:#8ac4c6;
+  --color-neutral-400:#65b1b4;
+  --color-neutral-500:#499496;
+  --color-neutral-600:#3a7678;
+  --color-neutral-700:#2b5859;
+  --color-neutral-800:#1c393a;
+  --color-neutral-900:#0f1e1f;
+  --color-neutral-950:#070d0e;
+}
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
+}
