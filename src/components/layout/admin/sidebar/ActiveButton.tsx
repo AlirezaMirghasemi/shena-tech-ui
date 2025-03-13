@@ -8,7 +8,6 @@ function ActiveButton({
 }: {
   href: string;
   children: ReactNode;
-  pos: string;
 }) {
   const pathName = usePathname();
   const isActive = pathName === href;

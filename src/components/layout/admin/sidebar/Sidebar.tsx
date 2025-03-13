@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import { FaBarsStaggered, FaPersonDrowning, FaToolbox } from "react-icons/fa6";
 import Breadcrumb from "./Breadcrumb";
 import Buttons from "./Buttons";
+import ActiveButton from "./ActiveButton";
 
 export default function Sidebar() {
   return (
@@ -28,14 +29,14 @@ export default function Sidebar() {
       <div
         id="hs-application-sidebar"
         className="hs-overlay  [--auto-close:lg]
-  hs-overlay-open:translate-x-0
-  -translate-x-full transition-all duration-300 transform
-  w-65 h-full
-  hidden
-  fixed inset-y-0 start-0 z-60
-  bg-white border-e border-gray-200
-  lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
-  dark:bg-neutral-800 dark:border-neutral-700"
+        hs-overlay-open:translate-x-0
+        -translate-x-full transition-all duration-300 transform
+        w-65 h-full
+        hidden
+        fixed inset-y-0 start-0 z-60
+      bg-white border-e border-gray-200
+        lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
+      dark:bg-neutral-800 dark:border-neutral-700"
         role="dialog"
         tabIndex={-1}
         aria-label="Sidebar"
@@ -55,11 +56,8 @@ export default function Sidebar() {
               />
             </a>
             {/* End Logo */}
-
             <div className="hidden lg:block ms-2"></div>
           </div>
-
-          {/* Content */}
           <div className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
             <nav
               className="hs-accordion-group p-3 w-full flex flex-col flex-wrap"
@@ -67,19 +65,15 @@ export default function Sidebar() {
             >
               <ul className="flex flex-col space-y-1">
                 <li>
-                  <a
-                    className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white"
-                    href="#"
-                  >
+                  <ActiveButton href="/admin">
                     <FaToolbox />
                     میز کاربری
-                  </a>
+                  </ActiveButton>
                 </li>
-                <Buttons/>
+                <Buttons />
               </ul>
             </nav>
           </div>
-          {/* End Content */}
         </div>
       </div>
     </>
