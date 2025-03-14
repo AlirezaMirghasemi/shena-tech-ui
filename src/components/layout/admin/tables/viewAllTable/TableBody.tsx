@@ -63,10 +63,7 @@ export default function TableBody({
                   </div>
                 </td>
                 ))}
-              </tr>
-            ))}
-          <tr>
-            <td className="size-px whitespace-nowrap">
+                <td className="size-px whitespace-nowrap">
               <div className="px-6 py-1.5">
                 <a
                   className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
@@ -76,7 +73,9 @@ export default function TableBody({
                 </a>
               </div>
             </td>
-          </tr>
+              </tr>
+            ))}
+
         </tbody>
       </table>
     </>
