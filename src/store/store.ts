@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { tagsSlice } from "./slices/tagSlice";
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {
+        tags:tagsSlice.reducer,
+    },
   });
 };
 // Infer the type of makeStore
