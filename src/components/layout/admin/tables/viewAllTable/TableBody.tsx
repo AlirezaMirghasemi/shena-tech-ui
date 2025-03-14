@@ -37,7 +37,7 @@ export default function TableBody({
         </thead>
 
         <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-          {tableBody.data &&
+          {tableBody.data && tableBody.colTitles &&
             tableBody.data.map((line) => (
               <tr key={line.id}>
                 <td className="size-px whitespace-nowrap">
