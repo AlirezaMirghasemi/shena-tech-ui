@@ -1,8 +1,10 @@
 export interface ITag{
-    id:number|null,
+    id:number,
     title:string,
     slug:string,
-    description:string|undefined,
+    description?:string,
     createdAt:number,
     updatedAt:number
 }
+
+export type TagFormValues=Pick<ITag,'title'|'slug'|'description'>;

@@ -1,10 +1,7 @@
-import { ITag } from "@/interfaces/models/ITag";
+import {   TagFormValues } from "@/interfaces/models/ITag";
 
-export const tagInitial: ITag = {
-  id: null,
+export const tagInitial: TagFormValues = {
   title:"",
-  slug: "",
-  description: undefined,
-  createdAt: Date.now(),
-  updatedAt: Date.now(),
+  slug:"",
+  description:"",
 };

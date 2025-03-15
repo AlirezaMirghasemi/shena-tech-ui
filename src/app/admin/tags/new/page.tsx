@@ -1,18 +1,22 @@
 "use client";
 import Form from "@/components/admin/pages/Form";
 import ValidatingError from "@/components/common/ValidatingError";
-import { ITag } from "@/interfaces/models/ITag";
+import { useAppDispatch } from "@/store/hooks";
+import { generateSlug } from "@/utils/slugGenerator";
 import { tagConfig } from "@/validations/configs/tag.config";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 
 export default function NewTagPage() {
-  const formik = useFormik<ITag>(tagConfig);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const formik = useFormik(tagConfig(router, dispatch));
   return (
     <>
       <Form
         headerTitle={"هشتگ"}
         headerDescription={"افزودن هشتگ جدید"}
-        formik={formik.handleSubmit}
+        formik={formik}
       >
         <div className="max-w-sm space-y-2">
           <label
@@ -54,7 +58,15 @@ export default function NewTagPage() {
             name="slug"
             id="slug"
             value={formik.values.slug}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              const rawSlug = e.target.value;
+              // اجازه تایپ مستقیم فارسی
+              formik.setFieldValue("slug", rawSlug);
+
+              // تولید خودکار به صورت موازی (اختیاری)
+              const generated = generateSlug(rawSlug);
+              formik.setFieldValue("slug", generated);
+            }}
             onBlur={formik.handleBlur}
             type="text"
             placeholder="اسلاگ"
@@ -101,10 +113,11 @@ export default function NewTagPage() {
             ""
           )}
           <button
+            disabled={formik.isSubmitting}
             type="submit"
             className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-100 text-teal-800 hover:bg-teal-200 focus:outline-hidden focus:bg-teal-200 disabled:opacity-50 disabled:pointer-events-none dark:text-teal-500 dark:bg-teal-800/30 dark:hover:bg-teal-800/20 dark:focus:bg-teal-800/20"
           >
-            ذخیره
+            {formik.isSubmitting ? "در حال ثبت..." : "ثبت هشتگ"}
           </button>
         </div>
       </Form>

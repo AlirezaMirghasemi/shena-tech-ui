@@ -9,14 +9,14 @@ export default function Form({
 }: {
   headerTitle: string;
   headerDescription: string;
-  formik: FormikProps<unknown>["handleSubmit"]
+  formik: FormikProps<any>
   children: React.ReactElement;
 }): React.JSX.Element {
   return (
     <>
       <FormHeader title={headerTitle} description={headerDescription} />
       <div className="py-6 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
-        <form onSubmit={formik}>{children}</form>
+        <form onSubmit={formik.handleSubmit}>{children}</form>
       </div>
     </>
   );
