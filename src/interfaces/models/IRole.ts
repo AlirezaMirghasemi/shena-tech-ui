@@ -1,7 +1,7 @@
 export interface IRole {
-    id?:number,
-    roleName: string,
-    description?: string,
-    createdAt: string,
-    updatedAt: string
+    id:number|null,
+    roleTitle: string,
+    description: string|null,
+    createdAt: number,
+    updatedAt: number
 }

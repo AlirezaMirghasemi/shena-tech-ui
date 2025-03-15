@@ -22,7 +22,7 @@ export default function TableBody({
             </th>
             {tableBody.viewTHeadTitles &&
               tableBody.viewTHeadTitles.map((tHead) => (
-                <th key={1}
+                <th key={tHead}
                   scope="col"
                   className="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3 text-start"
                 >

@@ -1,5 +1,5 @@
-import Header from "@/components/layout/shenatech/header/Header";
-import Footer from "@/components/layout/shenatech/Footer";
+import Header from "@/components/shenatech/layout/header/Header";
+import Footer from "@/components/shenatech/layout/Footer";
 import React from "react";
 
 export default function HomePageLayout({

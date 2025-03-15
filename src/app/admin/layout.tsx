@@ -1,5 +1,5 @@
-import Header from "@/components/layout/admin/header/Header";
-import Sidebar from "@/components/layout/admin/sidebar/Sidebar";
+import Header from "@/components/admin/layout/header/Header";
+import Sidebar from "@/components/admin/layout/sidebar/Sidebar";
 
 export default function AdminPageLayout({
   children,
@@ -10,7 +10,7 @@ export default function AdminPageLayout({
     <>
       <Header />
       <Sidebar />
-      <div className="w-full lg:ps-64">
+      <div className="w-full lg:ps-64 min-h-screen h-full">
         <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           <div className=" px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
             <div className="flex flex-col">

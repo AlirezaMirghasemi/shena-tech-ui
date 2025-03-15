@@ -1,12 +1,12 @@
 import {Status} from "@/constants/data/Status";
 
 export interface IComment {
-    id?:number,
+    id:number|null,
     postId:number,
     userId:number,
     ParentId:number,
     content:string,
     status:Status,
-    createdAt:string,
-    updatedAt:string
+    createdAt:number,
+    updatedAt:number
 }

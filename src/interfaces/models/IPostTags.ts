@@ -1,5 +1,5 @@
 export interface IPostTags {
-    id?:number,
+    id:number|null,
     postId:number,
     tagId:number
 }

@@ -13,7 +13,7 @@ export default function TableHeader({tableHeader}:{tableHeader:IViewTableHeader}
         {
                 tableHeader.buttons && (
                     <TableHeaderButton>
-                             { tableHeader.buttons.map((button)=>(button.element))}
+                             <>{ tableHeader.buttons.map((button)=>(button.element))}</>
                     </TableHeaderButton>
                 )
             }

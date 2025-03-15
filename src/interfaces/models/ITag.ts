@@ -1,8 +1,8 @@
 export interface ITag{
-    id?:number,
-    name:string,
+    id:number|null,
+    title:string,
     slug:string,
-    description?:string,
-    createdAt:string,
-    updatedAt:string
+    description:string|undefined,
+    createdAt:number,
+    updatedAt:number
 }

@@ -3,10 +3,10 @@ import {Type} from "@/constants/data/Type";
 
 
 export interface IPost {
-    id?:number,
+    id:number|null,
     userId:number,
     title:string,
-    jsonBody:string,
+    content:string,
     status:Status,
     type:Type,
     createdAt:number,
