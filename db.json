@@ -1,0 +1,20 @@
+{
+  "tags": [
+    {
+      "id": "1a1b",
+      "titlePersian": "تست",
+      "titleEnglish": "test",
+      "createdAt": 1742125343810,
+      "updatedAt": 1742125343810
+    }
+  ],
+  "slugs": [
+    {
+      "id": "c3e9",
+      "titlePersian": "تست",
+      "titleEnglish": "test",
+      "createdAt": 1742130172071,
+      "updatedAt": 1742130172071
+    }
+  ]
+}

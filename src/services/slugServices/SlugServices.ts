@@ -1,9 +1,10 @@
-import { ITag } from "@/interfaces/models/ITag";
-//get all tags
-export async function fetchTags() {
+import { ISlug } from "@/interfaces/models/ISlug";
+
+//get all slugs
+export async function fetchSlugs() {
   try {
     const response = await fetch(
-      "http://localhost:3001/tags",
+      "http://localhost:3001/slugs",
       {
         method: "GET",
         headers: { "content-type": "application/json" },
@@ -12,22 +13,22 @@ export async function fetchTags() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data: ITag[] = await response.json();
+    const data: ISlug[] = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching tags:", error);
+    console.error("Error fetching slugs:", error);
     throw error;
   }
 }
 
-export async function createTag( tag: Omit<ITag, "id">) {
+export async function createSlug( slug: Omit<ISlug, "id">) {
   try {
     const response = await fetch(
-      "http://localhost:3001/tags",
+      "http://localhost:3001/slugs",
       {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(tag),
+        body: JSON.stringify(slug),
       }
     );
     if (!response.ok) {
@@ -35,7 +36,7 @@ export async function createTag( tag: Omit<ITag, "id">) {
     }
     return response.json();
   } catch (error) {
-    console.error("Error Create new tag:", error);
+    console.error("Error Create new slug:", error);
     throw error;
   }
 }

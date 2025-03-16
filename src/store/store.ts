@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { tagsSlice } from "./slices/tagSlice";
+import { slugsSlice } from "./slices/slugSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
         tags:tagsSlice.reducer,
+        slugs:slugsSlice.reducer,
     },
   });
 };

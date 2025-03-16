@@ -1,19 +1,19 @@
-import { TagFormValues } from "@/interfaces/models/ITag";
 import { useAppDispatch } from "@/store/hooks";
 import { FormikConfig } from "formik";
 import { useRouter } from 'next/navigation';
-import { tagInitial } from "../initials/tag.initial";
-import { tagSchema } from "../schemas/tag.schema";
-import { createTagAsync } from "@/store/thunks/tagsThunk";
 import { toast } from "sonner";
+import { SlugFormValues } from "@/interfaces/models/ISlug";
+import { slugInitial } from "../initials/slug.initial";
+import { slugSchema } from "../schemas/slug.schema";
+import { createSlugAsync } from "@/store/thunks/slugsThunk";
 
-// configs/tag.config.ts
-export const tagConfig = (
+// configs/slug.config.ts
+export const slugConfig = (
     router: ReturnType<typeof useRouter>,
     dispatch: ReturnType<typeof useAppDispatch>
-  ): FormikConfig<TagFormValues> => ({
-    initialValues: tagInitial,
-    validationSchema: tagSchema,
+  ): FormikConfig<SlugFormValues> => ({
+    initialValues: slugInitial,
+    validationSchema: slugSchema,
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
         const finalValues = {
@@ -23,14 +23,14 @@ export const tagConfig = (
         };
 
         const result = await dispatch(
-          createTagAsync(finalValues)
+          createSlugAsync(finalValues)
         ).unwrap();
 
-        toast.success("هشتگ با موفقیت ایجاد شد");
+        toast.success("اسلاگ با موفقیت ایجاد شد");
         resetForm();
-        setTimeout(() => router.push("/admin/tags"), 1000);
+        setTimeout(() => router.push("/admin/slugs"), 1000);
       } catch (error: any) {
-        toast.error(error?.message || "خطا در ایجاد هشتگ");
+        toast.error(error?.message || "خطا در ایجاد اسلاگ");
       } finally {
         setSubmitting(false);
       }
