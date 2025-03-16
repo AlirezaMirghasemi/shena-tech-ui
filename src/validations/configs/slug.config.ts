@@ -22,7 +22,7 @@ export const slugConfig = (
           updatedAt: Date.now()
         };
 
-        const result = await dispatch(
+        await dispatch(
           createSlugAsync(finalValues)
         ).unwrap();
 

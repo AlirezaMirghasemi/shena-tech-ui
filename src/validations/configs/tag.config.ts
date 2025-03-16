@@ -22,7 +22,7 @@ export const tagConfig = (
           updatedAt: Date.now()
         };
 
-        const result = await dispatch(
+         await dispatch(
           createTagAsync(finalValues)
         ).unwrap();
 
