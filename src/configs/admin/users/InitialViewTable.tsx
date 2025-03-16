@@ -3,28 +3,28 @@ import Link from "next/link";
 
 export const InitialViewTable: IViewTable = {
   tableHeader: {
-    title: "اسلاگ ها",
-    description: " مشاهده، اعمال تغییرات و امکان حذف اسلاگ ها",
+    title: "کاربران",
+    description: " مشاهده، اعمال تغییرات و امکان حذف کاربران",
+    singleName:"کاربر",
     buttons: [
       {
-        title: "اسلاگ جدید",
-        name: "NewSlug",
+        title: "کاربر جدید",
+        name: "NewUser",
         element: (
           <Link
-            href="slugs/new"
+            href="users/new"
             className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-500 text-white hover:bg-teal-600 focus:outline-hidden focus:bg-teal-600 disabled:opacity-50 disabled:pointer-events-none"
           >
-            اسلاگ جدید
+            کاربر جدید
           </Link>
         ),
       },
     ],
-    singleName:"اسلاگ"
   },
   tableBody: {
-    colTitles: ["titlePersian", "titleEnglish"],
+    colTitles: ["username", "email","fullName","mobile"],
     data: [],
     buttons: [],
-    viewTHeadTitles: ["عنوان فارسی", "عنوان انگلیسی", "عملیات"],
+    viewTHeadTitles: ["نام کاربری", "ایمیل", "نام کامل","شماره همراه","عملیات"],
   },
 };

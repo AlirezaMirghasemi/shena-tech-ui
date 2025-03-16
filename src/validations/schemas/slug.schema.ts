@@ -1,3 +1,5 @@
+//TODO:در هنگام تایپ کاربر یونیک بودن رو چک کن
+
 import * as Yup from 'yup';
 import { validationMessages } from '../utils/ValidationMessages';
 export const slugSchema = Yup.object().shape({

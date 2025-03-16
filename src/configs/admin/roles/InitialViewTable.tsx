@@ -19,6 +19,7 @@ export const InitialViewTable: IViewTable = {
         ),
       },
     ],
+    singleName:"نقش"
   },
   tableBody: {
     colTitles: ["title", "description"],

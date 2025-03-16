@@ -12,6 +12,7 @@ export interface IViewTableHeader {
   title: string;
   description: string;
   buttons: IViewTableButton[] | null;
+  singleName:string;
 }
 export interface IViewTableButton {
   title: string;

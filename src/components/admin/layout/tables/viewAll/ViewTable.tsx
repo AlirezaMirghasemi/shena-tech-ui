@@ -1,6 +1,7 @@
 import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 import { IViewTable } from "@/interfaces/initials/admin/ViewTable/IViewTable";
+import TableFooter from './TableFooter';
 
 export default function ViewTable({
   initialViewTable,
@@ -18,7 +19,7 @@ export default function ViewTable({
           aria-labelledby="hs-soft-color-warning-label"
         >
           <span id="hs-soft-color-warning-label" className="font-bold">
-            {initialViewTable.tableHeader.title}
+            {initialViewTable.tableHeader.singleName+" "}
           </span>
          تعریف نشده است
         </div>
@@ -27,8 +28,8 @@ export default function ViewTable({
   return (
     <>
       <TableHeader tableHeader={initialViewTable.tableHeader} />
-      {}
       <TableBody tableBody={initialViewTable.tableBody} />
+      <TableFooter dataCount={initialViewTable.tableBody.data.length}/>
     </>
   );
 }
