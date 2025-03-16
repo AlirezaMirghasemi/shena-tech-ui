@@ -2,7 +2,6 @@
 import Form from "@/components/admin/pages/Form";
 import ValidatingError from "@/components/common/ValidatingError";
 import { useAppDispatch } from "@/store/hooks";
-import { generateSlug } from "@/utils/slugGenerator";
 import { tagConfig } from "@/validations/configs/tag.config";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
@@ -23,92 +22,56 @@ export default function NewTagPage() {
             htmlFor="title"
             className="block text-sm font-medium mb-2 dark:text-white"
           >
-            عنوان
+            عنوان فارسی
           </label>
           <input
-            name="title"
-            id="title"
-            value={formik.values.title}
+            name="titlePersian"
+            id="titlePersian"
+            value={formik.values.titlePersian}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             type="text"
-            placeholder="عنوان هشتگ"
+            placeholder="عنوان فارسی هشتگ"
             className={`
                 py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400
                 ${
-                  formik.touched.title && formik.errors.title
+                  formik.touched.titlePersian && formik.errors.titlePersian
                     ? "border-red-500   focus:border-red-500 focus:ring-red-500 dark:border-red-500"
                     : "border-teal-500  focus:border-teal-500 focus:ring-teal-500"
                 }
                 `}
           />
-          {formik.touched.title && formik.errors.title ? (
-            <ValidatingError error={formik.errors.title as string} />
+          {formik.touched.titlePersian && formik.errors.titlePersian ? (
+            <ValidatingError error={formik.errors.titlePersian as string} />
           ) : (
             ""
           )}
 
           <label
-            htmlFor="slug"
+            htmlFor="title"
             className="block text-sm font-medium mb-2 dark:text-white"
           >
-            اسلاگ
+            عنوان انگلیسی
           </label>
           <input
-            name="slug"
-            id="slug"
-            value={formik.values.slug}
-            onChange={(e) => {
-              const rawSlug = e.target.value;
-              // اجازه تایپ مستقیم فارسی
-              formik.setFieldValue("slug", rawSlug);
-
-              // تولید خودکار به صورت موازی (اختیاری)
-              const generated = generateSlug(rawSlug);
-              formik.setFieldValue("slug", generated);
-            }}
-            onBlur={formik.handleBlur}
-            type="text"
-            placeholder="اسلاگ"
-            className={`
-                py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400
-                ${
-                  formik.touched.slug && formik.errors.slug
-                    ? "border-red-500   focus:border-red-500 focus:ring-red-500 dark:border-red-500"
-                    : "border-teal-500  focus:border-teal-500 focus:ring-teal-500"
-                }
-                `}
-          />
-          {formik.touched.slug && formik.errors.slug ? (
-            <ValidatingError error={formik.errors.slug as string} />
-          ) : (
-            ""
-          )}
-
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium mb-2 dark:text-white"
-          >
-            توضیحات
-          </label>
-          <textarea
-            name="description"
-            id="description"
-            value={formik.values.description}
+            name="titleEnglish"
+            id="titleEnglish"
+            value={formik.values.titleEnglish}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="توضیحات هشتگ"
+            type="text"
+            placeholder="عنوان انگلیسی هشتگ"
             className={`
                 py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400
                 ${
-                  formik.touched.description && formik.errors.description
+                  formik.touched.titleEnglish && formik.errors.titleEnglish
                     ? "border-red-500   focus:border-red-500 focus:ring-red-500 dark:border-red-500"
                     : "border-teal-500  focus:border-teal-500 focus:ring-teal-500"
                 }
                 `}
           />
-          {formik.touched.description && formik.errors.description ? (
-            <ValidatingError error={formik.errors.description as string} />
+          {formik.touched.titleEnglish && formik.errors.titleEnglish ? (
+            <ValidatingError error={formik.errors.titleEnglish as string} />
           ) : (
             ""
           )}

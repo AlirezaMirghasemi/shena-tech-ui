@@ -10,4 +10,7 @@ export const validationMessages = {
     atLeast:(field:string)=>`${field} باید شامل حداقل یک کلمه بزرگ ، یک علامت خاص و یک حرف کوچک باشد`,
     match:(field:string)=>`${field} نباید شامل فاصله ، - _ . باشد `,
     notPersian:(field:string)=>`${field} نمی تواند فارسی باشد`,
+    notEnglish:(field:string)=>`${field} نمی تواند انگلیسی باشد`,
+    matchPersian:'فقط حروف فارسی، اعداد و آندرلاین مجاز است',
+    matchEnglish:'فقط حروف انگلیسی، اعداد و آندرلاین مجاز است'
 };

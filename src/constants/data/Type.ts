@@ -1,4 +1,5 @@
 export enum Type {
   ARTICLE = "article",
-  EDUCATION = "education",
+  EVENT = "event",
+  VIDEO="video"
 }

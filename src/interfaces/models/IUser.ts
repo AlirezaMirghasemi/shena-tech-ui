@@ -1,8 +1,7 @@
 import { Gender } from "@/constants/data/Gender";
 
 export interface IUser {
-    id: number|null,
-    roleId: number,
+    id: number,
     username: string,
     email: string,
     fullName: string|null,

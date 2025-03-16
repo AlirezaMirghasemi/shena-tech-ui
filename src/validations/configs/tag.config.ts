@@ -20,7 +20,6 @@ export const tagConfig = (
         // تولید نهایی اسلاگ قبل از ارسال
         const finalValues = {
           ...values,
-          slug: generateSlug(values.slug || values.title),
           createdAt: Date.now(),
           updatedAt: Date.now()
         };

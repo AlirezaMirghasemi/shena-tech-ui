@@ -1,20 +1,17 @@
 import * as Yup from "yup";
 import { validationMessages } from "../utils/ValidationMessages";
-import { generateSlug } from "@/utils/slugGenerator";
 export const tagSchema = Yup.object().shape({
-  title: Yup.string()
-    .required(validationMessages.required("هشتگ"))
+  titlePersian: Yup.string()
+    .required(validationMessages.required("عنوان فارسی هشتگ"))
     .min(3, validationMessages.minLength(3))
-    .max(20, validationMessages.maxLength(20)),
-
-    slug: Yup.string()
-    .transform((value, ctx) => generateSlug(value || ctx.parent.title))
-    .required(validationMessages.required("اسلاگ"))
+    .max(20, validationMessages.maxLength(20))
     .matches(
-      /^[\p{L}\d-]+$/u, // پذیرش حروف فارسی/لاتین
-      'فقط حروف، اعداد و خط تیره مجاز است'
+      /^[\u0600-\u06FF\uFB8A\u067E\u0686\u06AF\u06CC\u0629\u0643\u0621-\u0624\u0626٠-٩0-9_]+$/,
+      validationMessages.matchPersian
     ),
-  description: Yup.string()
+  titleEnglish: Yup.string()
+    .required(validationMessages.required("عنوان انگلیسی هشتگ"))
     .min(3, validationMessages.minLength(3))
-    .max(50, validationMessages.maxLength(50)),
+    .max(20, validationMessages.maxLength(20))
+    .matches(/^[a-zA-Z0-9_]+$/, validationMessages.matchEnglish),
 });

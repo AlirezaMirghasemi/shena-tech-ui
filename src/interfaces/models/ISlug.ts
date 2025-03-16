@@ -1,4 +1,4 @@
-export interface ITag{
+export interface ISlug{
     id:number,
     titlePersian:string,
     titleEnglish:string,
@@ -6,4 +6,4 @@ export interface ITag{
     updatedAt:number
 }
 
-export type TagFormValues=Pick<ITag,'titlePersian'|'titleEnglish'>;
+export type TagFormValues=Pick<ISlug,'titlePersian'|'titleEnglish'>;
