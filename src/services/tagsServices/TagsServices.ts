@@ -1,39 +1,20 @@
 import { ITag } from "@/interfaces/models/ITag";
+import axios from "axios";
 //get all tags
 export async function fetchTags() {
   try {
-    const response = await fetch(
-      "http://localhost:3001/tags",
-      {
-        method: "GET",
-        headers: { "content-type": "application/json" },
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data: ITag[] = await response.json();
-    return data;
+    const response = await axios.get<ITag[]>("http://localhost:3001/tags");
+    return response.data;
   } catch (error) {
     console.error("Error fetching tags:", error);
     throw error;
   }
 }
-
-export async function createTag( tag: Omit<ITag, "id">) {
+//create new tag
+export async function createTag(tag: Omit<ITag, "id">) {
   try {
-    const response = await fetch(
-      "http://localhost:3001/tags",
-      {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(tag),
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
+    const response = await axios.post("http://localhost:3001/tags", tag);
+    return response.data;
   } catch (error) {
     console.error("Error Create new tag:", error);
     throw error;

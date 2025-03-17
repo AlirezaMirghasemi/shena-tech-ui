@@ -1,17 +1,17 @@
-export default function TableFooter({dataCount}:{dataCount:number}) {
-return(<>
-
-<div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
+export default function TableFooter({ dataCount }: { dataCount: number }) {
+  return (
+    <>
+      <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
         <div>
           <p className="text-sm text-gray-600 dark:text-neutral-400">
             <span className="font-semibold text-gray-800 dark:text-neutral-200">
               {dataCount}
             </span>{" "}
             داده یافت شده
-             {/* //TODO:به جای داده نام جدول قرار بگیرد */}
+            {/* //TODO:به جای داده نام جدول قرار بگیرد */}
           </p>
         </div>
-{/* TODO: پیجینیت کامل پیاده سازی شود */}
+        {/* TODO:  پیجینیت کامل پیاده سازی شود */}
         <div>
           <div className="inline-flex gap-x-2">
             <button
@@ -58,5 +58,6 @@ return(<>
           </div>
         </div>
       </div>
-</>);
+    </>
+  );
 }
