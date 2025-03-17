@@ -5,11 +5,20 @@ import { useAppDispatch } from "@/store/hooks";
 import { roleConfig } from "@/validations/configs/role.config";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDebounce } from 'use-debounce';
+
 
 export default function NewRolePage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const formik = useFormik(roleConfig(router, dispatch));
+  const [debouncedTitle]=useDebounce(formik.values.title,500);
+  useEffect(() => {
+    if(debouncedTitle)
+        formik.validateField('title');
+  }, [debouncedTitle]);
+
   return (
     <>
       <Form

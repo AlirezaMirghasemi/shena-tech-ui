@@ -5,11 +5,21 @@ import { useAppDispatch } from "@/store/hooks";
 import { tagConfig } from "@/validations/configs/tag.config";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useDebounce } from "use-debounce";
 
 export default function NewTagPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const formik = useFormik(tagConfig(router, dispatch));
+const [debouncedPersianTitle, debouncedEnglishTitle] = useDebounce(
+    [formik.values.titlePersian, formik.values.titleEnglish],
+    500
+);
+useEffect(() => {
+    if (debouncedPersianTitle !== undefined) formik.validateField("titlePersian");
+    if (debouncedEnglishTitle !== undefined) formik.validateField("titleEnglish");
+}, [debouncedPersianTitle, debouncedEnglishTitle]);
   return (
     <>
       <Form
@@ -19,7 +29,7 @@ export default function NewTagPage() {
       >
         <div className="max-w-sm space-y-2">
           <label
-            htmlFor="title"
+            htmlFor="titlePersian"
             className="block text-sm font-medium mb-2 dark:text-white"
           >
             عنوان فارسی
@@ -48,7 +58,7 @@ export default function NewTagPage() {
           )}
 
           <label
-            htmlFor="title"
+            htmlFor="titleEnglish"
             className="block text-sm font-medium mb-2 dark:text-white"
           >
             عنوان انگلیسی
