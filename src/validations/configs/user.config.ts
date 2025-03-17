@@ -15,14 +15,14 @@ export const userConfig = (
   initialValues: userInitial,
   validationSchema: userSchema,
   onSubmit: async (values, { setSubmitting, resetForm }) => {
-let uploadedFilename = "";
+    let uploadedFilename = "";
 
     try {
-        if(values.profilePicture)
-        {
-            uploadedFilename = await uploadFile(values.profilePicture as File);
-
-        }
+      if (values.profilePicture) {
+        uploadedFilename = await uploadFile(
+          values.profilePicture as unknown as File
+        );
+      }
       const hashedPassword = await hashPassword(values.password);
       values.password = hashedPassword;
       console.log(values);
@@ -47,7 +47,6 @@ let uploadedFilename = "";
           body: JSON.stringify({ filename: uploadedFilename }),
         });
       }
-
     } finally {
       setSubmitting(false);
     }

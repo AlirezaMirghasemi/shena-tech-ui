@@ -8,6 +8,6 @@ export const userInitial:UserFormValues={
     password: "",
     bio: "",
     profilePicture: "",
-    mobile: "",
+    mobile:"",
     gender: Gender.NotSpecified
 }

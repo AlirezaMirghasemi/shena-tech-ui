@@ -51,6 +51,7 @@ export const userSchema = Yup.object().shape({
       return ["image/jpeg", "image/png"].includes((value as File).type);
     }),
   mobile: Yup.string()
+  .max(11,validationMessages)
     .matches(/^09\d{9}$/, validationMessages.invalidMobile)
     .test(
       "is-unique",

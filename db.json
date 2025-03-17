@@ -46,6 +46,19 @@
       "gender": "NotSpecified",
       "createdAt": 1742227803789,
       "updatedAt": 1742227803789
+    },
+    {
+      "id": "b29b",
+      "username": "testUserName2",
+      "email": "test@test2.com",
+      "fullName": "",
+      "password": "$2b$12$R7uMZTRbTRnIr/ac9dSQfuk/fdjfRAoouw/WvGaV82mvZyPZbH1sy",
+      "bio": "",
+      "profilePicture": "",
+      "mobile": "09039992731",
+      "gender": "NotSpecified",
+      "createdAt": 1742231635352,
+      "updatedAt": 1742231635352
     }
   ]
 }
