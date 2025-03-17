@@ -12,6 +12,7 @@ export const validationMessages = {
     notPersian:(field:string)=>`${field} نمی تواند فارسی باشد`,
     notEnglish:(field:string)=>`${field} نمی تواند انگلیسی باشد`,
     matchPersian:'فقط حروف فارسی، اعداد و آندرلاین مجاز است',
-    matchEnglish:'فقط حروف انگلیسی، اعداد و آندرلاین مجاز است'
+    matchEnglish:'فقط حروف انگلیسی، اعداد و آندرلاین مجاز است',
+    invalidMobile:'شماره همراه باید با 09 شروع شده و 11 رقم باشد'
 
 };

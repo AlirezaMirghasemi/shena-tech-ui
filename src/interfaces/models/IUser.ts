@@ -4,12 +4,12 @@ export interface IUser {
   id: number;
   username: string;
   email: string;
-  fullName: string | null;
+  fullName: string;
   password: string;
-  bio: string | null;
-  profilePicture: string | null;
+  bio: string;
+  profilePicture: string;
   mobile: string;
-  gender: Gender | null;
+  gender: Gender;
   createdAt: number;
   updatedAt: number;
 }

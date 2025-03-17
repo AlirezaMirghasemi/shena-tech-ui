@@ -6,6 +6,13 @@
       "titleEnglish": "test",
       "createdAt": 1742125343810,
       "updatedAt": 1742125343810
+    },
+    {
+      "id": "2e54",
+      "titlePersian": "تست2",
+      "titleEnglish": "test2",
+      "createdAt": 1742221205099,
+      "updatedAt": 1742221205099
     }
   ],
   "slugs": [
@@ -26,7 +33,19 @@
       "updatedAt": 1742139271411
     }
   ],
-  "users":[
-
+  "users": [
+    {
+      "id": "8f5f",
+      "username": "testUserName",
+      "email": "test@test.com",
+      "fullName": "testFullName",
+      "password": "$2b$12$q1m8vJcE2Cabr/5W5yMoGe5py1InPsQKpgTPUjy6k59mxZXAk0iIW",
+      "bio": "testInfo",
+      "profilePicture": "1742227803003-0fba8ad4-4620-46ff-935d-d22ff87ed956.jpg",
+      "mobile": "09102129638",
+      "gender": "NotSpecified",
+      "createdAt": 1742227803789,
+      "updatedAt": 1742227803789
+    }
   ]
 }
