@@ -1,23 +1,28 @@
 "use client";
 import Form from "@/components/admin/pages/Form";
+import InputField from "@/components/admin/pages/InputField";
 import ValidatingError from "@/components/common/ValidatingError";
+import { getInputClass } from "@/constants/theme/InputClass";
 import { useAppDispatch } from "@/store/hooks";
 import { roleConfig } from "@/validations/configs/role.config";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useDebounce } from 'use-debounce';
-
+import { useDebounce } from "use-debounce";
 
 export default function NewRolePage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const formik = useFormik(roleConfig(router, dispatch));
-  const [debouncedTitle]=useDebounce(formik.values.title,500);
+  const [debouncedTitle] = useDebounce(formik.values.title, 500);
   useEffect(() => {
-    if(debouncedTitle)
-        formik.validateField('title');
+    if (debouncedTitle) formik.validateField("title");
   }, [debouncedTitle]);
+
+
+
+
+
 
   return (
     <>
@@ -27,7 +32,7 @@ export default function NewRolePage() {
         formik={formik}
       >
         <div className="max-w-sm space-y-2">
-          <label
+          {/* <label
             htmlFor="title"
             className="block text-sm font-medium mb-2 dark:text-white"
           >
@@ -54,8 +59,13 @@ export default function NewRolePage() {
             <ValidatingError error={formik.errors.title as string} />
           ) : (
             ""
-          )}
-
+          )} */}
+          <InputField
+            id={"title"}
+            name={"title"}
+            placeholder={"عنوان نقش"}
+            formik={formik}
+          />
           <label
             htmlFor="description"
             className="block text-sm font-medium mb-2 dark:text-white"
@@ -69,14 +79,10 @@ export default function NewRolePage() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             placeholder="توضیحات نقش"
-            className={`
-                py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400
-                ${
-                  formik.touched.description && formik.errors.description
-                    ? "border-red-500   focus:border-red-500 focus:ring-red-500 dark:border-red-500"
-                    : "border-teal-500  focus:border-teal-500 focus:ring-teal-500"
-                }
-                `}
+            className={getInputClass(
+              !!formik.touched.title,
+              formik.errors.title
+            )}
           />
           {formik.touched.description && formik.errors.description ? (
             <ValidatingError error={formik.errors.description as string} />
