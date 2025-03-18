@@ -6,7 +6,7 @@ import TableFooter from './TableFooter';
 export default function ViewTable({
   initialViewTable,
 }: {
-  initialViewTable: IViewTable;
+  initialViewTable: IViewTable,
 }) {
   if (initialViewTable.tableBody.data.length == 0)
     return (

@@ -65,12 +65,15 @@ export default function TableBody({
                 ))}
                 <td className="size-px whitespace-nowrap">
               <div className="px-6 py-1.5">
-                <a
-                  className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-                  href="#"
-                >
-                  Edit
-                </a>
+              {tableBody.buttons &&
+                      tableBody.buttons.map((button) => (
+                        <div key={button.name}>
+                          {typeof button.element === 'function'
+                            ? button.element((line["id"]))
+                            : button.element}
+                        </div>
+                      ))
+                    }
               </div>
             </td>
               </tr>

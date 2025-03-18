@@ -45,7 +45,7 @@ export default function NewTagPage() {
             id={"titleEnglish"}
             name={"titleEnglish"}
             placeholder={"عنوان انگلیسی هشتگ"}
-            formik={undefined}
+            formik={formik}
           />
           <button
             disabled={formik.isSubmitting}

@@ -24,7 +24,33 @@ export const InitialViewTable: IViewTable = {
   tableBody: {
     colTitles: ["title", "description"],
     data: [],
-    buttons: [],
+    buttons: [
+            {
+                title: "ویرایش",
+                name: "edit",
+                element: (id: string) => (
+                  <Link
+                    href={`/admin/roles/edit/${id}`}
+                    className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
+                  >
+                    ویرایش
+                  </Link>
+                )
+              },
+              {
+                title: "حذف",
+                name: "delete",
+                element: (id: string) => (
+                  <Link
+                    href={`/admin/roles/delete/${id}`}
+                    className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
+                  >
+                    حذف
+                  </Link>
+                )
+              }
+
+        ],
     viewTHeadTitles: ["عنوان","توضیحات", "عملیات"],
   },
 };

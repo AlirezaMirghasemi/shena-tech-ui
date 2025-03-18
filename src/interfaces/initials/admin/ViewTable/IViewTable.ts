@@ -17,11 +17,11 @@ export interface IViewTableHeader {
 export interface IViewTableButton {
   title: string;
   name: string;
-  element: React.ReactElement;
+  element: React.ReactElement | ((id: string) => React.ReactElement); // تغییر در اینجا
 }
 export interface IViewTableBody {
   colTitles: string[];
   data: ITag[] | IUser[] | IPost[] | IComment[] | IRole[] | [];
-  buttons: IViewTable[] | null;
+  buttons: IViewTableButton[] | null;
   viewTHeadTitles: string[];
 }
