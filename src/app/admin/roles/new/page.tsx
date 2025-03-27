@@ -1,5 +1,5 @@
 "use client";
-import Form from "@/components/admin/pages/Form";
+import Form from "@/components/admin/pages/DynamicForm";
 import InputField from "@/components/admin/pages/InputField";
 import ValidatingError from "@/components/common/ValidatingError";
 import { getInputClass } from "@/constants/theme/InputClass";

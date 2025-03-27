@@ -1,9 +1,10 @@
 /* https://www.tints.dev/?purple=96496D&green=6D9649&primary=496D96&secendry=6D9649&tertiary=967249&blue=496D96&khaki=967249&firoozi=499496 */
 
 @import "tailwindcss";
-@import "../../node_modules/preline/variants.css";
-@source '../../node_modules/preline/preline.js';
+@import "preline/variants.css";
+
 @plugin "@tailwindcss/forms";
+@import "preline/src/plugins/datepicker/styles.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -1,44 +1,57 @@
-
-import { ISlug } from "@/interfaces/models/ISlug";
 import { createSlice } from "@reduxjs/toolkit";
+import { DataStatus } from "@/constants/data/DataStatus";
+import { ISlug } from "@/interfaces/models/ISlug";
 import { createSlugAsync, fetchSlugsAsync } from "../thunks/slugsThunk";
 
+// تعریف وضعیت اولیه اسلایس
+interface SlugsState {
+  data: ISlug[];
+  status: string;
+  error: string | null;
+}
 
-const initialState = {
-  slugs: [] as ISlug[],
-  loading: false,
-  error: null as string | null,
+const initialState: SlugsState = {
+  data: [],
+  status: DataStatus.IDLE,
+  error: null,
 };
+
+/**
+ * اسلایس ریداکس مربوط به اسلاگ ها جهت مدیریت عملیات fetch و create
+ */
 export const slugsSlice = createSlice({
   name: "slugs",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // هندل کردن وضعیت بارگذاری اسلاگ ها
     builder
-
       .addCase(fetchSlugsAsync.pending, (state) => {
-        state.loading = true;
+        state.status = DataStatus.LOADING;
         state.error = null;
       })
       .addCase(fetchSlugsAsync.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slugs = action.payload;
+        state.status = DataStatus.SUCCEEDED;
+        state.data = action.payload;
       })
       .addCase(fetchSlugsAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to fetch tags";
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to fetch slugs";
       })
+      // هندل کردن وضعیت ایجاد اسلاگ جدید
       .addCase(createSlugAsync.pending, (state) => {
-        state.loading = true;
+        state.status = DataStatus.LOADING;
         state.error = null;
       })
       .addCase(createSlugAsync.fulfilled, (state, action) => {
-        state.loading = false;
-        state.slugs.push(action.payload);
+        state.status = DataStatus.SUCCEEDED;
+        state.data = action.payload;
       })
       .addCase(createSlugAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to create slug";
       });
   },
 });
+
+export default slugsSlice.reducer;

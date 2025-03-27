@@ -1,61 +1,32 @@
 "use client";
-import Form from "@/components/admin/pages/Form";
-import InputField from "@/components/admin/pages/InputField";
-import { useAppDispatch } from "@/store/hooks";
-import { tagConfig } from "@/validations/configs/tag.config";
-import { useFormik } from "formik";
+
+import TagForm from "@/components/admin/pages/tags/TagForm";
+import { useTags } from "@/hooks/DB/useTags";
+import { TagFormValues } from "@/interfaces/models/ITag";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useDebounce } from "use-debounce";
+import { toast } from "sonner";
 
-export default function NewTagPage() {
+const NewTagPage = () => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const formik = useFormik(tagConfig(router, dispatch));
-  const [debouncedValues] = useDebounce(
-    {
-      titlePersian: formik.values.titlePersian,
-      titleEnglish: formik.values.titleEnglish,
-    },
-    500
-  );
+  const { actions, isLoading } = useTags();
 
-  useEffect(() => {
-    formik.validateField("titlePersian");
-  }, [debouncedValues.titlePersian]);
-  useEffect(() => {
-    formik.validateField("titleEnglish");
-  }, [debouncedValues.titleEnglish]);
+  const handleSubmit = async (values: TagFormValues) => {
+    const success = await actions.createNewTag(values);
+    if (success) {
+      toast.success("هشتگ با موفقیت ایجاد شد");
+      setTimeout(() => router.push("/admin/tags"), 1000);
+    }
+  };
   return (
-    <>
-      <Form
-        headerTitle={"هشتگ"}
-        headerDescription={"افزودن هشتگ جدید"}
-        formik={formik}
-      >
-        <div className="max-w-sm space-y-2">
-          <InputField
-            id={"titlePersian"}
-            name={"titlePersian"}
-            placeholder={"عنوان فارسی هشتگ"}
-            formik={formik}
-          />
-
-          <InputField
-            id={"titleEnglish"}
-            name={"titleEnglish"}
-            placeholder={"عنوان انگلیسی هشتگ"}
-            formik={formik}
-          />
-          <button
-            disabled={formik.isSubmitting}
-            type="submit"
-            className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-teal-100 text-teal-800 hover:bg-teal-200 focus:outline-hidden focus:bg-teal-200 disabled:opacity-50 disabled:pointer-events-none dark:text-teal-500 dark:bg-teal-800/30 dark:hover:bg-teal-800/20 dark:focus:bg-teal-800/20"
-          >
-            {formik.isSubmitting ? "در حال ثبت..." : "ثبت هشتگ"}
-          </button>
-        </div>
-      </Form>
-    </>
+    <div className="max-w-2xl mx-auto p-6">
+      <TagForm
+        title="ایجاد هشتگ جدید"
+        description="اطلاعات هشتگ جدید را وارد نمایید"
+        onSubmit={handleSubmit}
+        isSubmitting={isLoading}
+      />
+    </div>
   );
-}
+};
+
+export default NewTagPage;

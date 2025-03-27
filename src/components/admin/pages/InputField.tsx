@@ -1,20 +1,21 @@
 import ValidatingError from "@/components/common/ValidatingError";
-import { getInputClass } from "@/constants/theme/InputClass";
+import { ErrorMessage, Field } from "formik";
 
 export default function InputField({
   id,
   name,
-  type = "text",
+  type = "input",
   placeholder,
-  formik,
+  disabled,
+
 }: {
   id: string;
   name: string;
   type?: string;
   placeholder: string;
-  formik: any;
-}) {
+  disabled:boolean
 
+}) {
   return (
     <>
       <label
@@ -23,19 +24,18 @@ export default function InputField({
       >
         {placeholder}
       </label>
-      <input
+      <Field
         id={id}
         name={name}
-        type={type}
-        value={formik.values[name]}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        as={type}
+        disabled={disabled}
         placeholder={placeholder}
-        className={getInputClass(formik.touched[name], formik.errors[name])}
+        className="py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 border-teal-500 focus:border-teal-500 focus:ring-teal-500"
+
       />
-      {formik.touched[name] && formik.errors[name] && (
-        <ValidatingError error={formik.errors[name] as string} />
-      )}
+      <ErrorMessage name={name} >
+         {message=><ValidatingError error={message} />}
+      </ErrorMessage>
     </>
   );
 }

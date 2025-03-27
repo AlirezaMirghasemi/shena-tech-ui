@@ -1,5 +1,5 @@
 export interface ISlug{
-    id:number,
+    id?:string,
     titlePersian:string,
     titleEnglish:string,
     createdAt:number,
