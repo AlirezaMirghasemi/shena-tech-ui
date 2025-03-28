@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { FormikConfig } from "formik";
 import { useRouter } from "next/navigation";
 import { roleInitial } from "../initials/role.initial";
-import { roleSchema } from "../schemas/role.shema";
+import { roleSchema } from "../schemas/role.schema";
 import { createRoleAsync } from "@/store/thunks/rolesThunk";
 import { toast } from "sonner";
 

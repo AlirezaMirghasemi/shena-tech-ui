@@ -1,7 +1,7 @@
 import { IRole } from "@/interfaces/models/IRole";
 import axios from "axios";
 
-//get all soles
+//get all roles
 export async function fetchRoles() {
   try {
     const response = await axios.get<IRole[]>("http://localhost:3001/roles");

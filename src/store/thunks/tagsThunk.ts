@@ -1,5 +1,5 @@
 import { ITag } from "@/interfaces/models/ITag";
-import { createTag, fetchTags } from "@/services/tagsServices/TagsServices";
+import { createTag, fetchTags } from "@/services/tagServices/TagServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /**

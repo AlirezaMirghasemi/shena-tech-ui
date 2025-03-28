@@ -1,5 +1,5 @@
 import { IUser } from "@/interfaces/models/IUser";
-import { createUser, fetchUsers } from "@/services/usersServices/UsersServices";
+import { createUser, fetchUsers } from "@/services/userServices/UserServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUsersAsync=createAsyncThunk('users/fetchUsers',async()=>{
