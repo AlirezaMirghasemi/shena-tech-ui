@@ -1,7 +1,15 @@
 {
   "tags": [],
   "slugs": [],
-  "roles": [],
+  "roles": [
+    {
+      "id": "a31f",
+      "title": "مدیر",
+      "description": "دسترسی کامل",
+      "createdAt": 1743240684904,
+      "updatedAt": 1743240684904
+    }
+  ],
   "users": [],
   "permissions": [
     {
