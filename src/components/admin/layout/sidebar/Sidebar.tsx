@@ -3,6 +3,12 @@ import { FaBarsStaggered, FaPersonDrowning, FaToolbox } from "react-icons/fa6";
 import Breadcrumb from "./Breadcrumb";
 import Buttons from "./Buttons";
 import ActiveButton from "./ActiveButton";
+import AccountView from "./AccountView";
+import ParentNavTab from "../buttons/ParentNavTab";
+import {
+  ContentAdminSideButtons,
+  UserAdminSideButtons,
+} from "@/configs/admin/SidebarButtons";
 
 export default function Sidebar() {
   return (
@@ -70,10 +76,14 @@ export default function Sidebar() {
                     میز کاربری
                   </ActiveButton>
                 </li>
+
+                <ParentNavTab buttons={UserAdminSideButtons} />
+                <ParentNavTab buttons={ContentAdminSideButtons} />
                 <Buttons />
               </ul>
             </nav>
           </div>
+          <AccountView />
         </div>
       </div>
     </>
