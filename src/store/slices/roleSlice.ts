@@ -39,7 +39,7 @@ export const rolesSlice = createSlice({
       })
       .addCase(fetchRolesAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = action.payload;
+        state.data = action.payload as IRole[];
       })
       .addCase(fetchRolesAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;

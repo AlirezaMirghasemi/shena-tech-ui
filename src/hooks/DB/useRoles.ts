@@ -20,7 +20,6 @@ export const useRoles = () => {
    * تابع بارگذاری تمام نقش‌ها از API
    */
   const loadAllRoles = () => dispatch(fetchRolesAsync());
-
   const getRoleById = (id: string) => dispatch(fetchRoleByIdAsync(id));
 
   /**

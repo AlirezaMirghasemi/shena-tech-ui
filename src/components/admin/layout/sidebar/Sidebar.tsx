@@ -1,9 +1,10 @@
 "use client";
-import { FaBarsStaggered, FaPersonDrowning } from "react-icons/fa6";
+import { FaBarsStaggered } from "react-icons/fa6";
 import Breadcrumb from "./Breadcrumb";
 import AccountView from "./AccountView";
 import ParentNavTab from "../buttons/ParentNavTab";
 import { SidebarButtons } from "@/configs/admin/SidebarButtons";
+import Image from "next/image";
 
 export default function Sidebar() {
   return (
@@ -43,18 +44,14 @@ export default function Sidebar() {
         aria-label="Sidebar"
       >
         <div className="relative flex flex-col h-full max-h-full">
-          <div className="px-6 pt-4 flex items-center">
+          <div className="  flex items-center  px-12">
             {/* Logo */}
             <a
-              className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-hidden focus:opacity-80"
+              className="flex-none rounded-xl items-center text-xl inline-block font-semibold focus:outline-hidden focus:opacity-80"
               href="#"
               aria-label="shenatech"
             >
-              <FaPersonDrowning
-                className="w-28 h-auto"
-                width="116"
-                height="32"
-              />
+              <Image src="/shenatech_logo.png" alt="alt" width={150} height={150}/>
             </a>
             {/* End Logo */}
             <div className="hidden lg:block ms-2"></div>

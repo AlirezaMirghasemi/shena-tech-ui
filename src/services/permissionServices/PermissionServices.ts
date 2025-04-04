@@ -26,3 +26,23 @@ export async function createPermission(permission: Omit<IPermission, "id">) {
     throw error;
   }
 }
+
+
+//fetch permission by id
+export async function fetchPermissionById({ id }: { id: string }) {
+    try {
+      const response = await axios.get<IPermission>(
+        `http://localhost:3001/permissions/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error getting permission:", error);
+      throw error;
+    }
+  }
+
+  //update permission by id
+  export const updatePermission = async ({id, data}: {id: string; data: Partial<IPermission>}) => {
+      const response = await axios.put(`http://localhost:3001/permissions/${id}`, data);
+      return response.data;
+    };

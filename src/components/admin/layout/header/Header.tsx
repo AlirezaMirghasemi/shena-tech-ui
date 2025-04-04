@@ -1,7 +1,7 @@
 "use client";
 import ThemeToggle from "@/components/common/ThemeToggle";
+import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import { FaPersonDrowning } from "react-icons/fa6";
 
 export default function Header() {
   return (
@@ -15,10 +15,11 @@ export default function Header() {
               href="#"
               aria-label="Preline"
             >
-              <FaPersonDrowning
-                className="w-28 h-auto"
-                width="116"
-                height="32"
+              <Image
+                src="/shenatech_logo.png"
+                alt="alt"
+                width={150}
+                height={150}
               />
             </a>
             {/* End Logo */}

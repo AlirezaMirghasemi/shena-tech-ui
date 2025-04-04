@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   FaInstagram,
   FaLinkedinIn,
@@ -19,7 +20,12 @@ export default function Footer() {
               href="#"
               aria-label="Brand"
             >
-              شناتک
+              <Image
+                src="/shenatech_logo.png"
+                alt="alt"
+                width={150}
+                height={150}
+              />
             </a>
           </div>
           {/* End Col */}

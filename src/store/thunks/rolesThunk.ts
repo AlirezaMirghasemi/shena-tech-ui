@@ -13,17 +13,31 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchRolesAsync = createAsyncThunk(
   "roles/fetchRoles",
   async () => {
-    const response: IRole[] = await fetchRoles();
+    try {
+        const response: IRole[] = await fetchRoles();
     return response ? response : [];
+    } catch (error) {
+        if (error instanceof Error) {
+            return (error.message);
+          }
+          return ("خطای ناشناخته در پیمایش نقش");
+    }
   }
 );
 
 //fetch role by id
 export const fetchRoleByIdAsync = createAsyncThunk(
   "roles/fetchRoleById",
-  async (id: string) => {
-    const response: IRole = await fetchRoleById({ id });
+  async (id: string,{rejectWithValue}) => {
+    try {
+        const response: IRole = await fetchRoleById({ id });
     return response ? response : null;
+    } catch (error ) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+          }
+          return rejectWithValue("خطای ناشناخته در پیمایش تکی نقش");
+    }
   }
 );
 

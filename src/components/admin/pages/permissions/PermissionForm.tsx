@@ -8,7 +8,7 @@ import { Entity } from "../../../../constants/data/Entity";
 import { Creator } from "@/constants/data/Creator";
 
 interface PermissionFormProps {
-  initialValues?: PermissionFormValues;
+  initialValues: PermissionFormValues;
   onSubmit: (values: PermissionFormValues) => Promise<void>;
   isSubmitting: boolean;
   title: string;

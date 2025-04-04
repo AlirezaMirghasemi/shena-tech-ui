@@ -41,7 +41,7 @@
       "edit": true,
       "delete": true,
       "read": true,
-      "creator": "self",
+      "creator": "all",
       "statusEdit": true,
       "description": "test 1",
       "createdAt": 1743158534154,
