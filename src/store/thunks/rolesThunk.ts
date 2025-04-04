@@ -1,5 +1,10 @@
 import { IRole } from "@/interfaces/models/IRole";
-import { createRole, fetchRoles } from "@/services/roleServices/RoleServices";
+import {
+  createRole,
+  fetchRoleById,
+  fetchRoles,
+  updateRole
+} from "@/services/roleServices/RoleServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /**
@@ -10,6 +15,15 @@ export const fetchRolesAsync = createAsyncThunk(
   async () => {
     const response: IRole[] = await fetchRoles();
     return response ? response : [];
+  }
+);
+
+//fetch role by id
+export const fetchRoleByIdAsync = createAsyncThunk(
+  "roles/fetchRoleById",
+  async (id: string) => {
+    const response: IRole = await fetchRoleById({ id });
+    return response ? response : null;
   }
 );
 
@@ -30,3 +44,19 @@ export const createRoleAsync = createAsyncThunk(
     }
   }
 );
+
+//edit role
+export const updateRoleAsync = createAsyncThunk(
+    "roles/updateRole",
+    async ({id, role}: {id: string; role: Partial<IRole>}, {rejectWithValue}) => {
+      try {
+        const response = await updateRole({id, data: role});
+        return response;
+      } catch (error) {
+        if (error instanceof Error) {
+          return rejectWithValue(error.message);
+        }
+        return rejectWithValue("خطای ناشناخته در ویرایش نقش");
+      }
+    }
+  );

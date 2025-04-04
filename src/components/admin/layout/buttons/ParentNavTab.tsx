@@ -45,9 +45,7 @@ export default function ParentNavTab({ buttons }: { buttons: IParentButton }) {
                 data-hs-accordion-always-open
               >
                 {buttons.children.map((child) => (
-                  <>
-                    <ParentNavTab buttons={child} />
-                  </>
+                    <ParentNavTab buttons={child} key={child.name}/>
                 ))}
               </ul>
             </div>

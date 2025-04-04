@@ -10,7 +10,7 @@ export default function InputField({
   disabled,
   data,
   className,
-  labelClassName
+  labelClassName,
 }: {
   id: string;
   name: string;

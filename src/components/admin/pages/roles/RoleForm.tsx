@@ -8,8 +8,9 @@ import { roleSchema } from "@/validations/schemas/role.schema";
 import { RoleFormValues } from "@/interfaces/models/IRole";
 
 interface RoleFormProps {
-  initialValues?: RoleFormValues;
+  initialValues: RoleFormValues;
   onSubmit: (values: RoleFormValues) => Promise<void>;
+  originalTitle?: string;
   isSubmitting: boolean;
   title: string;
   description: string;
@@ -27,16 +28,18 @@ const DebouncedValidation = () => {
 
 export default function RoleForm({
   initialValues = roleInitial,
+  originalTitle,
   onSubmit,
   isSubmitting,
   title,
   description,
 }: RoleFormProps) {
+    console.log(initialValues)
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={roleSchema}
+      validationSchema={roleSchema(originalTitle)}
       validateOnChange={false}
     >
       <DynamicForm headerTitle={title} headerDescription={description}>

@@ -1,6 +1,6 @@
 import { IRole, RoleFormValues } from "@/interfaces/models/IRole";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createRoleAsync, fetchRolesAsync } from "@/store/thunks/rolesThunk";
+import { createRoleAsync, fetchRoleByIdAsync, fetchRolesAsync, updateRoleAsync } from "@/store/thunks/rolesThunk";
 
 
 /**
@@ -21,6 +21,8 @@ export const useRoles = () => {
    */
   const loadAllRoles = () => dispatch(fetchRolesAsync());
 
+  const getRoleById = (id: string) => dispatch(fetchRoleByIdAsync(id));
+
   /**
    * تابع ایجاد نقش جدید با استفاده از داده‌های فرم
    * @param formData - داده‌های فرم جهت ایجاد نقش
@@ -40,7 +42,15 @@ export const useRoles = () => {
       return false;
     }
   };
-
+  const updateRole = async (id: string, values: Partial<RoleFormValues>) => {
+    try {
+      await dispatch(updateRoleAsync({id, role: values})).unwrap();
+      return true;
+    } catch (error) {
+      console.error("خطا در ویرایش نقش:", error);
+      return false;
+    }
+  };
   return {
     roles,
     isLoading: status === "loading",
@@ -48,6 +58,8 @@ export const useRoles = () => {
     actions: {
       loadAllRoles,
       createNewRole,
+      getRoleById,
+      updateRole
     },
   };
 };

@@ -1,14 +1,9 @@
 "use client";
-import { FaBarsStaggered, FaPersonDrowning, FaToolbox } from "react-icons/fa6";
+import { FaBarsStaggered, FaPersonDrowning } from "react-icons/fa6";
 import Breadcrumb from "./Breadcrumb";
-import Buttons from "./Buttons";
-import ActiveButton from "./ActiveButton";
 import AccountView from "./AccountView";
 import ParentNavTab from "../buttons/ParentNavTab";
-import {
-  ContentAdminSideButtons,
-  UserAdminSideButtons,
-} from "@/configs/admin/SidebarButtons";
+import { SidebarButtons } from "@/configs/admin/SidebarButtons";
 
 export default function Sidebar() {
   return (
@@ -70,16 +65,7 @@ export default function Sidebar() {
               data-hs-accordion-always-open
             >
               <ul className="flex flex-col space-y-1">
-                <li>
-                  <ActiveButton href="/admin">
-                    <FaToolbox />
-                    میز کاربری
-                  </ActiveButton>
-                </li>
-
-                <ParentNavTab buttons={UserAdminSideButtons} />
-                <ParentNavTab buttons={ContentAdminSideButtons} />
-                <Buttons />
+                <ParentNavTab buttons={SidebarButtons} />
               </ul>
             </nav>
           </div>

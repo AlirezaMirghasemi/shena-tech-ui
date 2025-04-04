@@ -1,17 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DataStatus } from "@/constants/data/DataStatus";
 import { IRole } from "@/interfaces/models/IRole";
-import { createRoleAsync, fetchRolesAsync } from "../thunks/rolesThunk";
+import {
+  createRoleAsync,
+  fetchRoleByIdAsync,
+  fetchRolesAsync,
+  updateRoleAsync,
+} from "../thunks/rolesThunk";
 
 // تعریف وضعیت اولیه اسلایس
 interface RolesState {
   data: IRole[];
+  single: IRole | null;
   status: string;
   error: string | null;
 }
 
 const initialState: RolesState = {
   data: [],
+  single: null,
   status: DataStatus.IDLE,
   error: null,
 };
@@ -37,6 +44,20 @@ export const rolesSlice = createSlice({
       .addCase(fetchRolesAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to fetch roles";
+      });
+    // هندل کردن وضعیت بارگذاری نقش با شناسه
+    builder
+      .addCase(fetchRoleByIdAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(fetchRoleByIdAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.single = action.payload;
+      })
+      .addCase(fetchRoleByIdAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to fetch roles";
       })
       // هندل کردن وضعیت ایجاد نقش جدید
       .addCase(createRoleAsync.pending, (state) => {
@@ -50,6 +71,21 @@ export const rolesSlice = createSlice({
       .addCase(createRoleAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to create role";
+      })
+      //هندل کردن بروزرسانی
+      .addCase(updateRoleAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(updateRoleAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.data = state.data.map(role =>
+          role.id === action.payload.id ? action.payload : role
+        );
+      })
+      .addCase(updateRoleAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to update role";
       });
   },
 });
