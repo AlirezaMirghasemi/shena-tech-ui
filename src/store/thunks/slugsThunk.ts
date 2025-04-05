@@ -1,5 +1,10 @@
 import { ISlug } from "@/interfaces/models/ISlug";
-import { createSlug, fetchSlugs } from "@/services/slugServices/SlugServices";
+import {
+  createSlug,
+  fetchSlugById,
+  fetchSlugs,
+  updateSlug
+} from "@/services/slugServices/SlugServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 /**
@@ -8,8 +13,31 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchSlugsAsync = createAsyncThunk(
   "slugs/fetchSlugs",
   async () => {
-    const response: ISlug[] = await fetchSlugs();
+    try {
+        const response: ISlug[] = await fetchSlugs();
     return response ? response : [];
+    } catch (error) {
+        if (error instanceof Error) {
+            return (error.message);
+          }
+          return ("خطای ناشناخته در پیمایش اسلاگ");
+    }
+  }
+);
+
+//fetch slug by id
+export const fetchSlugByIdAsync = createAsyncThunk(
+  "slugs/fetchSlugById",
+  async (id: string,{rejectWithValue}) => {
+    try {
+        const response: ISlug = await fetchSlugById({ id });
+    return response ? response : null;
+    } catch (error ) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+          }
+          return rejectWithValue("خطای ناشناخته در پیمایش تکی اسلاگ");
+    }
   }
 );
 
@@ -30,3 +58,19 @@ export const createSlugAsync = createAsyncThunk(
     }
   }
 );
+
+//edit slug
+export const updateSlugAsync = createAsyncThunk(
+    "slugs/updateSlug",
+    async ({id, slug}: {id: string; slug: Partial<ISlug>}, {rejectWithValue}) => {
+      try {
+        const response = await updateSlug({id, data: slug});
+        return response;
+      } catch (error) {
+        if (error instanceof Error) {
+          return rejectWithValue(error.message);
+        }
+        return rejectWithValue("خطای ناشناخته در ویرایش اسلاگ");
+      }
+    }
+  );

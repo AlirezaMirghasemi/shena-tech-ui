@@ -1,5 +1,6 @@
 import { ITag } from "@/interfaces/models/ITag";
 import axios from "axios";
+
 //get all tags
 export async function fetchTags() {
   try {
@@ -20,3 +21,22 @@ export async function createTag(tag: Omit<ITag, "id">) {
     throw error;
   }
 }
+
+//fetch tag by id
+export async function fetchTagById({ id }: { id: string }) {
+  try {
+    const response = await axios.get<ITag>(
+      `http://localhost:3001/tags/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error getting tag:", error);
+    throw error;
+  }
+}
+
+//update tag by id
+export const updateTag = async ({id, data}: {id: string; data: Partial<ITag>}) => {
+    const response = await axios.put(`http://localhost:3001/tags/${id}`, data);
+    return response.data;
+  };

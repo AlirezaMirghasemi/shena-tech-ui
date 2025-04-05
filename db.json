@@ -2,13 +2,21 @@
   "tags": [
     {
       "id": "a98f",
-      "titlePersian": "تست2",
-      "titleEnglish": "test2",
+      "titlePersian": "تست",
+      "titleEnglish": "test",
       "createdAt": 1743691716845,
       "updatedAt": 1743691716845
     }
   ],
-  "slugs": [],
+  "slugs": [
+    {
+      "id": "c57f",
+      "titlePersian": "اسلاگ",
+      "titleEnglish": "slug",
+      "createdAt": 1743853121637,
+      "updatedAt": 1743853121637
+    }
+  ],
   "roles": [
     {
       "id": "a31f",

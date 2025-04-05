@@ -1,18 +1,21 @@
+import { SlugFormValues } from "@/interfaces/models/ISlug";
+import { slugInitial } from "@/validations/initials/slug.initial";
+import { slugSchema } from "@/validations/schemas/slug.schema";
 import { Formik, useFormikContext } from "formik";
 import DynamicForm from "../DynamicForm";
 import InputField from "../InputField";
 import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
-import { slugInitial } from "@/validations/initials/slug.initial";
-import { slugSchema } from "@/validations/schemas/slug.schema";
-import { SlugFormValues } from "@/interfaces/models/ISlug";
 
 interface SlugFormProps {
-  initialValues?: SlugFormValues;
+  initialValues: SlugFormValues;
   onSubmit: (values: SlugFormValues) => Promise<void>;
   isSubmitting: boolean;
   title: string;
   description: string;
+  originalPersianTitle?: string;
+  originalEnglishTitle?: string;
+
 }
 
 const DebouncedValidation = () => {
@@ -33,6 +36,8 @@ const DebouncedValidation = () => {
 
 export default function SlugForm({
   initialValues = slugInitial,
+  originalPersianTitle,
+  originalEnglishTitle,
   onSubmit,
   isSubmitting,
   title,
@@ -42,7 +47,7 @@ export default function SlugForm({
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={slugSchema}
+      validationSchema={slugSchema(originalEnglishTitle,originalPersianTitle)}
       validateOnChange={false}
     >
       <DynamicForm headerTitle={title} headerDescription={description}>

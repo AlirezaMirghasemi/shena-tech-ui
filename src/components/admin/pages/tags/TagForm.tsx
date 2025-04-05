@@ -8,11 +8,14 @@ import { useDebounce } from "use-debounce";
 import { useEffect } from "react";
 
 interface TagFormProps {
-  initialValues?: TagFormValues;
+  initialValues: TagFormValues;
   onSubmit: (values: TagFormValues) => Promise<void>;
   isSubmitting: boolean;
   title: string;
   description: string;
+  originalPersianTitle?: string;
+  originalEnglishTitle?: string;
+
 }
 
 const DebouncedValidation = () => {
@@ -33,6 +36,8 @@ const DebouncedValidation = () => {
 
 export default function TagForm({
   initialValues = tagInitial,
+  originalPersianTitle,
+  originalEnglishTitle,
   onSubmit,
   isSubmitting,
   title,
@@ -42,7 +47,7 @@ export default function TagForm({
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={tagSchema}
+      validationSchema={tagSchema(originalEnglishTitle,originalPersianTitle)}
       validateOnChange={false}
     >
       <DynamicForm headerTitle={title} headerDescription={description}>

@@ -1,17 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DataStatus } from "@/constants/data/DataStatus";
 import { ISlug } from "@/interfaces/models/ISlug";
-import { createSlugAsync, fetchSlugsAsync } from "../thunks/slugsThunk";
+import {
+  createSlugAsync,
+  fetchSlugByIdAsync,
+  fetchSlugsAsync,
+  updateSlugAsync,
+} from "../thunks/slugsThunk";
 
 // تعریف وضعیت اولیه اسلایس
 interface SlugsState {
   data: ISlug[];
+  single: ISlug | null;
   status: string;
   error: string | null;
 }
 
 const initialState: SlugsState = {
   data: [],
+  single: null,
   status: DataStatus.IDLE,
   error: null,
 };
@@ -32,9 +39,23 @@ export const slugsSlice = createSlice({
       })
       .addCase(fetchSlugsAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = action.payload;
+        state.data = action.payload as ISlug[];
       })
       .addCase(fetchSlugsAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to fetch slugs";
+      });
+    // هندل کردن وضعیت بارگذاری اسلاگ با شناسه
+    builder
+      .addCase(fetchSlugByIdAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(fetchSlugByIdAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.single = action.payload;
+      })
+      .addCase(fetchSlugByIdAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to fetch slugs";
       })
@@ -50,6 +71,21 @@ export const slugsSlice = createSlice({
       .addCase(createSlugAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to create slug";
+      })
+      //هندل کردن بروزرسانی
+      .addCase(updateSlugAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(updateSlugAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.data = state.data.map((slug) =>
+          slug.id === action.payload.id ? action.payload : slug
+        );
+      })
+      .addCase(updateSlugAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to update slug";
       });
   },
 });

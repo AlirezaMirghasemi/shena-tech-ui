@@ -1,52 +1,56 @@
 "use client";
 
-import RoleForm from "@/components/admin/pages/roles/RoleForm";
-import { useRoles } from "@/hooks/DB/useRoles";
-import { RoleFormValues } from "@/interfaces/models/IRole";
+import TagForm from "@/components/admin/pages/tags/TagForm";
+import { useTags } from "@/hooks/DB/useTags";
+import { TagFormValues } from "@/interfaces/models/ITag";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const EditRolePage = ({ params }: { params: Promise<{ id: string }> }) => {
+const EditTagPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
-  const { actions, isLoading } = useRoles();
-  const [initialValues, setInitialValues] = useState<
-    RoleFormValues | undefined
-  >(undefined);
-  const [originalTitle, setOriginalTitle] = useState("");
+  const { actions, isLoading } = useTags();
+  const [initialValues, setInitialValues] = useState<TagFormValues | undefined>(
+    undefined
+  );
+  const [originalPersianTitle, setOriginalPersianTitle] = useState("");
+  const [originalEnglishTitle, setOriginalEnglishTitle] = useState("");
+
   useEffect(() => {
-    const fetchRole = async () => {
+    const fetchTag = async () => {
       const { id } = await params;
-      const role = await actions.getRoleById(id);
-      if (role.payload) {
-        const roleData = role.payload as RoleFormValues;
-        setInitialValues(roleData);
-        setOriginalTitle(roleData.title);
+      const tag = await actions.getTagById(id);
+      if (tag.payload) {
+        const tagData = tag.payload as TagFormValues;
+        setInitialValues(tagData);
+        setOriginalPersianTitle(tagData.titlePersian);
+        setOriginalEnglishTitle(tagData.titleEnglish);
       }
     };
-    fetchRole();
+    fetchTag();
   }, []);
-  const handleSubmit = async (values: RoleFormValues) => {
+  const handleSubmit = async (values: TagFormValues) => {
     const { id } = await params;
     if (!id) return;
-    const success = await actions.updateRole(id, values);
+    const success = await actions.updateTag(id, values);
     if (success) {
-      toast.success("نقش با موفقیت ویرایش شد");
-      setTimeout(() => router.push("/admin/roles"), 1000);
+      toast.success("هشتگ با موفقیت ویرایش شد");
+      setTimeout(() => router.push("/admin/tags"), 1000);
     }
   };
   if (!initialValues) return <div>در حال بارگذاری...</div>;
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <RoleForm
+      <TagForm
         initialValues={initialValues}
-        originalTitle={originalTitle}
-        title="ویرایش نقش "
-        description="اطلاعات نقش را ویرایش نمایید"
+        originalPersianTitle={originalPersianTitle}
+        originalEnglishTitle={originalEnglishTitle}
+        title="ویرایش هشتگ "
+        description="اطلاعات هشتگ را ویرایش نمایید"
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
       />
     </div>
   );
 };
-export default EditRolePage;
+export default EditTagPage;

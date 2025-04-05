@@ -1,7 +1,11 @@
 import { ISlug, SlugFormValues } from "@/interfaces/models/ISlug";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createSlugAsync, fetchSlugsAsync } from "@/store/thunks/slugsThunk";
-
+import {
+  createSlugAsync,
+  fetchSlugByIdAsync,
+  fetchSlugsAsync,
+  updateSlugAsync,
+} from "@/store/thunks/slugsThunk";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به اسلاگ‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -20,6 +24,7 @@ export const useSlugs = () => {
    * تابع بارگذاری تمام اسلاگ‌ها از API
    */
   const loadAllSlugs = () => dispatch(fetchSlugsAsync());
+  const getSlugById = (id: string) => dispatch(fetchSlugByIdAsync(id));
 
   /**
    * تابع ایجاد اسلاگ جدید با استفاده از داده‌های فرم
@@ -40,7 +45,15 @@ export const useSlugs = () => {
       return false;
     }
   };
-
+  const updateSlug = async (id: string, values: Partial<SlugFormValues>) => {
+    try {
+      await dispatch(updateSlugAsync({ id, slug: values })).unwrap();
+      return true;
+    } catch (error) {
+      console.error("خطا در ویرایش اسلاگ:", error);
+      return false;
+    }
+  };
   return {
     slugs,
     isLoading: status === "loading",
@@ -48,6 +61,8 @@ export const useSlugs = () => {
     actions: {
       loadAllSlugs,
       createNewSlug,
+      getSlugById,
+      updateSlug,
     },
   };
 };

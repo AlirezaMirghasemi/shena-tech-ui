@@ -21,3 +21,22 @@ export async function createSlug(slug: Omit<ISlug, "id">) {
     throw error;
   }
 }
+
+//fetch slug by id
+export async function fetchSlugById({ id }: { id: string }) {
+  try {
+    const response = await axios.get<ISlug>(
+      `http://localhost:3001/slugs/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error getting slug:", error);
+    throw error;
+  }
+}
+
+//update slug by id
+export const updateSlug = async ({id, data}: {id: string; data: Partial<ISlug>}) => {
+    const response = await axios.put(`http://localhost:3001/slugs/${id}`, data);
+    return response.data;
+  };
