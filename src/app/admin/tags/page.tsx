@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {  useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import LoadingSkeleton from "@/components/common/LoadingSkeleton";
@@ -114,22 +114,26 @@ const TagsPage = () => {
         deletedItemId={deletingItemId}
       />
       <div className="container mx-auto p-4 space-y-6">
+
         <TableHeader tableHeader={InitialViewTable.tableHeader} />
 
-        <DynamicTable
-          data={tags}
-          columns={columns}
-          actions={actions}
-          loading={isLoading}
-          error={error}
-          emptyState={
-            <div className="flex flex-col items-center gap-4 py-8">
-              <span className="text-lg text-gray-500">هیچ هشتگی یافت نشد</span>
-            </div>
-          }
-          ariaLabel="جدول مدیریت تگ ها"
-          rowKey="id"
-        />
+          <DynamicTable
+            data={tags}
+            columns={columns}
+            actions={actions}
+            loading={isLoading}
+            error={error}
+            emptyState={
+              <div className="flex flex-col items-center gap-4 py-8">
+                <span className="text-lg text-gray-500">
+                  هیچ هشتگی یافت نشد
+                </span>
+              </div>
+            }
+            ariaLabel="جدول مدیریت تگ ها"
+            rowKey="id"
+          />
+
       </div>
     </>
   );

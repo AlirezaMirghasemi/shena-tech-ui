@@ -1,6 +1,5 @@
 import Header from "@/components/admin/layout/header/Header";
 import Sidebar from "@/components/admin/layout/sidebar/Sidebar";
-
 export default function AdminPageLayout({
   children,
 }: Readonly<{

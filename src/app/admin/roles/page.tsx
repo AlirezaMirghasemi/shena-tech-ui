@@ -100,9 +100,7 @@ const RolesPage = () => {
     ],
     [router]
   );
-
   if (isLoading) return <LoadingSkeleton />;
-
   return (
     <>
       <ConfirmDelete
