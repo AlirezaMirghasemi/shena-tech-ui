@@ -2,6 +2,7 @@ import { ITag, TagFormValues } from "@/interfaces/models/ITag";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   createTagAsync,
+  deleteTagAsync,
   fetchTagByIdAsync,
   fetchTagsAsync,
   updateTagAsync,
@@ -25,6 +26,7 @@ export const useTags = () => {
    */
   const loadAllTags = () => dispatch(fetchTagsAsync());
   const getTagById = (id: string) => dispatch(fetchTagByIdAsync(id));
+  const deleteTag = (id: string) => dispatch(deleteTagAsync(id));
 
   /**
    * تابع ایجاد هشتگ جدید با استفاده از داده‌های فرم
@@ -63,6 +65,7 @@ export const useTags = () => {
       createNewTag,
       getTagById,
       updateTag,
+      deleteTag
     },
   };
 };

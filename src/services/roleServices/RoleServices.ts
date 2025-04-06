@@ -36,7 +36,29 @@ export async function fetchRoleById({ id }: { id: string }) {
 }
 
 //update role by id
-export const updateRole = async ({id, data}: {id: string; data: Partial<IRole>}) => {
+export const updateRole = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<IRole>;
+}) => {
+  try {
     const response = await axios.put(`http://localhost:3001/roles/${id}`, data);
     return response.data;
-  };
+  } catch (error) {
+    console.error("Error updating role:", error);
+    throw error;
+  }
+};
+
+//delete role by id
+export const deleteRole = async ({ id }: { id: string }) => {
+  try {
+    const response = await axios.delete(`http://localhost:3001/roles/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting role:", error);
+    throw error;
+  }
+};

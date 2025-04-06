@@ -3,6 +3,7 @@ import { DataStatus } from "@/constants/data/DataStatus";
 import { ISlug } from "@/interfaces/models/ISlug";
 import {
   createSlugAsync,
+  deleteSlugAsync,
   fetchSlugByIdAsync,
   fetchSlugsAsync,
   updateSlugAsync,
@@ -86,7 +87,21 @@ export const slugsSlice = createSlice({
       .addCase(updateSlugAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update slug";
-      });
+      })
+      //delete slug
+            .addCase(deleteSlugAsync.pending, (state) => {
+              state.status = DataStatus.LOADING;
+              state.error = null;
+            })
+            .addCase(deleteSlugAsync.fulfilled, (state, action) => {
+              state.status = DataStatus.SUCCEEDED;
+              state.data = action.payload;
+            })
+            .addCase(deleteSlugAsync.rejected, (state, action) => {
+              state.status = DataStatus.FAILED;
+              state.error = action.error.message || "Failed to update slug";
+            })
+            ;
   },
 });
 

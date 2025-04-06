@@ -3,6 +3,7 @@ import { DataStatus } from "@/constants/data/DataStatus";
 import { ITag } from "@/interfaces/models/ITag";
 import {
   createTagAsync,
+  deleteTagAsync,
   fetchTagByIdAsync,
   fetchTagsAsync,
   updateTagAsync,
@@ -86,7 +87,21 @@ export const tagsSlice = createSlice({
       .addCase(updateTagAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update tag";
-      });
+      })
+      //delete tag
+            .addCase(deleteTagAsync.pending, (state) => {
+              state.status = DataStatus.LOADING;
+              state.error = null;
+            })
+            .addCase(deleteTagAsync.fulfilled, (state, action) => {
+              state.status = DataStatus.SUCCEEDED;
+              state.data = action.payload;
+            })
+            .addCase(deleteTagAsync.rejected, (state, action) => {
+              state.status = DataStatus.FAILED;
+              state.error = action.error.message || "Failed to update tag";
+            })
+            ;
   },
 });
 

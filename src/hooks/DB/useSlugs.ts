@@ -2,6 +2,7 @@ import { ISlug, SlugFormValues } from "@/interfaces/models/ISlug";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   createSlugAsync,
+  deleteSlugAsync,
   fetchSlugByIdAsync,
   fetchSlugsAsync,
   updateSlugAsync,
@@ -25,6 +26,8 @@ export const useSlugs = () => {
    */
   const loadAllSlugs = () => dispatch(fetchSlugsAsync());
   const getSlugById = (id: string) => dispatch(fetchSlugByIdAsync(id));
+  const deleteSlug = (id: string) => dispatch(deleteSlugAsync(id));
+
 
   /**
    * تابع ایجاد اسلاگ جدید با استفاده از داده‌های فرم
@@ -63,6 +66,7 @@ export const useSlugs = () => {
       createNewSlug,
       getSlugById,
       updateSlug,
+      deleteSlug
     },
   };
 };

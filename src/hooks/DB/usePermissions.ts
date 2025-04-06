@@ -1,6 +1,6 @@
 import { IPermission, PermissionFormValues } from "@/interfaces/models/IPermission";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createPermissionAsync, fetchPermissionByIdAsync, fetchPermissionsAsync, updatePermissionAsync } from "@/store/thunks/permissionThunk";
+import { createPermissionAsync, deletePermissionAsync, fetchPermissionByIdAsync, fetchPermissionsAsync, updatePermissionAsync } from "@/store/thunks/permissionThunk";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به مجوز‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -20,6 +20,8 @@ export const usePermissions = () => {
    */
   const loadAllPermissions = () => dispatch(fetchPermissionsAsync());
   const getPermissionById = (id: string) => dispatch(fetchPermissionByIdAsync(id));
+    const deletePermission = (id: string) => dispatch(deletePermissionAsync(id));
+
 
   /**
    * تابع ایجاد مجوز جدید با استفاده از داده‌های فرم
@@ -57,7 +59,8 @@ export const usePermissions = () => {
       loadAllPermissions,
       getPermissionById,
       createNewPermission,
-      updatePermission
+      updatePermission,
+      deletePermission
     },
   };
 };

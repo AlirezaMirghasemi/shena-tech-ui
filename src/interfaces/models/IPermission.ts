@@ -2,7 +2,7 @@ import { Creator } from "@/constants/data/Creator";
 import { Entity } from "@/constants/data/Entity";
 
 export interface IPermission {
-  id?: number;
+  id?: string;
   entity: Entity | "";
   create: boolean;
   edit: boolean;

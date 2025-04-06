@@ -36,7 +36,29 @@ export async function fetchSlugById({ id }: { id: string }) {
 }
 
 //update slug by id
-export const updateSlug = async ({id, data}: {id: string; data: Partial<ISlug>}) => {
+export const updateSlug = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<ISlug>;
+}) => {
+  try {
     const response = await axios.put(`http://localhost:3001/slugs/${id}`, data);
     return response.data;
-  };
+  } catch (error) {
+    console.error("Error updating slug:", error);
+    throw error;
+  }
+};
+
+//delete slug by id
+export const deleteSlug = async ({ id }: { id: string }) => {
+  try {
+    const response = await axios.delete(`http://localhost:3001/slugs/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting slug:", error);
+    throw error;
+  }
+};

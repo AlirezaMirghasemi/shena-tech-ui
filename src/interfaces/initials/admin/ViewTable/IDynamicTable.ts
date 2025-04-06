@@ -24,10 +24,16 @@ export interface IDynamicTableColumn<T extends object> {
 export interface ITableAction<T extends object> {
   name: string;
   icon: ReactNode;
-  handler: (row: T) => void;
+  handler?: (row: T) => void;
+  ariaControls?: string;
+  ariaHasPopup?: string;
+  ariaExpanded?: string;
+  dataHsOverlay?:string;
   className?: string;
   ariaLabel?: string;
   disabled?: boolean | ((row: T) => boolean);
+  type?:string;
+  modalId?: string;
 }
 
 /**

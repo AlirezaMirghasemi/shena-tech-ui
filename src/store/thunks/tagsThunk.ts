@@ -1,6 +1,7 @@
 import { ITag } from "@/interfaces/models/ITag";
 import {
   createTag,
+  deleteTag,
   fetchTagById,
   fetchTags,
   updateTag,
@@ -71,6 +72,21 @@ export const updateTagAsync = createAsyncThunk(
         return rejectWithValue(error.message);
       }
       return rejectWithValue("خطای ناشناخته در ویرایش هشتگ");
+    }
+  }
+);
+//delete tag
+export const deleteTagAsync = createAsyncThunk(
+  "tags/deleteTag",
+  async (id: string) => {
+    try {
+      const response = await deleteTag({ id });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "خطای ناشناخته در حذف هشتگ";
     }
   }
 );

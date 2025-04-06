@@ -1,9 +1,10 @@
 import { IRole } from "@/interfaces/models/IRole";
 import {
   createRole,
+  deleteRole,
   fetchRoleById,
   fetchRoles,
-  updateRole
+  updateRole,
 } from "@/services/roleServices/RoleServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -14,13 +15,13 @@ export const fetchRolesAsync = createAsyncThunk(
   "roles/fetchRoles",
   async () => {
     try {
-        const response: IRole[] = await fetchRoles();
-    return response ? response : [];
+      const response: IRole[] = await fetchRoles();
+      return response ? response : [];
     } catch (error) {
-        if (error instanceof Error) {
-            return (error.message);
-          }
-          return ("خطای ناشناخته در پیمایش نقش");
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "خطای ناشناخته در پیمایش نقش";
     }
   }
 );
@@ -28,15 +29,15 @@ export const fetchRolesAsync = createAsyncThunk(
 //fetch role by id
 export const fetchRoleByIdAsync = createAsyncThunk(
   "roles/fetchRoleById",
-  async (id: string,{rejectWithValue}) => {
+  async (id: string, { rejectWithValue }) => {
     try {
-        const response: IRole = await fetchRoleById({ id });
-    return response ? response : null;
-    } catch (error ) {
-        if (error instanceof Error) {
-            return rejectWithValue(error.message);
-          }
-          return rejectWithValue("خطای ناشناخته در پیمایش تکی نقش");
+      const response: IRole = await fetchRoleById({ id });
+      return response ? response : null;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue("خطای ناشناخته در پیمایش تکی نقش");
     }
   }
 );
@@ -61,16 +62,35 @@ export const createRoleAsync = createAsyncThunk(
 
 //edit role
 export const updateRoleAsync = createAsyncThunk(
-    "roles/updateRole",
-    async ({id, role}: {id: string; role: Partial<IRole>}, {rejectWithValue}) => {
-      try {
-        const response = await updateRole({id, data: role});
-        return response;
-      } catch (error) {
-        if (error instanceof Error) {
-          return rejectWithValue(error.message);
-        }
-        return rejectWithValue("خطای ناشناخته در ویرایش نقش");
+  "roles/updateRole",
+  async (
+    { id, role }: { id: string; role: Partial<IRole> },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await updateRole({ id, data: role });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
       }
+      return rejectWithValue("خطای ناشناخته در ویرایش نقش");
     }
-  );
+  }
+);
+
+//delete role
+export const deleteRoleAsync = createAsyncThunk(
+  "roles/deleteRole",
+  async (id: string) => {
+    try {
+      const response = await deleteRole({ id });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "خطای ناشناخته در حذف نقش";
+    }
+  }
+);

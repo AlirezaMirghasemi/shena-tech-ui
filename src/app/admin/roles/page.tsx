@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaPencil } from "react-icons/fa6";
+import { FaPencil, FaTrash } from "react-icons/fa6";
 import LoadingSkeleton from "@/components/common/LoadingSkeleton";
 import { useRoles } from "@/hooks/DB/useRoles";
 import type { IRole } from "@/interfaces/models/IRole";
@@ -9,43 +9,45 @@ import { InitialViewTable } from "@/configs/admin/roles/InitialViewTable";
 import TableHeader from "@/components/admin/layout/tables/viewAll/TableHeader";
 import DynamicTable from "@/components/admin/layout/tables/viewAll/DynamicTable";
 import { IDynamicTableColumn } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
+import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
 
 const RolesPage = () => {
+  const [deletingItemId, setDeletingItemId] = useState<string>("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
+
   const {
     roles,
     isLoading,
     error,
-    actions: {
-      loadAllRoles,
-      //, deleteRole
-    },
+    actions: { loadAllRoles, deleteRole },
   } = useRoles();
 
   useEffect(() => {
     loadAllRoles();
   }, []);
 
-  //   const handleDelete = useCallback(
-  //     async (roleId: string) => {
-  //       if (confirm("آیا از حذف این نقش اطمینان دارید؟")) {
-  //         try {
-  //          //await deleteRole(roleId);
-  //           await loadAllRoles();
-  //         } catch (error) {
-  //           console.error("خطا در حذف نقش:", error);
-  //         }
-  //       }
-  //     },
-  //     [
-  //         //deleteRole,
-  //          loadAllRoles]
-  //   );
+  const handleDelete = useCallback(
+    async (roleId: string) => {
+      if (!roleId) return;
+
+      try {
+        await deleteRole(roleId);
+        await loadAllRoles();
+        setIsDeleteModalOpen(false);
+      } catch (error) {
+        console.error("خطا در حذف نقش:", error);
+      } finally {
+        setDeletingItemId("");
+      }
+    },
+    [deleteRole, loadAllRoles]
+  );
 
   const columns = useMemo<IDynamicTableColumn<IRole>[]>(
     () => [
       {
-        header: "عنوان ",
+        header: "عنوان",
         accessor: "title",
         sortable: true,
         width: "25%",
@@ -80,24 +82,38 @@ const RolesPage = () => {
         handler: (role: IRole) => router.push(`/admin/roles/edit/${role.id}`),
         ariaLabel: "ویرایش نقش",
       },
-      //   {
-      //     name: "delete",
-      //     icon: <FaTrash className="w-5 h-5 text-red-500" />,
-      //     //handler: (role: IRole) => handleDelete(role.id as string),
-      //     className: "hover:bg-red-100 dark:hover:bg-red-900/20",
-      //     ariaLabel: "حذف نقش",
-      //   },
+      {
+        name: "delete",
+        icon: <FaTrash className="w-5 h-5 text-red-500" />,
+        type: "button",
+        className: "hover:bg-red-100 dark:hover:bg-red-900/20",
+        ariaLabel: "حذف نقش",
+        ariaControls: "confirmDeleteRole",
+        ariaHasPopup: "dialog",
+        handler: (row: IRole) => {
+          if (row.id) {
+            setDeletingItemId(row.id);
+            setIsDeleteModalOpen(true);
+          }
+        },
+      },
     ],
-    [
-      router,
-      //     , handleDelete
-    ]
+    [router]
   );
 
   if (isLoading) return <LoadingSkeleton />;
 
   return (
     <>
+      <ConfirmDelete
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        ariaControls="confirmDeleteRole"
+        title="تایید حذف نقش"
+        message="آیا از حذف این نقش اطمینان دارید؟"
+        confirmHandler={handleDelete}
+        deletedItemId={deletingItemId}
+      />
       <div className="container mx-auto p-4 space-y-6">
         <TableHeader tableHeader={InitialViewTable.tableHeader} />
         <DynamicTable
@@ -161,7 +177,6 @@ const RolesPage = () => {
         >
           <h3 className="">جدول کاربران نقش انتخاب شده</h3>
         </div>
-
       </div>
     </>
   );

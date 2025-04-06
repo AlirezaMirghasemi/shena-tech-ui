@@ -1,6 +1,7 @@
 import { ISlug } from "@/interfaces/models/ISlug";
 import {
   createSlug,
+  deleteSlug,
   fetchSlugById,
   fetchSlugs,
   updateSlug
@@ -74,3 +75,18 @@ export const updateSlugAsync = createAsyncThunk(
       }
     }
   );
+//delete slug
+export const deleteSlugAsync = createAsyncThunk(
+  "slugs/deleteSlug",
+  async (id: string) => {
+    try {
+      const response = await deleteSlug({ id });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "خطای ناشناخته در حذف نقش";
+    }
+  }
+);

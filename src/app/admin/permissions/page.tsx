@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaCheck, FaPencil, FaX } from "react-icons/fa6";
+import { FaCheck, FaPencil, FaTrash, FaX } from "react-icons/fa6";
 import LoadingSkeleton from "@/components/common/LoadingSkeleton";
 import { usePermissions } from "@/hooks/DB/usePermissions";
 import type { IPermission } from "@/interfaces/models/IPermission";
@@ -9,38 +9,38 @@ import { InitialViewTable } from "@/configs/admin/permissions/InitialViewTable";
 import TableHeader from "@/components/admin/layout/tables/viewAll/TableHeader";
 import DynamicTable from "@/components/admin/layout/tables/viewAll/DynamicTable";
 import { IDynamicTableColumn } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
+import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
 
 const PermissionsPage = () => {
+  const [deletingItemId, setDeletingItemId] = useState<string>("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
   const {
     permissions,
     isLoading,
     error,
-    actions: {
-      loadAllPermissions,
-      //, deletePermission
-    },
+    actions: { loadAllPermissions, deletePermission },
   } = usePermissions();
 
   useEffect(() => {
     loadAllPermissions();
   }, []);
-console.log(permissions);
-  //   const handleDelete = useCallback(
-  //     async (permissionId: string) => {
-  //       if (confirm("آیا از حذف این مجوز اطمینان دارید؟")) {
-  //         try {
-  //          //await deletePermission(permissionId);
-  //           await loadAllPermissions();
-  //         } catch (error) {
-  //           console.error("خطا در حذف مجوز:", error);
-  //         }
-  //       }
-  //     },
-  //     [
-  //         //deletePermission,
-  //          loadAllPermissions]
-  //   );
+  const handleDelete = useCallback(
+    async (permissionId: string) => {
+      if (!permissionId) return;
+
+      try {
+        await deletePermission(permissionId);
+        await loadAllPermissions();
+        setIsDeleteModalOpen(false);
+      } catch (error) {
+        console.error("خطا در حذف مجوز:", error);
+      } finally {
+        setDeletingItemId("");
+      }
+    },
+    [deletePermission, loadAllPermissions]
+  );
 
   const columns = useMemo<IDynamicTableColumn<IPermission>[]>(
     () => [
@@ -68,11 +68,11 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "مجوز ایجاد",
         cellRenderer: (row) =>
-            row.create ? (
-              <FaCheck className="text-green-500 mx-auto" />
-            ) : (
-              <FaX className="text-red-500 mx-auto" />
-            ),
+          row.create ? (
+            <FaCheck className="text-green-500 mx-auto" />
+          ) : (
+            <FaX className="text-red-500 mx-auto" />
+          ),
       },
       {
         header: "ویرایش",
@@ -82,11 +82,11 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "مجوز ویرایش",
         cellRenderer: (row) =>
-            row.edit ? (
-              <FaCheck className="text-green-500 mx-auto" />
-            ) : (
-              <FaX className="text-red-500 mx-auto" />
-            ),
+          row.edit ? (
+            <FaCheck className="text-green-500 mx-auto" />
+          ) : (
+            <FaX className="text-red-500 mx-auto" />
+          ),
       },
       {
         header: "حذف",
@@ -96,11 +96,11 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "مجوز حذف",
         cellRenderer: (row) =>
-            row.delete ? (
-              <FaCheck className="text-green-500 mx-auto" />
-            ) : (
-              <FaX className="text-red-500 mx-auto" />
-            ),
+          row.delete ? (
+            <FaCheck className="text-green-500 mx-auto" />
+          ) : (
+            <FaX className="text-red-500 mx-auto" />
+          ),
       },
       {
         header: "مشاهده",
@@ -110,11 +110,11 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "مجوز مشاهده",
         cellRenderer: (row) =>
-            row.read ? (
-              <FaCheck className="text-green-500 mx-auto" />
-            ) : (
-              <FaX className="text-red-500 mx-auto" />
-            ),
+          row.read ? (
+            <FaCheck className="text-green-500 mx-auto" />
+          ) : (
+            <FaX className="text-red-500 mx-auto" />
+          ),
       },
       {
         header: "تغییر وضعیت",
@@ -124,11 +124,11 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "مجوز تغییر وضعیت",
         cellRenderer: (row) =>
-            row.statusEdit ? (
-              <FaCheck className="text-green-500 mx-auto" />
-            ) : (
-              <FaX className="text-red-500 mx-auto" />
-            ),
+          row.statusEdit ? (
+            <FaCheck className="text-green-500 mx-auto" />
+          ) : (
+            <FaX className="text-red-500 mx-auto" />
+          ),
       },
       {
         header: "دسترسی",
@@ -138,10 +138,10 @@ console.log(permissions);
         align: "text-center",
         ariaLabel: "دسترسی",
         cellRenderer: (row) => (
-            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-              {row.creator === "self" ? "خودش" : "همه"}
-            </span>
-          ),
+          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+            {row.creator === "self" ? "خودش" : "همه"}
+          </span>
+        ),
       },
       {
         header: "تاریخ ایجاد",
@@ -164,41 +164,57 @@ console.log(permissions);
           router.push(`/admin/permissions/edit/${permission.id}`),
         ariaLabel: "ویرایش مجوز",
       },
-      //   {
-      //     name: "delete",
-      //     icon: <FaTrash className="w-5 h-5 text-red-500" />,
-      //     //handler: (permission: IPermission) => handleDelete(permission.id as string),
-      //     className: "hover:bg-red-100 dark:hover:bg-red-900/20",
-      //     ariaLabel: "حذف مجوز",
-      //   },
+      {
+        name: "delete",
+        icon: <FaTrash className="w-5 h-5 text-red-500" />,
+        type: "button",
+        className: "hover:bg-red-100 dark:hover:bg-red-900/20",
+        ariaLabel: "حذف مجوز",
+        ariaControls: "confirmDeletePermission",
+        ariaHasPopup: "dialog",
+        handler: (row: IPermission) => {
+          if (row.id) {
+            setDeletingItemId(row.id);
+            setIsDeleteModalOpen(true);
+          }
+        },
+      },
     ],
-    [
-      router,
-      //     , handleDelete
-    ]
+    [router]
   );
 
   if (isLoading) return <LoadingSkeleton />;
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <TableHeader tableHeader={InitialViewTable.tableHeader} />
-
-      <DynamicTable
-        data={permissions}
-        columns={columns}
-        actions={actions}
-        loading={isLoading}
-        error={error}
-        emptyState={
-          <div className="flex flex-col items-center gap-4 py-8">
-            <span className="text-lg text-gray-500">هیچ مجوزی یافت نشد</span>
-          </div>
-        }
-        ariaLabel="جدول مدیریت مجوز ها"
-        rowKey="id"
+    <>
+      <ConfirmDelete
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        ariaControls="confirmDeletePermission"
+        title="تایید حذف مجوز"
+        message="آیا از حذف این مجوز اطمینان دارید؟"
+        confirmHandler={handleDelete}
+        deletedItemId={deletingItemId}
       />
-    </div>
+      <div className="container mx-auto p-4 space-y-6">
+        <TableHeader tableHeader={InitialViewTable.tableHeader} />
+
+        <DynamicTable
+          data={permissions}
+          columns={columns}
+          actions={actions}
+          loading={isLoading}
+          error={error}
+          emptyState={
+            <div className="flex flex-col items-center gap-4 py-8">
+              <span className="text-lg text-gray-500">هیچ مجوزی یافت نشد</span>
+            </div>
+          }
+          ariaLabel="جدول مدیریت مجوز ها"
+          rowKey="id"
+        />
+      </div>
+    </>
   );
 };
 

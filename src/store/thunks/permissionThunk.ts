@@ -1,6 +1,7 @@
 import { IPermission } from "@/interfaces/models/IPermission";
 import {
   createPermission,
+  deletePermission,
   fetchPermissionById,
   fetchPermissions,
   updatePermission,
@@ -73,6 +74,22 @@ export const updatePermissionAsync = createAsyncThunk(
         return rejectWithValue(error.message);
       }
       return rejectWithValue("خطای ناشناخته در ویرایش مجوز");
+    }
+  }
+);
+
+//delete permission
+export const deletePermissionAsync = createAsyncThunk(
+  "permissions/deletePermission",
+  async (id: string) => {
+    try {
+      const response = await deletePermission({ id });
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+      return "خطای ناشناخته در حذف مجوز";
     }
   }
 );

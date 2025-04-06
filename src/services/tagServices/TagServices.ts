@@ -36,7 +36,29 @@ export async function fetchTagById({ id }: { id: string }) {
 }
 
 //update tag by id
-export const updateTag = async ({id, data}: {id: string; data: Partial<ITag>}) => {
+export const updateTag = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<ITag>;
+}) => {
+  try {
     const response = await axios.put(`http://localhost:3001/tags/${id}`, data);
     return response.data;
-  };
+  } catch (error) {
+    console.error("Error updating tag:", error);
+    throw error;
+  }
+};
+
+//delete tag by id
+export const deleteTag = async ({ id }: { id: string }) => {
+  try {
+    const response = await axios.delete(`http://localhost:3001/tags/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting tag:", error);
+    throw error;
+  }
+};

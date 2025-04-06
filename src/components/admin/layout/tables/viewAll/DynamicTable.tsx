@@ -149,13 +149,47 @@ const DynamicTable = <T extends object>({
                     return (
                       <button
                         key={action.name}
-                        onClick={() => !isDisabled && action.handler(row)}
+                        onClick={() => {
+                          if (!isDisabled && action.handler) {
+                            action.handler(row);
+                          }
+                        }}
+                        data-hs-overlay={
+                          action.ariaControls
+                            ? `#${action.ariaControls}`
+                            : undefined
+                        }
                         className={`p-2 rounded-md transition-colors ${
                           action.className ||
                           "text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/20"
                         } ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                         aria-label={action.ariaLabel || action.name}
                         disabled={isDisabled}
+                        aria-controls={action?.ariaControls}
+                        aria-haspopup={
+                          action?.ariaHasPopup as
+                            | boolean
+                            | "dialog"
+                            | "menu"
+                            | "false"
+                            | "true"
+                            | "listbox"
+                            | "tree"
+                            | "grid"
+                            | undefined
+                        }
+                        aria-expanded={
+                          action?.ariaExpanded === undefined
+                            ? undefined
+                            : action.ariaExpanded === "true"
+                        }
+                        type={
+                          action.type as
+                            | "button"
+                            | "submit"
+                            | "reset"
+                            | undefined
+                        }
                       >
                         {action.icon}
                       </button>

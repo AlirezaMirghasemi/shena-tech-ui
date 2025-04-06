@@ -10,12 +10,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
+
       <body className="bg-linear-to-t from-blue-200 to-blue-400 dark:from-blue-500 dark:to-blue-900">
         <StoreProvider>
           <Toaster/>
           {children}
         </StoreProvider>
       </body>
+
       <PrelineScriptWrapper />
     </html>
   );

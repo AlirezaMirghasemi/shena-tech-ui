@@ -1,7 +1,12 @@
 import { IRole, RoleFormValues } from "@/interfaces/models/IRole";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createRoleAsync, fetchRoleByIdAsync, fetchRolesAsync, updateRoleAsync } from "@/store/thunks/rolesThunk";
-
+import {
+  createRoleAsync,
+  deleteRoleAsync,
+  fetchRoleByIdAsync,
+  fetchRolesAsync,
+  updateRoleAsync,
+} from "@/store/thunks/rolesThunk";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به نقش‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -21,12 +26,13 @@ export const useRoles = () => {
    */
   const loadAllRoles = () => dispatch(fetchRolesAsync());
   const getRoleById = (id: string) => dispatch(fetchRoleByIdAsync(id));
-
+  const deleteRole = (id: string) => dispatch(deleteRoleAsync(id));
   /**
    * تابع ایجاد نقش جدید با استفاده از داده‌های فرم
    * @param formData - داده‌های فرم جهت ایجاد نقش
    * @returns نتیجه موفقیت یا شکست عملیات
    */
+  //create role
   const createNewRole = async (formData: RoleFormValues) => {
     const newRole: IRole = {
       ...formData,
@@ -41,9 +47,10 @@ export const useRoles = () => {
       return false;
     }
   };
+  //update role
   const updateRole = async (id: string, values: Partial<RoleFormValues>) => {
     try {
-      await dispatch(updateRoleAsync({id, role: values})).unwrap();
+      await dispatch(updateRoleAsync({ id, role: values })).unwrap();
       return true;
     } catch (error) {
       console.error("خطا در ویرایش نقش:", error);
@@ -58,7 +65,8 @@ export const useRoles = () => {
       loadAllRoles,
       createNewRole,
       getRoleById,
-      updateRole
+      updateRole,
+      deleteRole,
     },
   };
 };

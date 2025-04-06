@@ -27,22 +27,45 @@ export async function createPermission(permission: Omit<IPermission, "id">) {
   }
 }
 
-
 //fetch permission by id
 export async function fetchPermissionById({ id }: { id: string }) {
+  try {
+    const response = await axios.get<IPermission>(
+      `http://localhost:3001/permissions/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error getting permission:", error);
+    throw error;
+  }
+}
+
+//update permission by id
+export const updatePermission = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: Partial<IPermission>;
+}) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:3001/permissions/${id}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating permission:", error);
+    throw error;
+  }
+};
+//delete permission by id
+export const deletePermission = async ({ id }: { id: string }) => {
     try {
-      const response = await axios.get<IPermission>(
-        `http://localhost:3001/permissions/${id}`
-      );
+      const response = await axios.delete(`http://localhost:3001/permissions/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Error getting permission:", error);
+      console.error("Error deleting permission:", error);
       throw error;
     }
-  }
-
-  //update permission by id
-  export const updatePermission = async ({id, data}: {id: string; data: Partial<IPermission>}) => {
-      const response = await axios.put(`http://localhost:3001/permissions/${id}`, data);
-      return response.data;
-    };
+  };

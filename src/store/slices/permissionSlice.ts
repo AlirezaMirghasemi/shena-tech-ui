@@ -2,6 +2,7 @@ import { DataStatus } from "@/constants/data/DataStatus";
 import { IPermission } from "@/interfaces/models/IPermission";
 import {
   createPermissionAsync,
+  deletePermissionAsync,
   fetchPermissionByIdAsync,
   fetchPermissionsAsync,
   updatePermissionAsync,
@@ -86,7 +87,21 @@ export const permissionsSlice = createSlice({
       .addCase(updatePermissionAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update permission";
-      });
+      })
+      //delete permission
+            .addCase(deletePermissionAsync.pending, (state) => {
+              state.status = DataStatus.LOADING;
+              state.error = null;
+            })
+            .addCase(deletePermissionAsync.fulfilled, (state, action) => {
+              state.status = DataStatus.SUCCEEDED;
+              state.data = action.payload;
+            })
+            .addCase(deletePermissionAsync.rejected, (state, action) => {
+              state.status = DataStatus.FAILED;
+              state.error = action.error.message || "Failed to update permission";
+            })
+            ;
 
   },
 });
