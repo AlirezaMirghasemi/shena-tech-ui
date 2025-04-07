@@ -13,15 +13,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  */
 export const fetchPermissionsAsync = createAsyncThunk(
   "permissions/fetchPermissions",
-  async () => {
+  async ({ page, size }: { page: number; size: number }) => {
     try {
-      const response: IPermission[] = await fetchPermissions();
-      return response ? response : [];
+      const response = await fetchPermissions(page, size);
+      return response;
     } catch (error) {
       if (error instanceof Error) {
-        return error.message;
+        throw new Error(error.message);
       }
-      return "خطای ناشناخته در پیمایش مجوز";
+      throw new Error("Unknown error fetching permissions");
     }
   }
 );

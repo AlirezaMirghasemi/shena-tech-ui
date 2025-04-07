@@ -13,20 +13,26 @@ import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
 
 const RolesPage = () => {
   const [deletingItemId, setDeletingItemId] = useState<string>("");
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const router = useRouter();
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const router = useRouter();
+    const {
+      roles,
+      isLoading,
+      error,
+      actions: { loadAllRoles, deleteRole },
+      currentPage,
+      totalPages,
+    } = useRoles();
 
-  const {
-    roles,
-    isLoading,
-    error,
-    actions: { loadAllRoles, deleteRole },
-  } = useRoles();
-
-  useEffect(() => {
-    loadAllRoles();
-  }, []);
-
+    useEffect(() => {
+      loadAllRoles();
+    }, []);
+    const handlePageChange = useCallback(
+      (newPage: number | undefined) => {
+        loadAllRoles(newPage);
+      },
+      [loadAllRoles]
+    );
   const handleDelete = useCallback(
     async (roleId: string) => {
       if (!roleId) return;
@@ -115,19 +121,26 @@ const RolesPage = () => {
       <div className="container mx-auto p-4 space-y-6">
         <TableHeader tableHeader={InitialViewTable.tableHeader} />
         <DynamicTable
-          data={roles}
-          columns={columns}
-          actions={actions}
-          loading={isLoading}
-          error={error}
-          emptyState={
-            <div className="flex flex-col items-center gap-4 py-8">
-              <span className="text-lg text-gray-500">هیچ نقشی یافت نشد</span>
-            </div>
-          }
-          ariaLabel="جدول مدیریت نقش ها"
-          rowKey="id"
-        />
+            data={roles}
+            columns={columns}
+            actions={actions}
+            loading={isLoading}
+            error={error}
+            emptyState={
+              <div className="flex flex-col items-center gap-4 py-8">
+                <span className="text-lg text-gray-500">
+                  هیچ نقشی یافت نشد
+                </span>
+              </div>
+            }
+            ariaLabel="جدول مدیریت تگ ها"
+            rowKey="id"
+            pagination={{
+                currentPage,
+                totalPages,
+                onPageChange: handlePageChange,
+              }}
+          />
       </div>
       <nav
         className="relative z-0 flex border border-gray-200 rounded-xl overflow-hidden dark:border-neutral-700"

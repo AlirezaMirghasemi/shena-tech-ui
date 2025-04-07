@@ -20,12 +20,19 @@ const TagsPage = () => {
     isLoading,
     error,
     actions: { loadAllTags, deleteTag },
+    currentPage,
+    totalPages,
   } = useTags();
 
   useEffect(() => {
     loadAllTags();
   }, []);
-
+  const handlePageChange = useCallback(
+    (newPage: number | undefined) => {
+      loadAllTags(newPage);
+    },
+    [loadAllTags]
+  );
   const handleDelete = useCallback(
     async (tagId: string) => {
       if (!tagId) return;
@@ -132,6 +139,11 @@ const TagsPage = () => {
             }
             ariaLabel="جدول مدیریت تگ ها"
             rowKey="id"
+            pagination={{
+                currentPage,
+                totalPages,
+                onPageChange: handlePageChange,
+              }}
           />
 
       </div>

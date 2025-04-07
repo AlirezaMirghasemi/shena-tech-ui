@@ -1,5 +1,6 @@
 import { ITag, TagFormValues } from "@/interfaces/models/ITag";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setCurrentPage } from "@/store/slices/tagSlice";
 import {
   createTagAsync,
   deleteTagAsync,
@@ -7,6 +8,7 @@ import {
   fetchTagsAsync,
   updateTagAsync,
 } from "@/store/thunks/tagsThunk";
+import { useCallback } from "react";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به هشتگ‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -16,15 +18,23 @@ export const useTags = () => {
 
   // دریافت وضعیت و داده‌های هشتگ‌ها از استور ریداکس
   const {
-    data: tags = [],
+    data: tags,
     status,
     error,
+    currentPage,
+    totalPages,
   } = useAppSelector((state) => state.tags);
 
   /**
    * تابع بارگذاری تمام هشتگ‌ها از API
    */
-  const loadAllTags = () => dispatch(fetchTagsAsync());
+  const loadAllTags = useCallback(
+    (page = 1) => {
+      dispatch(setCurrentPage(page));
+      dispatch(fetchTagsAsync({ page, size: 1 }));
+    },
+    [dispatch]
+  );
   const getTagById = (id: string) => dispatch(fetchTagByIdAsync(id));
   const deleteTag = (id: string) => dispatch(deleteTagAsync(id));
 
@@ -67,5 +77,7 @@ export const useTags = () => {
       updateTag,
       deleteTag
     },
+    currentPage,
+    totalPages,
   };
 };

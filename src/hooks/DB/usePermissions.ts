@@ -1,6 +1,17 @@
-import { IPermission, PermissionFormValues } from "@/interfaces/models/IPermission";
+import {
+  IPermission,
+  PermissionFormValues,
+} from "@/interfaces/models/IPermission";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createPermissionAsync, deletePermissionAsync, fetchPermissionByIdAsync, fetchPermissionsAsync, updatePermissionAsync } from "@/store/thunks/permissionThunk";
+import { setCurrentPage } from "@/store/slices/permissionSlice";
+import {
+  createPermissionAsync,
+  deletePermissionAsync,
+  fetchPermissionByIdAsync,
+  fetchPermissionsAsync,
+  updatePermissionAsync,
+} from "@/store/thunks/permissionsThunk";
+import { useCallback } from "react";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به مجوز‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -10,18 +21,26 @@ export const usePermissions = () => {
 
   // دریافت وضعیت و داده‌های مجوز‌ها از استور ریداکس
   const {
-    data: permissions = [],
+    data: permissions,
     status,
     error,
+    currentPage,
+    totalPages,
   } = useAppSelector((state) => state.permissions);
 
   /**
    * تابع بارگذاری تمام مجوز‌ها از API
    */
-  const loadAllPermissions = () => dispatch(fetchPermissionsAsync());
-  const getPermissionById = (id: string) => dispatch(fetchPermissionByIdAsync(id));
-    const deletePermission = (id: string) => dispatch(deletePermissionAsync(id));
-
+  const loadAllPermissions = useCallback(
+    (page = 1) => {
+      dispatch(setCurrentPage(page));
+      dispatch(fetchPermissionsAsync({ page, size: 1 }));
+    },
+    [dispatch]
+  );
+  const getPermissionById = (id: string) =>
+    dispatch(fetchPermissionByIdAsync(id));
+  const deletePermission = (id: string) => dispatch(deletePermissionAsync(id));
 
   /**
    * تابع ایجاد مجوز جدید با استفاده از داده‌های فرم
@@ -42,9 +61,14 @@ export const usePermissions = () => {
       return false;
     }
   };
- const updatePermission = async (id: string, values: Partial<PermissionFormValues>) => {
+  const updatePermission = async (
+    id: string,
+    values: Partial<PermissionFormValues>
+  ) => {
     try {
-      await dispatch(updatePermissionAsync({id, permission: values})).unwrap();
+      await dispatch(
+        updatePermissionAsync({ id, permission: values })
+      ).unwrap();
       return true;
     } catch (error) {
       console.error("خطا در ویرایش مجوز:", error);
@@ -57,10 +81,12 @@ export const usePermissions = () => {
     error,
     actions: {
       loadAllPermissions,
-      getPermissionById,
       createNewPermission,
+      getPermissionById,
       updatePermission,
-      deletePermission
+      deletePermission,
     },
+    currentPage,
+    totalPages,
   };
 };

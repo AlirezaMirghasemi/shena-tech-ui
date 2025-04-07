@@ -8,13 +8,15 @@ import {
   fetchTagsAsync,
   updateTagAsync,
 } from "../thunks/tagsThunk";
-
+const PAGE_SIZE = 1;
 // تعریف وضعیت اولیه اسلایس
 interface TagsState {
   data: ITag[];
   single: ITag | null;
   status: string;
   error: string | null;
+  currentPage: number;
+  totalPages: number;
 }
 
 const initialState: TagsState = {
@@ -22,6 +24,8 @@ const initialState: TagsState = {
   single: null,
   status: DataStatus.IDLE,
   error: null,
+  currentPage: 1,
+  totalPages: 1,
 };
 
 /**
@@ -30,17 +34,20 @@ const initialState: TagsState = {
 export const tagsSlice = createSlice({
   name: "tags",
   initialState,
-  reducers: {},
+  reducers: {setCurrentPage(state, action) {
+    state.currentPage = action.payload;
+  },},
   extraReducers: (builder) => {
     // هندل کردن وضعیت بارگذاری هشتگ ها
     builder
-      .addCase(fetchTagsAsync.pending, (state) => {
+    .addCase(fetchTagsAsync.pending, (state) => {
         state.status = DataStatus.LOADING;
         state.error = null;
       })
       .addCase(fetchTagsAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = action.payload as ITag[];
+        state.data = action.payload.data;
+        state.totalPages = Math.ceil(action.payload.totalCount / PAGE_SIZE);
       })
       .addCase(fetchTagsAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
@@ -106,3 +113,4 @@ export const tagsSlice = createSlice({
 });
 
 export default tagsSlice.reducer;
+export const { setCurrentPage } = tagsSlice.actions;

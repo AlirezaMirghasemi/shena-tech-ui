@@ -20,11 +20,19 @@ const PermissionsPage = () => {
     isLoading,
     error,
     actions: { loadAllPermissions, deletePermission },
+    currentPage,
+    totalPages,
   } = usePermissions();
 
   useEffect(() => {
     loadAllPermissions();
   }, []);
+  const handlePageChange = useCallback(
+    (newPage: number | undefined) => {
+      loadAllPermissions(newPage);
+    },
+    [loadAllPermissions]
+  );
   const handleDelete = useCallback(
     async (permissionId: string) => {
       if (!permissionId) return;
@@ -207,11 +215,16 @@ const PermissionsPage = () => {
           error={error}
           emptyState={
             <div className="flex flex-col items-center gap-4 py-8">
-              <span className="text-lg text-gray-500">هیچ مجوزی یافت نشد</span>
+              <span className="text-lg text-gray-500">هیچ نقشی یافت نشد</span>
             </div>
           }
-          ariaLabel="جدول مدیریت مجوز ها"
+          ariaLabel="جدول مدیریت تگ ها"
           rowKey="id"
+          pagination={{
+            currentPage,
+            totalPages,
+            onPageChange: handlePageChange,
+          }}
         />
       </div>
     </>

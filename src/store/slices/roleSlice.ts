@@ -8,13 +8,15 @@ import {
   fetchRolesAsync,
   updateRoleAsync,
 } from "../thunks/rolesThunk";
-
+const PAGE_SIZE = 1;
 // تعریف وضعیت اولیه اسلایس
 interface RolesState {
   data: IRole[];
   single: IRole | null;
   status: string;
   error: string | null;
+  currentPage: number;
+  totalPages: number;
 }
 
 const initialState: RolesState = {
@@ -22,6 +24,8 @@ const initialState: RolesState = {
   single: null,
   status: DataStatus.IDLE,
   error: null,
+  currentPage: 1,
+  totalPages: 1,
 };
 
 /**
@@ -30,7 +34,11 @@ const initialState: RolesState = {
 export const rolesSlice = createSlice({
   name: "roles",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // هندل کردن وضعیت بارگذاری نقش ها
     builder
@@ -40,7 +48,8 @@ export const rolesSlice = createSlice({
       })
       .addCase(fetchRolesAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = action.payload as IRole[];
+        state.data = action.payload.data;
+        state.totalPages = Math.ceil(action.payload.totalCount / PAGE_SIZE);
       })
       .addCase(fetchRolesAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
@@ -80,7 +89,7 @@ export const rolesSlice = createSlice({
       })
       .addCase(updateRoleAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = state.data.map(role =>
+        state.data = state.data.map((role) =>
           role.id === action.payload.id ? action.payload : role
         );
       })
@@ -100,9 +109,9 @@ export const rolesSlice = createSlice({
       .addCase(deleteRoleAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update role";
-      })
-      ;
+      });
   },
 });
 
 export default rolesSlice.reducer;
+export const { setCurrentPage } = rolesSlice.actions;

@@ -1,5 +1,6 @@
 import { IRole, RoleFormValues } from "@/interfaces/models/IRole";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setCurrentPage } from "@/store/slices/roleSlice";
 import {
   createRoleAsync,
   deleteRoleAsync,
@@ -7,6 +8,7 @@ import {
   fetchRolesAsync,
   updateRoleAsync,
 } from "@/store/thunks/rolesThunk";
+import { useCallback } from "react";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به نقش‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -16,23 +18,31 @@ export const useRoles = () => {
 
   // دریافت وضعیت و داده‌های نقش‌ها از استور ریداکس
   const {
-    data: roles = [],
+    data: roles,
     status,
     error,
+    currentPage,
+    totalPages,
   } = useAppSelector((state) => state.roles);
 
   /**
    * تابع بارگذاری تمام نقش‌ها از API
    */
-  const loadAllRoles = () => dispatch(fetchRolesAsync());
+  const loadAllRoles = useCallback(
+    (page = 1) => {
+      dispatch(setCurrentPage(page));
+      dispatch(fetchRolesAsync({ page, size: 1 }));
+    },
+    [dispatch]
+  );
   const getRoleById = (id: string) => dispatch(fetchRoleByIdAsync(id));
   const deleteRole = (id: string) => dispatch(deleteRoleAsync(id));
+
   /**
    * تابع ایجاد نقش جدید با استفاده از داده‌های فرم
    * @param formData - داده‌های فرم جهت ایجاد نقش
    * @returns نتیجه موفقیت یا شکست عملیات
    */
-  //create role
   const createNewRole = async (formData: RoleFormValues) => {
     const newRole: IRole = {
       ...formData,
@@ -47,7 +57,6 @@ export const useRoles = () => {
       return false;
     }
   };
-  //update role
   const updateRole = async (id: string, values: Partial<RoleFormValues>) => {
     try {
       await dispatch(updateRoleAsync({ id, role: values })).unwrap();
@@ -66,7 +75,9 @@ export const useRoles = () => {
       createNewRole,
       getRoleById,
       updateRole,
-      deleteRole,
+      deleteRole
     },
+    currentPage,
+    totalPages,
   };
 };

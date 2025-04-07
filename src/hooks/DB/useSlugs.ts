@@ -1,5 +1,6 @@
 import { ISlug, SlugFormValues } from "@/interfaces/models/ISlug";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setCurrentPage } from "@/store/slices/slugSlice";
 import {
   createSlugAsync,
   deleteSlugAsync,
@@ -7,6 +8,7 @@ import {
   fetchSlugsAsync,
   updateSlugAsync,
 } from "@/store/thunks/slugsThunk";
+import { useCallback } from "react";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به اسلاگ‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -16,18 +18,25 @@ export const useSlugs = () => {
 
   // دریافت وضعیت و داده‌های اسلاگ‌ها از استور ریداکس
   const {
-    data: slugs = [],
+    data: slugs,
     status,
     error,
+    currentPage,
+    totalPages,
   } = useAppSelector((state) => state.slugs);
 
   /**
    * تابع بارگذاری تمام اسلاگ‌ها از API
    */
-  const loadAllSlugs = () => dispatch(fetchSlugsAsync());
+  const loadAllSlugs = useCallback(
+    (page = 1) => {
+      dispatch(setCurrentPage(page));
+      dispatch(fetchSlugsAsync({ page, size: 1 }));
+    },
+    [dispatch]
+  );
   const getSlugById = (id: string) => dispatch(fetchSlugByIdAsync(id));
   const deleteSlug = (id: string) => dispatch(deleteSlugAsync(id));
-
 
   /**
    * تابع ایجاد اسلاگ جدید با استفاده از داده‌های فرم
@@ -66,7 +75,9 @@ export const useSlugs = () => {
       createNewSlug,
       getSlugById,
       updateSlug,
-      deleteSlug
+      deleteSlug,
     },
+    currentPage,
+    totalPages,
   };
 };

@@ -20,12 +20,19 @@ const SlugsPage = () => {
     isLoading,
     error,
     actions: { loadAllSlugs, deleteSlug },
+    currentPage,
+    totalPages,
   } = useSlugs();
 
   useEffect(() => {
     loadAllSlugs();
   }, []);
-
+  const handlePageChange = useCallback(
+    (newPage: number | undefined) => {
+      loadAllSlugs(newPage);
+    },
+    [loadAllSlugs]
+  );
   const handleDelete = useCallback(
     async (slugId: string) => {
       if (!slugId) return;
@@ -127,8 +134,13 @@ const SlugsPage = () => {
               <span className="text-lg text-gray-500">هیچ اسلاگی یافت نشد</span>
             </div>
           }
-          ariaLabel="جدول مدیریت اسلاگ ها"
+          ariaLabel="جدول مدیریت تگ ها"
           rowKey="id"
+          pagination={{
+            currentPage,
+            totalPages,
+            onPageChange: handlePageChange,
+          }}
         />
       </div>
     </>

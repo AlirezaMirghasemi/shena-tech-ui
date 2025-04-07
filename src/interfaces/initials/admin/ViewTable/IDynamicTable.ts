@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { IPagination } from "../IPagination";
 
 export type TextAlignment = "text-center" | "text-left" | "text-right";
 
@@ -39,13 +40,6 @@ export interface ITableAction<T extends object> {
 /**
  * Pagination configuration
  */
-export interface IPaginationConfig {
-  currentPage: number;
-  totalPages: number;
-  pageSize: number;
-  onPageChange: (page: number) => void;
-  onPageSizeChange?: (size: number) => void;
-}
 
 /**
  * Props for DynamicTable component
@@ -55,7 +49,7 @@ export interface IDynamicTableProps<T extends object> {
   data: T[];
   columns: IDynamicTableColumn<T>[];
   actions?: ITableAction<T>[];
-  pagination?: IPaginationConfig;
+  pagination?: IPagination;
   loading?: boolean;
   error?: string | null;
   onSort?: (column: keyof T, direction: "asc" | "desc") => void;

@@ -8,13 +8,15 @@ import {
   fetchSlugsAsync,
   updateSlugAsync,
 } from "../thunks/slugsThunk";
-
+const PAGE_SIZE = 1;
 // تعریف وضعیت اولیه اسلایس
 interface SlugsState {
   data: ISlug[];
   single: ISlug | null;
   status: string;
   error: string | null;
+  currentPage: number;
+  totalPages: number;
 }
 
 const initialState: SlugsState = {
@@ -22,6 +24,8 @@ const initialState: SlugsState = {
   single: null,
   status: DataStatus.IDLE,
   error: null,
+  currentPage: 1,
+  totalPages: 1,
 };
 
 /**
@@ -30,7 +34,11 @@ const initialState: SlugsState = {
 export const slugsSlice = createSlice({
   name: "slugs",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // هندل کردن وضعیت بارگذاری اسلاگ ها
     builder
@@ -40,7 +48,8 @@ export const slugsSlice = createSlice({
       })
       .addCase(fetchSlugsAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = action.payload as ISlug[];
+        state.data = action.payload.data;
+        state.totalPages = Math.ceil(action.payload.totalCount / PAGE_SIZE);
       })
       .addCase(fetchSlugsAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
@@ -89,20 +98,20 @@ export const slugsSlice = createSlice({
         state.error = action.error.message || "Failed to update slug";
       })
       //delete slug
-            .addCase(deleteSlugAsync.pending, (state) => {
-              state.status = DataStatus.LOADING;
-              state.error = null;
-            })
-            .addCase(deleteSlugAsync.fulfilled, (state, action) => {
-              state.status = DataStatus.SUCCEEDED;
-              state.data = action.payload;
-            })
-            .addCase(deleteSlugAsync.rejected, (state, action) => {
-              state.status = DataStatus.FAILED;
-              state.error = action.error.message || "Failed to update slug";
-            })
-            ;
+      .addCase(deleteSlugAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(deleteSlugAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.data = action.payload;
+      })
+      .addCase(deleteSlugAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error = action.error.message || "Failed to update slug";
+      });
   },
 });
 
 export default slugsSlice.reducer;
+export const { setCurrentPage } = slugsSlice.actions;

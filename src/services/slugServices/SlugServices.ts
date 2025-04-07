@@ -2,15 +2,21 @@ import { ISlug } from "@/interfaces/models/ISlug";
 import axios from "axios";
 
 //get all slugs
-export async function fetchSlugs() {
-  try {
-    const response = await axios.get<ISlug[]>("http://localhost:3001/slugs");
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching slugs:", error);
-    throw error;
+export async function fetchSlugs(
+    _page = 1,
+    _per_page = 10
+  ): Promise<{ data: ISlug[]; totalCount: number }> {
+    const response = await axios.get("http://localhost:3001/slugs", {
+      params: {
+        _page,
+        _per_page,
+      },
+    });
+    return {
+      data: response.data.data || [],
+      totalCount: response.data.pages || 0,
+    };
   }
-}
 //create new slug
 export async function createSlug(slug: Omit<ISlug, "id">) {
   try {

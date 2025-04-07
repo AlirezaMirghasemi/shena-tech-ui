@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { permissionInitial } from "../initials/permission.initial";
 import { permissionSchema } from "../schemas/permission.schema";
-import { createPermissionAsync } from "@/store/thunks/permissionThunk";
+import { createPermissionAsync } from "@/store/thunks/permissionsThunk";
 import { toast } from "sonner";
 import { FormikConfig } from "formik";
 

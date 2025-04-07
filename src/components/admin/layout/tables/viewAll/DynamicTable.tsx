@@ -5,12 +5,13 @@ import {
   IDynamicTableProps,
   TextAlignment,
 } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
+import Paginate from "../../buttons/Paginate";
 
 const DynamicTable = <T extends object>({
   data,
   columns,
   actions,
-  //pagination,
+  pagination,
   loading,
   error,
   onSort,
@@ -102,6 +103,7 @@ const DynamicTable = <T extends object>({
     if (error) return <ErrorSkeleton message={error} />;
 
     return (
+        <>
       <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
         {data.length === 0 ? (
           <tr>
@@ -202,7 +204,10 @@ const DynamicTable = <T extends object>({
         ) : (
           []
         )}
+
       </tbody>
+
+      </>
     );
   }, [
     data,
@@ -225,6 +230,14 @@ const DynamicTable = <T extends object>({
           {renderHeader}
           {renderBody}
         </table>
+        {pagination && (
+        <Paginate
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.onPageChange}
+          className="border-t border-gray-200 dark:border-neutral-700"
+        />
+      )}
       </div>
     </div>
   );

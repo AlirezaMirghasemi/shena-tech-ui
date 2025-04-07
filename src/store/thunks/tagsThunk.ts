@@ -11,17 +11,20 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 /**
  * توکن آسنکرون جهت دریافت لیست هشتگ‌ها از API
  */
-export const fetchTagsAsync = createAsyncThunk("tags/fetchTags", async () => {
-  try {
-    const response: ITag[] = await fetchTags();
-    return response ? response : [];
-  } catch (error) {
-    if (error instanceof Error) {
-      return error.message;
+export const fetchTagsAsync = createAsyncThunk(
+    "tags/fetchTags",
+    async ({ page, size }: { page: number; size: number }) => {
+      try {
+        const response = await fetchTags(page, size);
+        return response;
+      } catch (error) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        }
+        throw new Error("Unknown error fetching tags");
+      }
     }
-    return "خطای ناشناخته در پیمایش هشتگ";
-  }
-});
+  );
 
 //fetch tag by id
 export const fetchTagByIdAsync = createAsyncThunk(

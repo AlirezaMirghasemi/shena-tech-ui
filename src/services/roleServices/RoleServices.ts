@@ -1,15 +1,20 @@
 import { IRole } from "@/interfaces/models/IRole";
 import axios from "axios";
 
-//get all roles
-export async function fetchRoles() {
-  try {
-    const response = await axios.get<IRole[]>("http://localhost:3001/roles");
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching roles:", error);
-    throw error;
-  }
+export async function fetchRoles(
+  _page = 1,
+  _per_page = 10
+): Promise<{ data: IRole[]; totalCount: number }> {
+  const response = await axios.get("http://localhost:3001/roles", {
+    params: {
+      _page,
+      _per_page,
+    },
+  });
+  return {
+    data: response.data.data || [],
+    totalCount: response.data.pages || 0,
+  };
 }
 //create new role
 export async function createRole(role: Omit<IRole, "id">) {

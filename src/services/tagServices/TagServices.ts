@@ -2,14 +2,20 @@ import { ITag } from "@/interfaces/models/ITag";
 import axios from "axios";
 
 //get all tags
-export async function fetchTags() {
-  try {
-    const response = await axios.get<ITag[]>("http://localhost:3001/tags");
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching tags:", error);
-    throw error;
-  }
+export async function fetchTags(
+  _page = 1,
+  _per_page = 10
+): Promise<{ data: ITag[]; totalCount: number }> {
+  const response = await axios.get("http://localhost:3001/tags", {
+    params: {
+      _page,
+      _per_page,
+    },
+  });
+  return {
+    data: response.data.data || [],
+    totalCount: response.data.pages || 0,
+  };
 }
 //create new tag
 export async function createTag(tag: Omit<ITag, "id">) {
@@ -25,9 +31,7 @@ export async function createTag(tag: Omit<ITag, "id">) {
 //fetch tag by id
 export async function fetchTagById({ id }: { id: string }) {
   try {
-    const response = await axios.get<ITag>(
-      `http://localhost:3001/tags/${id}`
-    );
+    const response = await axios.get<ITag>(`http://localhost:3001/tags/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error getting tag:", error);
