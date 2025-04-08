@@ -66,8 +66,12 @@ export const usePermissions = () => {
     values: Partial<PermissionFormValues>
   ) => {
     try {
+      const updatedPermission = {
+        ...values,
+        updatedAt: Date.now(),
+      };
       await dispatch(
-        updatePermissionAsync({ id, permission: values })
+        updatePermissionAsync({ id, permission: updatedPermission })
       ).unwrap();
       return true;
     } catch (error) {

@@ -58,9 +58,15 @@ export const useRoles = () => {
     }
   };
   const updateRole = async (id: string, values: Partial<RoleFormValues>) => {
-    try {
-      await dispatch(updateRoleAsync({ id, role: values })).unwrap();
-      return true;
+     try {
+          const updatedRole = {
+            ...values,
+            updatedAt: Date.now(),
+          };
+          await dispatch(
+            updateRoleAsync({ id, role: updatedRole })
+          ).unwrap();
+          return true;
     } catch (error) {
       console.error("خطا در ویرایش نقش:", error);
       return false;

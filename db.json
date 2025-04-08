@@ -39,27 +39,27 @@
       "id": "8f9c",
       "entity": "Comment",
       "create": true,
-      "edit": true,
+      "edit": false,
       "delete": true,
       "read": true,
       "creator": "all",
       "statusEdit": false,
-      "description": "test 1",
+      "description": "یکی بود یکی نبود غیر از خدای مهربان هیچکس نبود.یکی بود یکی نبود غیر از خدای مهربان هیچکس نبودیکی بود یکی نبود غیر از خدای مهربان هیچکس نبود",
       "createdAt": 1743158534154,
-      "updatedAt": 1743158534154
+      "updatedAt": 1744096864508
     },
     {
-      "id": "b4c0",
-      "entity": "Post",
-      "create": false,
+      "id": "5646",
+      "entity": "Comment",
+      "create": true,
       "edit": true,
-      "delete": false,
-      "read": false,
+      "delete": true,
+      "read": true,
       "creator": "all",
-      "statusEdit": false,
-      "description": "test 2",
-      "createdAt": 1743158601798,
-      "updatedAt": 1743158601798
+      "statusEdit": true,
+      "description": "پس توضیحات ؟؟؟",
+      "createdAt": 1744095944994,
+      "updatedAt": 1744095944994
     }
   ]
 }

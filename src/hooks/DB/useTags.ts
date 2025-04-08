@@ -59,7 +59,11 @@ export const useTags = () => {
   };
   const updateTag = async (id: string, values: Partial<TagFormValues>) => {
     try {
-      await dispatch(updateTagAsync({ id, tag: values })).unwrap();
+      const updatedTag = {
+        ...values,
+        updatedAt: Date.now(),
+      };
+      await dispatch(updateTagAsync({ id, tag: updatedTag })).unwrap();
       return true;
     } catch (error) {
       console.error("خطا در ویرایش هشتگ:", error);
@@ -75,7 +79,7 @@ export const useTags = () => {
       createNewTag,
       getTagById,
       updateTag,
-      deleteTag
+      deleteTag,
     },
     currentPage,
     totalPages,

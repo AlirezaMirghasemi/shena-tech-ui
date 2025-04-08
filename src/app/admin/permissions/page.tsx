@@ -64,7 +64,7 @@ const PermissionsPage = () => {
         header: "توضیحات",
         accessor: "description",
         sortable: true,
-        width: "20%",
+        width: "25%",
         align: "text-center",
         ariaLabel: "توضیحات",
       },
@@ -72,7 +72,7 @@ const PermissionsPage = () => {
         header: "ایجاد",
         accessor: "create",
         sortable: true,
-        width: "10%",
+        width: "5%",
         align: "text-center",
         ariaLabel: "مجوز ایجاد",
         cellRenderer: (row) =>
@@ -86,7 +86,7 @@ const PermissionsPage = () => {
         header: "ویرایش",
         accessor: "edit",
         sortable: true,
-        width: "10%",
+        width: "5%",
         align: "text-center",
         ariaLabel: "مجوز ویرایش",
         cellRenderer: (row) =>
@@ -100,7 +100,7 @@ const PermissionsPage = () => {
         header: "حذف",
         accessor: "delete",
         sortable: true,
-        width: "10%",
+        width: "5%",
         align: "text-center",
         ariaLabel: "مجوز حذف",
         cellRenderer: (row) =>
@@ -114,7 +114,7 @@ const PermissionsPage = () => {
         header: "مشاهده",
         accessor: "read",
         sortable: true,
-        width: "10%",
+        width: "5%",
         align: "text-center",
         ariaLabel: "مجوز مشاهده",
         cellRenderer: (row) =>
@@ -142,7 +142,7 @@ const PermissionsPage = () => {
         header: "دسترسی",
         accessor: "creator",
         sortable: true,
-        width: "10%",
+        width: "5%",
         align: "text-center",
         ariaLabel: "دسترسی",
         cellRenderer: (row) => (
@@ -155,9 +155,18 @@ const PermissionsPage = () => {
         header: "تاریخ ایجاد",
         accessor: "createdAt",
         align: "text-center",
+        width:"8%",
         cellRenderer: (permission: IPermission) =>
           new Date(permission.createdAt).toLocaleDateString("fa-IR"),
         ariaLabel: "تاریخ ایجاد مجوز",
+      },{
+        header: "تاریخ ویرایش",
+        accessor: "updatedAt",
+        align: "text-center",
+        width:"8%",
+        cellRenderer: (permission: IPermission) =>
+          new Date(permission.updatedAt).toLocaleDateString("fa-IR"),
+        ariaLabel: "تاریخ ویرایش مجوز",
       },
     ],
     []

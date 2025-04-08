@@ -10,7 +10,6 @@ import TableHeader from "@/components/admin/layout/tables/viewAll/TableHeader";
 import DynamicTable from "@/components/admin/layout/tables/viewAll/DynamicTable";
 import { IDynamicTableColumn } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
 import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
-
 const TagsPage = () => {
   const [deletingItemId, setDeletingItemId] = useState<string>("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -23,7 +22,6 @@ const TagsPage = () => {
     currentPage,
     totalPages,
   } = useTags();
-
   useEffect(() => {
     loadAllTags();
   }, []);
@@ -36,7 +34,6 @@ const TagsPage = () => {
   const handleDelete = useCallback(
     async (tagId: string) => {
       if (!tagId) return;
-
       try {
         await deleteTag(tagId);
         await loadAllTags();
@@ -121,9 +118,7 @@ const TagsPage = () => {
         deletedItemId={deletingItemId}
       />
       <div className="container mx-auto p-4 space-y-6">
-
         <TableHeader tableHeader={InitialViewTable.tableHeader} />
-
           <DynamicTable
             data={tags}
             columns={columns}

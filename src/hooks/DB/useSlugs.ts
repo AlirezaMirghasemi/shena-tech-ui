@@ -59,7 +59,11 @@ export const useSlugs = () => {
   };
   const updateSlug = async (id: string, values: Partial<SlugFormValues>) => {
     try {
-      await dispatch(updateSlugAsync({ id, slug: values })).unwrap();
+      const updatedSlug = {
+        ...values,
+        updatedAt: Date.now(),
+      };
+      await dispatch(updateSlugAsync({ id, slug: updatedSlug })).unwrap();
       return true;
     } catch (error) {
       console.error("خطا در ویرایش اسلاگ:", error);
