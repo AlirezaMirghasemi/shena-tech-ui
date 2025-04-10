@@ -1,17 +1,18 @@
 import { Gender } from "@/constants/data/Gender";
 
 export interface IUser {
-  id: string;
+  id?: string;
   username: string;
   email: string;
   fullName: string;
   password: string;
   bio: string;
-  profilePicture: string;
+  profilePicture?: File;
   mobile: string;
   gender: Gender;
   createdAt: number;
   updatedAt: number;
+  imageId?:string
 }
 export type UserFormValues = Pick<
   IUser,
@@ -23,4 +24,5 @@ export type UserFormValues = Pick<
   | "profilePicture"
   | "mobile"
   | "gender"
+  |"imageId"
 >;

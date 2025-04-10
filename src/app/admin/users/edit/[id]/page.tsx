@@ -1,52 +1,59 @@
 "use client";
 
-import RoleForm from "@/components/admin/pages/roles/RoleForm";
-import { useRoles } from "@/hooks/DB/useRoles";
-import { RoleFormValues } from "@/interfaces/models/IRole";
+import UserForm from "@/components/admin/pages/users/UserForm";
+import { useUsers } from "@/hooks/DB/useUsers";
+import { UserFormValues } from "@/interfaces/models/IUser";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const EditRolePage = ({ params }: { params: Promise<{ id: string }> }) => {
+const EditUserPage = ({ params }: { params: Promise<{ id: string }> }) => {
   const router = useRouter();
-  const { actions, isLoading } = useRoles();
+  const { actions, isLoading } = useUsers();
   const [initialValues, setInitialValues] = useState<
-    RoleFormValues | undefined
+    UserFormValues | undefined
   >(undefined);
-  const [originalTitle, setOriginalTitle] = useState("");
+  const [originalUsername, setOriginalUsername] = useState("");
+  const [originalEmail, setOriginalEmail] = useState("");
+  const [originalMobile, setOriginalMobile] = useState("");
+
   useEffect(() => {
-    const fetchRole = async () => {
+    const fetchUser = async () => {
       const { id } = await params;
-      const role = await actions.getRoleById(id);
-      if (role.payload) {
-        const roleData = role.payload as RoleFormValues;
-        setInitialValues(roleData);
-        setOriginalTitle(roleData.title);
+      const user = await actions.getUserById(id);
+      if (user.payload) {
+        const userData = user.payload as UserFormValues;
+        setInitialValues(userData);
+        setOriginalUsername(userData.username);
+        setOriginalEmail(userData.email);
+        setOriginalMobile(userData.mobile);
       }
     };
-    fetchRole();
+    fetchUser();
   }, []);
-  const handleSubmit = async (values: RoleFormValues) => {
+  const handleSubmit = async (values: UserFormValues) => {
     const { id } = await params;
     if (!id) return;
-    const success = await actions.updateRole(id, values);
+    const success = await actions.updateUser(id, values);
     if (success) {
-      toast.success("نقش با موفقیت ویرایش شد");
-      setTimeout(() => router.push("/admin/roles"), 1000);
+      toast.success("کاربر با موفقیت ویرایش شد");
+      setTimeout(() => router.push("/admin/users"), 1000);
     }
   };
   if (!initialValues) return <div>در حال بارگذاری...</div>;
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <RoleForm
+      <UserForm
         initialValues={initialValues}
-        originalTitle={originalTitle}
-        title="ویرایش نقش "
-        description="اطلاعات نقش را ویرایش نمایید"
+        originalUsername={originalUsername}
+        originalEmail={originalEmail}
+        originalMobile={originalMobile}
+        title="ویرایش کاربر "
+        description="اطلاعات کاربر را ویرایش نمایید"
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
       />
     </div>
   );
 };
-export default EditRolePage;
+export default EditUserPage;

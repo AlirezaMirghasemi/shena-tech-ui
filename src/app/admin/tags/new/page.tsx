@@ -3,6 +3,7 @@
 import TagForm from "@/components/admin/pages/tags/TagForm";
 import { useTags } from "@/hooks/DB/useTags";
 import { TagFormValues } from "@/interfaces/models/ITag";
+import { tagInitial } from "@/validations/initials/tag.initial";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -24,6 +25,7 @@ const NewTagPage = () => {
         description="اطلاعات هشتگ جدید را وارد نمایید"
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
+        initialValues={tagInitial}
       />
     </div>
   );

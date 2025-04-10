@@ -3,6 +3,7 @@
 import PermissionForm from "@/components/admin/pages/permissions/PermissionForm";
 import { usePermissions } from "@/hooks/DB/usePermissions";
 import { PermissionFormValues } from "@/interfaces/models/IPermission";
+import { permissionInitial } from "@/validations/initials/permission.initial";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -24,6 +25,7 @@ const NewPermissionPage = () => {
         description="اطلاعات مجوز جدید را وارد نمایید"
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
+        initialValues={permissionInitial}
       />
     </div>
   );

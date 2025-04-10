@@ -3,6 +3,7 @@
 import RoleForm from "@/components/admin/pages/roles/RoleForm";
 import { useRoles } from "@/hooks/DB/useRoles";
 import { RoleFormValues } from "@/interfaces/models/IRole";
+import { roleInitial } from "@/validations/initials/role.initial";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -24,6 +25,8 @@ const NewRolePage = () => {
         description="اطلاعات نقش جدید را وارد نمایید"
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
+        initialValues={roleInitial}
+
       />
     </div>
   );

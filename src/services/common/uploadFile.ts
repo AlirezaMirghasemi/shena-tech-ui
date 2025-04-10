@@ -1,9 +1,17 @@
 import axios from "axios";
-import Error from "next/error";
+import { IImage } from "@/interfaces/models/IImage";
 
-export const uploadFile = async (file: File): Promise<string> => {
+/**
+ * آپلود فایل در سرور
+ * @param file فایل انتخاب‌شده توسط کاربر
+ * @param imageType نوع تصویر (مثلاً "profilePicture")
+ * @returns شیء اطلاعات عکس مطابق با IImage
+ */
+export const uploadFile = async (file: File, imageType: string): Promise<IImage> => {
   const formData = new FormData();
-  formData.append("profilePicture", file);
+  // کلید را به گونه‌ای ست می‌کنیم که در API به درستی دریافت شود
+  formData.append("file", file);
+  formData.append("type", imageType);
 
   try {
     const response = await axios.post("/api/uploadFile", formData, {
@@ -11,10 +19,15 @@ export const uploadFile = async (file: File): Promise<string> => {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.filename;
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.error || "آپلود فایل با مشکل مواجه شد"
-    );
+    // توجه داشته باشید که API ما یک شیء تحت کلید imageRecord برمی‌گرداند.
+    return response.data.imageRecord;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.error || "آپلود فایل با مشکل مواجه شد"
+      );
+    } else {
+      throw new Error("آپلود فایل با مشکل مواجه شد");
+    }
   }
 };

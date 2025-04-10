@@ -4,7 +4,7 @@ export enum Type {
   VIDEO = "video",
 }
 export enum Image {
-  PROFILE = "profile",
+  PROFILE = "profilePicture",
   Poster = "poster",
 }
 export type ImageType = Image | Type;

@@ -3,9 +3,8 @@ import Link from "next/link";
 
 export const InitialViewTable: IViewTable = {
   tableHeader: {
-    title: "کاربران",
-    description: " مشاهده، اعمال تغییرات و امکان حذف کاربران",
-    singleName:"کاربر",
+    title: "کاربر ها",
+    description: " مشاهده، اعمال تغییرات و امکان حذف کاربر ها",
     buttons: [
       {
         title: "کاربر جدید",
@@ -20,37 +19,6 @@ export const InitialViewTable: IViewTable = {
         ),
       },
     ],
-  },
-  tableBody: {
-    colTitles: ["username", "email","fullName","mobile"],
-    data: [],
-    buttons: [
-        {
-            title: "ویرایش",
-            name: "edit",
-            element: (id: string) => (
-              <Link
-                href={`/admin/users/edit/${id}`}
-                className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-              >
-                ویرایش
-              </Link>
-            )
-          },
-          {
-            title: "حذف",
-            name: "delete",
-            element: (id: string) => (
-              <Link
-                href={`/admin/users/delete/${id}`}
-                className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-hidden focus:underline font-medium dark:text-blue-500"
-              >
-                حذف
-              </Link>
-            )
-          }
-
-    ],
-    viewTHeadTitles: ["نام کاربری", "ایمیل", "نام کامل","شماره همراه","عملیات"],
+    singleName: "کاربر",
   },
 };

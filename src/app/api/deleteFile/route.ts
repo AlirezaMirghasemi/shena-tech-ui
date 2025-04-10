@@ -5,29 +5,31 @@ import fs from 'fs/promises';
 
 export async function DELETE(req: Request) {
   try {
-    // استخراج نام فایل از query params
+    // استخراج نام فایل و نوع از query params
     const { searchParams } = new URL(req.url);
-    const filename = searchParams.get('filename');
+    const fileDirectory = searchParams.get('fileDirectory');
 
-    if (!filename) {
-      return NextResponse.json({ error: 'نام فایل ارائه نشده است' }, { status: 400 });
+
+
+
+
+
+    if (!fileDirectory) {
+      return NextResponse.json({ error: 'مسیر فایل مشخص نشده است' }, { status: 400 });
     }
+    const filePath = path.join(process.cwd(), 'public', fileDirectory);
 
-    // مسیر فایل در پوشه public/profilePicture
-    const filePath = path.join(process.cwd(), 'public', 'images','profilePicture', filename);
-
-    // بررسی وجود فایل
     try {
       await fs.access(filePath);
-    } catch (error) {
+    } catch {
       return NextResponse.json({ error: 'فایل یافت نشد' }, { status: 404 });
     }
 
-    // حذف فایل
     await fs.unlink(filePath);
 
     return NextResponse.json({ message: 'فایل با موفقیت حذف شد' });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'خطای ناشناخته رخ داده است';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

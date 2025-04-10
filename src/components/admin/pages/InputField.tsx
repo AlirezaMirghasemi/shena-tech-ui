@@ -5,32 +5,39 @@ export default function InputField({
   id,
   name,
   type,
-  as="input",
+  as = "input",
   placeholder,
   disabled,
   data,
   className,
   labelClassName,
+  component,
 }: {
   id: string;
   name: string;
   type?: string;
-  as?:string;
+  as?: string;
   placeholder: string;
   disabled: boolean;
   data?: string[];
-  className?:string
-  labelClassName?:string
+  className?: string;
+  labelClassName?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: (field: any, form: any) => React.JSX.Element;
 }) {
   return (
     <>
       <label
         htmlFor={id}
-        className={labelClassName ? labelClassName : "block text-sm font-medium mb-2 dark:text-white"}
+        className={
+          labelClassName
+            ? labelClassName
+            : "block text-sm font-medium mb-2 dark:text-white"
+        }
       >
         {placeholder}
       </label>
-      {as != "select" && (
+      {as == "file" && (
         <Field
           id={id}
           name={name}
@@ -38,7 +45,27 @@ export default function InputField({
           type={type}
           disabled={disabled}
           placeholder={placeholder}
-          className={className ? className : "py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 border-teal-500 focus:border-teal-500 focus:ring-teal-500"}
+          component={component}
+          className={
+            className
+              ? className
+              : "py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 border-teal-500 focus:border-teal-500 focus:ring-teal-500"
+          }
+        />
+      )}
+      {as != "select" && as !== "file" && (
+        <Field
+          id={id}
+          name={name}
+          as={as}
+          type={type}
+          disabled={disabled}
+          placeholder={placeholder}
+          className={
+            className
+              ? className
+              : "py-2.5 sm:py-3 px-4 block w-full rounded-lg sm:text-sm dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 border-teal-500 focus:border-teal-500 focus:ring-teal-500"
+          }
         />
       )}
       {as == "select" && (
@@ -49,6 +76,7 @@ export default function InputField({
           type={type}
           disabled={disabled}
           placeholder={placeholder}
+          suppressHydrationWarning={true}
           data-hs-select='{
             "placeholder": "یک گزینه را انتخاب کنید",
             "toggleTag": "<button type=\"button\" aria-expanded=\"false\"></button>",
@@ -59,7 +87,7 @@ export default function InputField({
             "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 \" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
           }'
         >
-  <option value="">Choose</option>
+          <option value="">یک گزینه را انتخاب کنید</option>
 
           {data?.map((option) => (
             <option value={option} key={option}>

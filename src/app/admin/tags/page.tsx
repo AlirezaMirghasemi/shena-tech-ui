@@ -1,5 +1,5 @@
 "use client";
-import {  useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import LoadingSkeleton from "@/components/common/LoadingSkeleton";
@@ -55,7 +55,7 @@ const TagsPage = () => {
         sortable: true,
         width: "25%",
         align: "text-center",
-        ariaLabel: "عنوان فارسی تگ",
+        ariaLabel: "عنوان فارسی هشتگ",
       },
       {
         header: "عنوان انگلیسی",
@@ -63,7 +63,7 @@ const TagsPage = () => {
         sortable: true,
         width: "25%",
         align: "text-center",
-        ariaLabel: "عنوان انگلیسی تگ",
+        ariaLabel: "عنوان انگلیسی هشتگ",
       },
       {
         header: "تاریخ ایجاد",
@@ -71,7 +71,7 @@ const TagsPage = () => {
         align: "text-center",
         cellRenderer: (tag: ITag) =>
           new Date(tag.createdAt).toLocaleDateString("fa-IR"),
-        ariaLabel: "تاریخ ایجاد تگ",
+        ariaLabel: "تاریخ ایجاد هشتگ",
       },
     ],
     []
@@ -83,7 +83,7 @@ const TagsPage = () => {
         name: "edit",
         icon: <FaPencil className="w-5 h-5" />,
         handler: (tag: ITag) => router.push(`/admin/tags/edit/${tag.id}`),
-        ariaLabel: "ویرایش تگ",
+        ariaLabel: "ویرایش هشتگ",
       },
       {
         name: "delete",
@@ -119,28 +119,25 @@ const TagsPage = () => {
       />
       <div className="container mx-auto p-4 space-y-6">
         <TableHeader tableHeader={InitialViewTable.tableHeader} />
-          <DynamicTable
-            data={tags}
-            columns={columns}
-            actions={actions}
-            loading={isLoading}
-            error={error}
-            emptyState={
-              <div className="flex flex-col items-center gap-4 py-8">
-                <span className="text-lg text-gray-500">
-                  هیچ هشتگی یافت نشد
-                </span>
-              </div>
-            }
-            ariaLabel="جدول مدیریت تگ ها"
-            rowKey="id"
-            pagination={{
-                currentPage,
-                totalPages,
-                onPageChange: handlePageChange,
-              }}
-          />
-
+        <DynamicTable
+          data={tags}
+          columns={columns}
+          actions={actions}
+          loading={isLoading}
+          error={error}
+          emptyState={
+            <div className="flex flex-col items-center gap-4 py-8">
+              <span className="text-lg text-gray-500">هیچ هشتگی یافت نشد</span>
+            </div>
+          }
+          ariaLabel="جدول مدیریت هشتگ ها"
+          rowKey="id"
+          pagination={{
+            currentPage,
+            totalPages,
+            onPageChange: handlePageChange,
+          }}
+        />
       </div>
     </>
   );

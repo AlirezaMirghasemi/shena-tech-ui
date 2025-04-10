@@ -3,6 +3,7 @@
 import SlugForm from "@/components/admin/pages/slugs/SlugForm";
 import { useSlugs } from "@/hooks/DB/useSlugs";
 import { SlugFormValues } from "@/interfaces/models/ISlug";
+import { slugInitial } from "@/validations/initials/slug.initial";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -22,6 +23,7 @@ const NewSlugPage = () => {
       <SlugForm
         title="ایجاد اسلاگ جدید"
         description="اطلاعات اسلاگ جدید را وارد نمایید"
+        initialValues={slugInitial}
         onSubmit={handleSubmit}
         isSubmitting={isLoading}
       />
