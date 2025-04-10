@@ -62,6 +62,8 @@ export const useUsers = () => {
           title: uploadResult.title,
           type: uploadResult.type,
           directory: uploadResult.directory,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         });
       } catch (uploadError) {
         console.error("خطا در آپلود عکس:", uploadError);
@@ -114,8 +116,10 @@ export const useUsers = () => {
         values.imageId !== ""
       ) {
         try {
-            const oldImage=await fetchImageById({ id: values.imageId as string });
-            await deleteFile(oldImage.directory); // یا به جای "profile" از مقدار متناسب با ImageType استفاده کنید.
+          const oldImage = await fetchImageById({
+            id: values.imageId as string,
+          });
+          await deleteFile(oldImage.directory); // یا به جای "profile" از مقدار متناسب با ImageType استفاده کنید.
           if (oldImage.id) {
             await deleteImage({ id: oldImage.id });
           } else {
@@ -137,6 +141,8 @@ export const useUsers = () => {
           title: uploadResult.title,
           type: uploadResult.type,
           directory: uploadResult.directory,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
         });
         // به‌روزرسانی شناسه عکس در داده‌های کاربر
         values.imageId = newImageRecord.id;

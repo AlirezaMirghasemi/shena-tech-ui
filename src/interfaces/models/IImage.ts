@@ -5,4 +5,7 @@ export interface IImage {
   title: string;
   type: ImageType;
   directory: string;
+  createdAt: number;
+  updatedAt: number;
 }
+export type ImageFormValues = Pick<IImage, "title" | "type" | "directory">;

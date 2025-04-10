@@ -5,9 +5,11 @@ import { Formik, useFormikContext } from "formik";
 import DynamicForm from "../DynamicForm";
 import InputField from "../InputField";
 import { useDebounce } from "use-debounce";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Gender } from "../../../../constants/data/Gender";
 import FileUploader from "@/components/common/FileUploader";
+import { useImages } from "@/hooks/DB/useImages";
+import { IImage } from "@/interfaces/models/IImage";
 
 interface UserFormProps {
   initialValues: UserFormValues;
@@ -51,6 +53,34 @@ export default function UserForm({
   title,
   description,
 }: UserFormProps) {
+  const { actions } = useImages();
+
+  // استفاده از state محلی جهت نگهداری اطلاعات عکس قبلی
+  const [previewOldImage, setPreviewOldImage] = useState<IImage | null>(null);
+
+  useEffect(() => {
+    // اگر initialValues.imageId خالی نباشد، عکس قبلی را بارگیری کن
+    if (initialValues.imageId && initialValues.imageId !== "") {
+      const fetchOldImage = async () => {
+        try {
+          const image = await actions.getImageById(
+            initialValues.imageId as string
+          );
+          if (image.payload) {
+            setPreviewOldImage(image.payload as IImage);
+          }
+        } catch (error) {
+          console.error("خطا در دریافت عکس قبلی:", error);
+          setPreviewOldImage(null);
+        }
+      };
+      fetchOldImage();
+    } else {
+      // در صورت نداشتن imageId، مقدار state را به null تنظیم کن
+      setPreviewOldImage(null);
+    }
+  }, [initialValues.imageId]);
+
   return (
     <Formik
       initialValues={initialValues}
@@ -119,9 +149,15 @@ export default function UserForm({
             id="profilePicture"
             disabled={isSubmitting}
             placeholder="عکس پروفایل خود را وارد کنید"
-            component={({ field, form}) => <FileUploader field={field} form={form} title={"عکس پروفایل کاربر"}/>}
-
-/>
+            component={({ field, form }) => (
+              <FileUploader
+                field={field}
+                form={form}
+                title={"عکس پروفایل کاربر"}
+                previewOld={previewOldImage?.directory} // ارسال مقدار URL عکس قبلی اگر موجود باشد
+              />
+            )}
+          />
           <button
             disabled={isSubmitting}
             type="submit"

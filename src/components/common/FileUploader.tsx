@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa6";
 
 interface FileUploaderProps {
   field: { name: string };
   form: { setFieldValue: (field: string, value: File) => void };
-  title:string
+  title: string;
+  previewOld?: string;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ field, form ,title}) => {
+const FileUploader: React.FC<FileUploaderProps> = ({
+  field,
+  form,
+  title,
+  previewOld,
+}) => {
   const [preview, setPreview] = React.useState<string | null>(null);
 
+  useEffect(() => {
+    if (previewOld) {
+      setPreview(previewOld);
+    }
+  }, []);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

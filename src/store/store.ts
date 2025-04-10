@@ -4,6 +4,7 @@ import { slugsSlice } from "./slices/slugSlice";
 import { rolesSlice } from "./slices/roleSlice";
 import { usersSlice } from "./slices/userSlice";
 import { permissionsSlice } from "./slices/permissionSlice";
+import { imagesSlice } from "./slices/imageSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -12,7 +13,8 @@ export const makeStore = () => {
       slugs: slugsSlice.reducer,
       roles: rolesSlice.reducer,
       users: usersSlice.reducer,
-      permissions:permissionsSlice.reducer,
+      permissions: permissionsSlice.reducer,
+      images: imagesSlice.reducer,
     },
   });
 };

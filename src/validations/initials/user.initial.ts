@@ -7,7 +7,8 @@ export const userInitial:UserFormValues={
     fullName: "",
     password: "",
     bio: "",
-    profilePicture: "",
+    profilePicture: undefined,
+    imageId:"",
     mobile:"",
     gender: Gender.NotSpecified
 }
