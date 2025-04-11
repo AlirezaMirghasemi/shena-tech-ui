@@ -10,10 +10,12 @@ import TableHeader from "@/components/admin/layout/tables/viewAll/TableHeader";
 import DynamicTable from "@/components/admin/layout/tables/viewAll/DynamicTable";
 import { IDynamicTableColumn } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
 import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
+import Link from "next/link";
 
 const RolesPage = () => {
   const [deletingItemId, setDeletingItemId] = useState<string>("");
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const[users,setUsers]=useState("");
     const router = useRouter();
     const {
       roles,
@@ -59,6 +61,11 @@ const RolesPage = () => {
         width: "25%",
         align: "text-center",
         ariaLabel: "عنوان نقش",
+        cellRenderer: (row) => (
+            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+            <Link href="" onClick={()=>{setUsers(row.id || "")}}>  {row.title}</Link>
+            </span>
+          ),
       },
       {
         header: "توضیحات",
@@ -178,7 +185,7 @@ const RolesPage = () => {
           role="tabpanel"
           aria-labelledby="bar-with-underline-item-1"
         >
-          <h3 className="">جدول مجوز های نقش انتخاب شده</h3>
+          <h3 className="">{users+":::"}</h3>
         </div>
         <div
           id="bar-with-underline-2"
@@ -186,7 +193,7 @@ const RolesPage = () => {
           role="tabpanel"
           aria-labelledby="bar-with-underline-item-2"
         >
-          <h3 className="">جدول کاربران نقش انتخاب شده</h3>
+          <h3 className="">{users}</h3>
         </div>
       </div>
     </>

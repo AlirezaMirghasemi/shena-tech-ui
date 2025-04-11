@@ -36,22 +36,21 @@ export const useImages = () => {
   //     [dispatch]
   //   );
   const getImageById = (id: string) => dispatch(fetchImageByIdAsync(id));
-  const deleteImage = (id: string) => dispatch(deleteImageAsync(id));
+  const deleteImage = (id: string, directory: string) => dispatch(deleteImageAsync({ id, imageDirectory: directory }));
 
   /**
    * تابع ایجاد عکس جدید با استفاده از داده‌های فرم
    * @param formData - داده‌های فرم جهت ایجاد عکس
    * @returns نتیجه موفقیت یا شکست عملیات
    */
-  const createNewImage = async (formData: ImageFormValues) => {
+  const createNewImage = async (formData: ImageFormValues,imageFile: File) => {
     const newImage: IImage = {
       ...formData,
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
     try {
-      await dispatch(createImageAsync(newImage)).unwrap();
-      return true;
+     return await dispatch(createImageAsync({ image: newImage, imageFile })).unwrap();
     } catch (error) {
       console.error("خطا در ایجاد عکس:", error);
       return false;

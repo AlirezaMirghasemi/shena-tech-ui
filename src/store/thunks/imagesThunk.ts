@@ -47,9 +47,13 @@ export const fetchImageByIdAsync = createAsyncThunk(
  */
 export const createImageAsync = createAsyncThunk(
   "images/newImage",
-  async (image: Omit<IImage, "id">, { rejectWithValue }) => {
+
+  async (
+    { image, imageFile }: { image: Omit<IImage, "id">; imageFile: File },
+    { rejectWithValue }: { rejectWithValue: (value: string) => void }
+  ) => {
     try {
-      const response = await createImage(image);
+      const response = await createImage(image, imageFile);
       return response;
     } catch (error) {
       if (error instanceof Error) {
@@ -81,9 +85,9 @@ export const updateImageAsync = createAsyncThunk(
 //delete image
 export const deleteImageAsync = createAsyncThunk(
   "images/deleteImage",
-  async (id: string) => {
+  async ({ id, imageDirectory }: { id: string; imageDirectory: string }) => {
     try {
-      const response = await deleteImage({ id });
+      const response = await deleteImage({ id, imageDirectory });
       return response;
     } catch (error) {
       if (error instanceof Error) {

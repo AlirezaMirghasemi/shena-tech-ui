@@ -1,12 +1,5 @@
 import { IImage } from "@/interfaces/models/IImage";
 import { IUser, UserFormValues } from "@/interfaces/models/IUser";
-import { deleteFile } from "@/services/common/deleteFile";
-import { uploadFile } from "@/services/common/uploadFile";
-import {
-  createImage,
-  deleteImage,
-  fetchImageById,
-} from "@/services/imageServices/ImageServices";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCurrentPage } from "@/store/slices/userSlice";
 import {
@@ -17,11 +10,15 @@ import {
   updateUserAsync,
 } from "@/store/thunks/usersThunk";
 import { useCallback } from "react";
+import { Image, ImageType } from "../../constants/data/Type";
+import { useImages } from "./useImages";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات کاربران
  */
 export const useUsers = () => {
+  const { actions } = useImages(); // چک کردن اینکه آیا کاربر عکس جدیدی انتخاب کرده است یا خیر
+
   const dispatch = useAppDispatch();
   const {
     data: users,
@@ -52,21 +49,24 @@ export const useUsers = () => {
       formData.profilePicture instanceof File
     ) {
       try {
-        // آپلود فایل و دریافت اطلاعات اولیه عکس
-        const uploadResult: IImage = await uploadFile(
-          formData.profilePicture,
-          "profilePicture"
+        const imageType: ImageType = Image.PROFILE;
+        const result = await actions.createNewImage(
+          {
+            title: "",
+            type: imageType,
+            directory: "",
+          },
+          formData.profilePicture
         );
-        // ثبت رکورد عکس در بانک اطلاعاتی
-        imageRecord = await createImage({
-          title: uploadResult.title,
-          type: uploadResult.type,
-          directory: uploadResult.directory,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-        });
-      } catch (uploadError) {
-        console.error("خطا در آپلود عکس:", uploadError);
+console.log("result:"+result);
+        if (result && typeof result === "object" && "id" in result) {
+          imageRecord = result as IImage;
+        } else {
+          console.error("خطا: ایجاد عکس موفقیت‌آمیز نبود.");
+          return false;
+        }
+      } catch (error) {
+        console.error("خطا در ذخیره عکس:", error);
         return false;
       }
     }
@@ -77,7 +77,6 @@ export const useUsers = () => {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-
     try {
       delete newUser.profilePicture;
       await dispatch(createUserAsync(newUser)).unwrap();
@@ -87,7 +86,6 @@ export const useUsers = () => {
       return false;
     }
   };
-
   /**
    * تابع ویرایش کاربر.
    * اگر عکس جدیدی انتخاب شده باشد:
@@ -101,7 +99,6 @@ export const useUsers = () => {
       UserFormValues & { imageId?: string; profilePicture?: File }
     >
   ) => {
-    // چک کردن اینکه آیا کاربر عکس جدیدی انتخاب کرده است یا خیر
     if (
       values.profilePicture &&
       typeof values.profilePicture === "object" &&
@@ -116,44 +113,43 @@ export const useUsers = () => {
         values.imageId !== ""
       ) {
         try {
-          const oldImage = await fetchImageById({
-            id: values.imageId as string,
-          });
-          await deleteFile(oldImage.directory); // یا به جای "profile" از مقدار متناسب با ImageType استفاده کنید.
+          const oldImage = (await actions.getImageById(values.imageId))
+            .payload as IImage;
           if (oldImage.id) {
-            await deleteImage({ id: oldImage.id });
+            await actions.deleteImage(oldImage.id, oldImage.directory);
           } else {
             console.error("خطا: شناسه عکس قبلی معتبر نیست.");
           }
-          // در صورت نیاز، می‌توان درخواست حذف فایل از سرور را نیز ارسال کرد.
         } catch (deleteError) {
           console.error("خطا در حذف عکس قبلی:", deleteError);
         }
       }
       try {
-        // آپلود عکس جدید
-        const uploadResult: IImage = await uploadFile(
-          values.profilePicture,
-          "profilePicture"
+        const imageType: ImageType = Image.PROFILE;
+        const result = await actions.createNewImage(
+          {
+            title: "",
+            type: imageType,
+            directory: "",
+          },
+          values.profilePicture
         );
-        // ثبت عکس جدید در بانک اطلاعاتی
-        const newImageRecord = await createImage({
-          title: uploadResult.title,
-          type: uploadResult.type,
-          directory: uploadResult.directory,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-        });
-        // به‌روزرسانی شناسه عکس در داده‌های کاربر
-        values.imageId = newImageRecord.id;
-      } catch (uploadError) {
-        console.error("خطا در آپلود عکس جدید:", uploadError);
+
+        if (result && typeof result === "object" && "id" in result) {
+          const newImageRecord: IImage = result as IImage;
+          // به‌روزرسانی شناسه عکس در داده‌های کاربر
+          values.imageId = newImageRecord.id;
+        } else {
+          console.error("خطا: ایجاد عکس موفقیت‌آمیز نبود.");
+          return false;
+        }
+      } catch (error) {
+        console.error("خطا در ذخیره عکس جدید:", error);
         return false;
       }
     }
     // حذف فیلد profilePicture (که شامل شیء File است) از داده‌های نهایی
     delete values.profilePicture;
-
     try {
       const updatedUser = {
         ...values,

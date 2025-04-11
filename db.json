@@ -31,21 +31,41 @@
       "description": "مدیریت کامل",
       "createdAt": 1743932481662,
       "updatedAt": 1743932481662
+    },
+    {
+      "id": "3019",
+      "title": "معاون",
+      "description": "معاونت",
+      "createdAt": 1744373048718,
+      "updatedAt": 1744373048718
     }
   ],
   "users": [
     {
-      "id": "481c",
+      "id": "88e9",
       "username": "don_miralone",
       "email": "alireza.mirghasemi@gmail.com",
       "fullName": "علیرضا میرقاسمی",
       "password": "2129638Dm@14",
-      "bio": "",
+      "bio": "بیوگرافی",
+      "imageId": "31dd",
       "mobile": "09039992731",
-      "gender": "Female",
-      "imageId": "a370",
-      "createdAt": 1744298144418,
-      "updatedAt": 1744304704136
+      "gender": "Male",
+      "createdAt": 1744365209568,
+      "updatedAt": 1744372559399
+    },
+    {
+      "id": "6911",
+      "username": "alireza_mirghasemi",
+      "email": "don@g.com",
+      "fullName": "علیرضا میرقاسمی",
+      "password": "2129638Dm@14",
+      "bio": "",
+      "imageId": "7544",
+      "mobile": "09102129638",
+      "gender": "Male",
+      "createdAt": 1744372538922,
+      "updatedAt": 1744372538922
     }
   ],
   "permissions": [
@@ -78,20 +98,20 @@
   ],
   "images": [
     {
-      "id": "a370",
-      "title": "profilePicture-1744304703862.jpg",
+      "id": "7544",
+      "title": "profilePicture-1744372538852.jpg",
       "type": "profilePicture",
-      "directory": "/images/profilePicture/profilePicture-1744304703862.jpg",
-      "createdAt": 1744304704119,
-      "updatedAt": 1744304704119
+      "directory": "/images/profilePicture/profilePicture-1744372538852.jpg",
+      "createdAt": 1744372538833,
+      "updatedAt": 1744372538833
     },
     {
-      "id": "0a5c",
-      "title": "profilePicture-1744305569014.jpg",
+      "id": "31dd",
+      "title": "profilePicture-1744372559318.jpg",
       "type": "profilePicture",
-      "directory": "/images/profilePicture/profilePicture-1744305569014.jpg",
-      "createdAt": 1744305569030,
-      "updatedAt": 1744305569030
+      "directory": "/images/profilePicture/profilePicture-1744372559318.jpg",
+      "createdAt": 1744372558966,
+      "updatedAt": 1744372558966
     }
   ]
 }

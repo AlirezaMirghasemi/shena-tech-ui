@@ -74,7 +74,11 @@ export const imagesSlice = createSlice({
       })
       .addCase(createImageAsync.fulfilled, (state, action) => {
         state.status = DataStatus.SUCCEEDED;
-        state.data = [action.payload];
+        if (action.payload) {
+          state.data = [action.payload];
+        } else {
+          state.error = "Failed to create image: payload is empty";
+        }
       })
       .addCase(createImageAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;

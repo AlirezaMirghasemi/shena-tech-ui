@@ -5,6 +5,6 @@ export enum Type {
 }
 export enum Image {
   PROFILE = "profilePicture",
-  Poster = "poster",
+  POSTER = "poster",
 }
-export type ImageType = Image | Type;
+export type ImageType = Type | Image;
