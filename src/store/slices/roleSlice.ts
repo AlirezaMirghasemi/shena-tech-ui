@@ -109,7 +109,8 @@ export const rolesSlice = createSlice({
       .addCase(deleteRoleAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update role";
-      });
+      })
+
   },
 });
 

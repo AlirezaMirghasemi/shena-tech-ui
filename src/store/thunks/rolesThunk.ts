@@ -12,19 +12,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
  * توکن آسنکرون جهت دریافت لیست نقش‌ها از API
  */
 export const fetchRolesAsync = createAsyncThunk(
-    "roles/fetchRoles",
-    async ({ page, size }: { page: number; size: number }) => {
-      try {
-        const response = await fetchRoles(page, size);
-        return response;
-      } catch (error) {
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        }
-        throw new Error("Unknown error fetching roles");
+  "roles/fetchRoles",
+  async ({ page, size }: { page: number; size: number }) => {
+    try {
+      const response = await fetchRoles(page, size);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
       }
+      throw new Error("Unknown error fetching roles");
     }
-  );
+  }
+);
 
 //fetch role by id
 export const fetchRoleByIdAsync = createAsyncThunk(

@@ -6,6 +6,7 @@ import {
   deletePermissionAsync,
   fetchPermissionByIdAsync,
   fetchPermissionsAsync,
+  fetchRolePermissionsAsync,
   updatePermissionAsync,
 } from "../thunks/permissionsThunk";
 
@@ -110,6 +111,20 @@ export const permissionsSlice = createSlice({
       .addCase(deletePermissionAsync.rejected, (state, action) => {
         state.status = DataStatus.FAILED;
         state.error = action.error.message || "Failed to update permission";
+      })
+      //fetch Role Permissions
+      .addCase(fetchRolePermissionsAsync.pending, (state) => {
+        state.status = DataStatus.LOADING;
+        state.error = null;
+      })
+      .addCase(fetchRolePermissionsAsync.fulfilled, (state, action) => {
+        state.status = DataStatus.SUCCEEDED;
+        state.data = action.payload;
+      })
+      .addCase(fetchRolePermissionsAsync.rejected, (state, action) => {
+        state.status = DataStatus.FAILED;
+        state.error =
+          action.error.message || "Failed to fetch role permissions";
       });
   },
 });

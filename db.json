@@ -33,11 +33,11 @@
       "updatedAt": 1743932481662
     },
     {
-      "id": "3019",
-      "title": "معاون",
-      "description": "معاونت",
-      "createdAt": 1744373048718,
-      "updatedAt": 1744373048718
+      "id": "68fc",
+      "title": "نویسنده",
+      "description": "نویسنده",
+      "createdAt": 1744531203764,
+      "updatedAt": 1744531203764
     }
   ],
   "users": [
@@ -94,6 +94,16 @@
       "description": "پس توضیحات ؟؟؟",
       "createdAt": 1744095944994,
       "updatedAt": 1744095944994
+    }
+  ],
+  "role_permissions": [
+    {
+      "role_id": "25e4",
+      "permission_id": "8f9c"
+    },
+    {
+      "role_id": "25e4",
+      "permission_id": "5646"
     }
   ],
   "images": [

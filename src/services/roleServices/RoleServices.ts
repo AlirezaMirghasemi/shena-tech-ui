@@ -2,13 +2,13 @@ import { IRole } from "@/interfaces/models/IRole";
 import axios from "axios";
 
 export async function fetchRoles(
-  _page = 1,
-  _per_page = 10
+  page = 1,
+  perPage = 10
 ): Promise<{ data: IRole[]; totalCount: number }> {
   const response = await axios.get("http://localhost:3001/roles", {
     params: {
-      _page,
-      _per_page,
+      _page: page,
+      _per_page: perPage,
     },
   });
   return {
@@ -16,6 +16,8 @@ export async function fetchRoles(
     totalCount: response.data.pages || 0,
   };
 }
+
+
 //create new role
 export async function createRole(role: Omit<IRole, "id">) {
   try {

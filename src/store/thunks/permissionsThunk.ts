@@ -4,6 +4,7 @@ import {
   deletePermission,
   fetchPermissionById,
   fetchPermissions,
+  fetchRolePermissions,
   updatePermission,
 } from "@/services/permissionServices/PermissionServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -90,6 +91,22 @@ export const deletePermissionAsync = createAsyncThunk(
         return error.message;
       }
       return "خطای ناشناخته در حذف مجوز";
+    }
+  }
+);
+
+//fetch Role Permissions
+export const fetchRolePermissionsAsync = createAsyncThunk(
+  "roles/fetchRolePermissions",
+  async (id: string) => {
+    try {
+      const { data }: { data: IPermission[] } = await fetchRolePermissions(id);
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("Unknown error fetching role permissions");
     }
   }
 );

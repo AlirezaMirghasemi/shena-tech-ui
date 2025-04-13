@@ -1,154 +1,29 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
-import { FaPencil, FaTrash } from "react-icons/fa6";
-import LoadingSkeleton from "@/components/common/LoadingSkeleton";
-import { useRoles } from "@/hooks/DB/useRoles";
-import type { IRole } from "@/interfaces/models/IRole";
-import { InitialViewTable } from "@/configs/admin/roles/InitialViewTable";
-import TableHeader from "@/components/admin/layout/tables/viewAll/TableHeader";
-import DynamicTable from "@/components/admin/layout/tables/viewAll/DynamicTable";
-import { IDynamicTableColumn } from "@/interfaces/initials/admin/ViewTable/IDynamicTable";
-import ConfirmDelete from "@/components/admin/layout/modal/ConfirmDelete";
-import Link from "next/link";
+
+import InitialRolesViewTable from "@/configs/admin/roles/InitialRolesViewTable";
+import { usePermissions } from "@/hooks/DB/usePermissions";
+import { IPermission } from "@/interfaces/models/IPermission";
+import { useState } from "react";
+import InitialRolePermissionsTable from '../../../configs/admin/rolePermissions/InitialRolePermissionsTable';
 
 const RolesPage = () => {
-  const [deletingItemId, setDeletingItemId] = useState<string>("");
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const[users,setUsers]=useState("");
-    const router = useRouter();
-    const {
-      roles,
-      isLoading,
-      error,
-      actions: { loadAllRoles, deleteRole },
-      currentPage,
-      totalPages,
-    } = useRoles();
+  const [rolePermissions, setRolePermissions] = useState<IPermission[]>([]);
+  const { actions } = usePermissions();
 
-    useEffect(() => {
-      loadAllRoles();
-    }, []);
-    const handlePageChange = useCallback(
-      (newPage: number | undefined) => {
-        loadAllRoles(newPage);
-      },
-      [loadAllRoles]
-    );
-  const handleDelete = useCallback(
-    async (roleId: string) => {
-      if (!roleId) return;
-
-      try {
-        await deleteRole(roleId);
-        await loadAllRoles();
-        setIsDeleteModalOpen(false);
-      } catch (error) {
-        console.error("خطا در حذف نقش:", error);
-      } finally {
-        setDeletingItemId("");
-      }
-    },
-    [deleteRole, loadAllRoles]
-  );
-
-  const columns = useMemo<IDynamicTableColumn<IRole>[]>(
-    () => [
-      {
-        header: "عنوان",
-        accessor: "title",
-        sortable: true,
-        width: "25%",
-        align: "text-center",
-        ariaLabel: "عنوان نقش",
-        cellRenderer: (row) => (
-            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-            <Link href="" onClick={()=>{setUsers(row.id || "")}}>  {row.title}</Link>
-            </span>
-          ),
-      },
-      {
-        header: "توضیحات",
-        accessor: "description",
-        sortable: true,
-        width: "25%",
-        align: "text-center",
-        ariaLabel: "توضیحات نقش",
-      },
-      {
-        header: "تاریخ ایجاد",
-        accessor: "createdAt",
-        align: "text-center",
-        cellRenderer: (role: IRole) =>
-          new Date(role.createdAt).toLocaleDateString("fa-IR"),
-        ariaLabel: "تاریخ ایجاد نقش",
-      },
-    ],
-    []
-  );
-
-  const actions = useMemo(
-    () => [
-      {
-        name: "edit",
-        icon: <FaPencil className="w-5 h-5" />,
-        handler: (role: IRole) => router.push(`/admin/roles/edit/${role.id}`),
-        ariaLabel: "ویرایش نقش",
-      },
-      {
-        name: "delete",
-        icon: <FaTrash className="w-5 h-5 text-red-500" />,
-        type: "button",
-        className: "hover:bg-red-100 dark:hover:bg-red-900/20",
-        ariaLabel: "حذف نقش",
-        ariaControls: "confirmDeleteRole",
-        ariaHasPopup: "dialog",
-        handler: (row: IRole) => {
-          if (row.id) {
-            setDeletingItemId(row.id);
-            setIsDeleteModalOpen(true);
-          }
-        },
-      },
-    ],
-    [router]
-  );
-  if (isLoading) return <LoadingSkeleton />;
+  const fetchRolePermissions = async ({
+    roleId,
+  }: {
+    roleId: string;
+  }): Promise<IPermission[]> => {
+    const permissions = await actions.getRolePermissions(roleId);
+    return permissions || [];
+  };
   return (
     <>
-      <ConfirmDelete
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        ariaControls="confirmDeleteRole"
-        title="تایید حذف نقش"
-        message="آیا از حذف این نقش اطمینان دارید؟"
-        confirmHandler={handleDelete}
-        deletedItemId={deletingItemId}
+      <InitialRolesViewTable
+        fetchRolePermissions={fetchRolePermissions}
+        setRolePermissions={setRolePermissions}
       />
-      <div className="container mx-auto p-4 space-y-6">
-        <TableHeader tableHeader={InitialViewTable.tableHeader} />
-        <DynamicTable
-            data={roles}
-            columns={columns}
-            actions={actions}
-            loading={isLoading}
-            error={error}
-            emptyState={
-              <div className="flex flex-col items-center gap-4 py-8">
-                <span className="text-lg text-gray-500">
-                  هیچ نقشی یافت نشد
-                </span>
-              </div>
-            }
-            ariaLabel="جدول مدیریت تگ ها"
-            rowKey="id"
-            pagination={{
-                currentPage,
-                totalPages,
-                onPageChange: handlePageChange,
-              }}
-          />
-      </div>
       <nav
         className="relative z-0 flex border border-gray-200 rounded-xl overflow-hidden dark:border-neutral-700"
         aria-label="Tabs"
@@ -185,7 +60,7 @@ const RolesPage = () => {
           role="tabpanel"
           aria-labelledby="bar-with-underline-item-1"
         >
-          <h3 className="">{users+":::"}</h3>
+          <InitialRolePermissionsTable permissions={rolePermissions}/>
         </div>
         <div
           id="bar-with-underline-2"
@@ -193,7 +68,7 @@ const RolesPage = () => {
           role="tabpanel"
           aria-labelledby="bar-with-underline-item-2"
         >
-          <h3 className="">{users}</h3>
+          <h3 className="">جدول کاربران</h3>
         </div>
       </div>
     </>

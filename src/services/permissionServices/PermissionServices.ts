@@ -75,3 +75,30 @@ export const deletePermission = async ({ id }: { id: string }) => {
     throw error;
   }
 };
+
+// fetch Role Permissions
+export async function fetchRolePermissions(
+  roleId: string
+): Promise<{ data: IPermission[] }> {
+  const response = await axios.get("http://localhost:3001/role_permissions", {
+    params: {
+      role_id: roleId,
+    },
+  });
+  const permissionIds: string[] = response.data.map(
+    (res: { permission_id: string }) => res.permission_id
+  );
+
+  if (permissionIds.length === 0) {
+    return { data: [] };
+  }
+  const permissions = await axios.get<IPermission[]>(
+    "http://localhost:3001/permissions"
+  );
+  const rolePermissions = permissions.data.filter((item) => {
+    return item.id ? permissionIds.includes(item.id) : false;
+  });
+  return {
+    data: rolePermissions,
+  };
+}

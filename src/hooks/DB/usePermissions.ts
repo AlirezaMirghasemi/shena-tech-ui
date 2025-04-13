@@ -12,6 +12,7 @@ import {
   updatePermissionAsync,
 } from "@/store/thunks/permissionsThunk";
 import { useCallback } from "react";
+import { fetchRolePermissionsAsync } from "../../store/thunks/permissionsThunk";
 
 /**
  * هوک سفارشی جهت مدیریت عملیات مربوط به مجوز‌ها از قبیل بارگذاری، ایجاد و سایر عملیات
@@ -79,6 +80,16 @@ export const usePermissions = () => {
       return false;
     }
   };
+
+  const getRolePermissions = async (roleId: string)=> {
+    try {
+      const result = (await dispatch(fetchRolePermissionsAsync(roleId))).payload as IPermission[];
+      return result; // برگردان payload که شامل مجوزها است
+    } catch (error) {
+      console.error("خطای دریافت مجوزهای نقش:", error);
+      return []; // در صورت خطا، آرایه خالی برگردان
+    }
+  };
   return {
     permissions,
     isLoading: status === "loading",
@@ -89,6 +100,7 @@ export const usePermissions = () => {
       getPermissionById,
       updatePermission,
       deletePermission,
+      getRolePermissions,
     },
     currentPage,
     totalPages,
